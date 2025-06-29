@@ -67,7 +67,7 @@ $notifications = [
         <div class="container-fluid">
             <!-- Brand -->
             <a class="navbar-brand d-flex align-items-center" href="<?php echo SITE_URL; ?>/admin/">
-                <img src="<?php echo SITE_URL; ?>/assets/images/logo.png" alt="ECCT" height="35" class="me-2">
+                <img src="<?php echo SITE_URL; ?>/assets/images/logo.jpg" alt="ECCT" height="35" class="me-2">
                 <span class="fw-bold">ECCT Admin</span>
             </a>
 
