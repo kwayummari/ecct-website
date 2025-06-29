@@ -1,0 +1,664 @@
+/**
+ * ECCT Admin Panel Stylesheet
+ * Modern admin interface styles
+ */
+
+/* ===== CSS Variables ===== */
+:root {
+    /* ECCT Admin Colors */
+    --admin-primary: #28a745;
+    --admin-primary-dark: #1e7e34;
+    --admin-secondary: #6c757d;
+    --admin-dark: #343a40;
+    --admin-light: #f8f9fa;
+    --admin-white: #ffffff;
+    
+    /* Admin Specific Colors */
+    --sidebar-bg: #2c3e50;
+    --sidebar-hover: #34495e;
+    --navbar-height: 60px;
+    --sidebar-width: 250px;
+    
+    /* Typography */
+    --admin-font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    
+    /* Shadows */
+    --admin-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    --admin-shadow-lg: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    
+    /* Transitions */
+    --admin-transition: all 0.3s ease;
+}
+
+/* ===== Global Admin Styles ===== */
+.admin-panel {
+    font-family: var(--admin-font);
+    background-color: #f4f6f9;
+    min-height: 100vh;
+}
+
+/* ===== Admin Navigation ===== */
+.admin-navbar {
+    height: var(--navbar-height);
+    box-shadow: var(--admin-shadow);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.admin-navbar .navbar-brand {
+    font-weight: 600;
+    color: var(--admin-white) !important;
+}
+
+.admin-navbar .nav-link {
+    color: rgba(255, 255, 255, 0.9) !important;
+    font-weight: 500;
+    transition: var(--admin-transition);
+}
+
+.admin-navbar .nav-link:hover {
+    color: var(--admin-white) !important;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 0.375rem;
+}
+
+.admin-navbar .dropdown-menu {
+    border: none;
+    box-shadow: var(--admin-shadow-lg);
+    border-radius: 0.5rem;
+}
+
+.admin-navbar .badge {
+    font-size: 0.65rem;
+    padding: 0.25em 0.5em;
+}
+
+/* ===== Main Content Area ===== */
+.main-content {
+    margin-top: var(--navbar-height);
+    min-height: calc(100vh - var(--navbar-height));
+}
+
+.content-wrapper {
+    padding: 2rem;
+}
+
+/* ===== Cards ===== */
+.card {
+    border: none;
+    border-radius: 0.75rem;
+    box-shadow: var(--admin-shadow);
+    transition: var(--admin-transition);
+}
+
+.card:hover {
+    box-shadow: var(--admin-shadow-lg);
+}
+
+.card-header {
+    background-color: var(--admin-white);
+    border-bottom: 1px solid #e9ecef;
+    border-radius: 0.75rem 0.75rem 0 0 !important;
+    padding: 1rem 1.5rem;
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+/* ===== Statistics Cards ===== */
+.stat-card {
+    transition: var(--admin-transition);
+    overflow: hidden;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--admin-shadow-lg);
+}
+
+.stat-icon {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.5rem;
+}
+
+/* ===== Tables ===== */
+.table {
+    margin-bottom: 0;
+}
+
+.table th {
+    border-top: none;
+    border-bottom: 2px solid #e9ecef;
+    font-weight: 600;
+    color: var(--admin-dark);
+    padding: 1rem 0.75rem;
+}
+
+.table td {
+    border-top: 1px solid #f1f3f4;
+    padding: 1rem 0.75rem;
+    vertical-align: middle;
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(40, 167, 69, 0.05);
+}
+
+/* ===== Buttons ===== */
+.btn {
+    font-weight: 500;
+    border-radius: 0.5rem;
+    transition: var(--admin-transition);
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+}
+
+.btn-primary {
+    background-color: var(--admin-primary);
+    border-color: var(--admin-primary);
+}
+
+.btn-primary:hover {
+    background-color: var(--admin-primary-dark);
+    border-color: var(--admin-primary-dark);
+}
+
+.btn-group .btn {
+    border-radius: 0.375rem;
+}
+
+.btn-group .btn:not(:last-child) {
+    margin-right: 0.25rem;
+}
+
+/* ===== Forms ===== */
+.form-control {
+    border-radius: 0.5rem;
+    border: 2px solid #e9ecef;
+    padding: 0.75rem 1rem;
+    transition: var(--admin-transition);
+}
+
+.form-control:focus {
+    border-color: var(--admin-primary);
+    box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+}
+
+.form-label {
+    font-weight: 600;
+    color: var(--admin-dark);
+    margin-bottom: 0.5rem;
+}
+
+.form-select {
+    border-radius: 0.5rem;
+    border: 2px solid #e9ecef;
+    padding: 0.75rem 1rem;
+}
+
+.form-check-input:checked {
+    background-color: var(--admin-primary);
+    border-color: var(--admin-primary);
+}
+
+/* ===== Alerts ===== */
+.alert {
+    border: none;
+    border-radius: 0.75rem;
+    font-weight: 500;
+    border-left: 4px solid;
+}
+
+.alert-success {
+    background-color: rgba(40, 167, 69, 0.1);
+    border-left-color: var(--admin-primary);
+    color: var(--admin-primary-dark);
+}
+
+.alert-danger {
+    background-color: rgba(220, 53, 69, 0.1);
+    border-left-color: #dc3545;
+    color: #721c24;
+}
+
+.alert-warning {
+    background-color: rgba(255, 193, 7, 0.1);
+    border-left-color: #ffc107;
+    color: #856404;
+}
+
+.alert-info {
+    background-color: rgba(23, 162, 184, 0.1);
+    border-left-color: #17a2b8;
+    color: #0c5460;
+}
+
+/* ===== Badges ===== */
+.badge {
+    font-weight: 500;
+    font-size: 0.75rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.5rem;
+}
+
+/* ===== Breadcrumbs ===== */
+.breadcrumb {
+    background-color: transparent;
+    margin-bottom: 0;
+    padding: 0;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+    content: "›";
+    font-weight: bold;
+    color: #6c757d;
+}
+
+.breadcrumb-item a {
+    color: var(--admin-primary);
+    text-decoration: none;
+}
+
+.breadcrumb-item a:hover {
+    color: var(--admin-primary-dark);
+}
+
+/* ===== Pagination ===== */
+.pagination {
+    margin-bottom: 0;
+}
+
+.page-link {
+    color: var(--admin-primary);
+    border: 1px solid #dee2e6;
+    border-radius: 0.5rem;
+    margin: 0 0.125rem;
+    font-weight: 500;
+}
+
+.page-link:hover {
+    color: var(--admin-primary-dark);
+    background-color: rgba(40, 167, 69, 0.1);
+    border-color: var(--admin-primary);
+}
+
+.page-item.active .page-link {
+    background-color: var(--admin-primary);
+    border-color: var(--admin-primary);
+}
+
+/* ===== Dashboard Specific ===== */
+.timeline {
+    position: relative;
+    padding-left: 2rem;
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
+.timeline-item:not(:last-child)::before {
+    content: '';
+    position: absolute;
+    left: -1.75rem;
+    top: 1.5rem;
+    width: 2px;
+    height: calc(100% + 1rem);
+    background-color: #e9ecef;
+}
+
+.timeline-marker {
+    position: absolute;
+    left: -2rem;
+    top: 0.25rem;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background-color: var(--admin-primary);
+}
+
+.timeline-content {
+    background-color: var(--admin-white);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    box-shadow: var(--admin-shadow);
+}
+
+/* ===== Login Page Styles ===== */
+.admin-auth {
+    background: linear-gradient(135deg, var(--admin-primary), var(--admin-primary-dark));
+    min-height: 100vh;
+}
+
+.auth-container {
+    min-height: 100vh;
+}
+
+.auth-branding {
+    background: linear-gradient(135deg, rgba(40, 167, 69, 0.9), rgba(30, 126, 52, 0.9)),
+                url('../images/admin-bg.jpg') center/cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.branding-content {
+    text-align: center;
+    padding: 2rem;
+}
+
+.brand-logo {
+    max-height: 80px;
+    width: auto;
+}
+
+.auth-form-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background-color: var(--admin-white);
+}
+
+.auth-form {
+    width: 100%;
+    max-width: 400px;
+}
+
+.input-group-text {
+    background-color: var(--admin-light);
+    border: 2px solid #e9ecef;
+    border-right: none;
+}
+
+.input-group .form-control {
+    border-left: none;
+}
+
+.input-group .form-control:focus {
+    box-shadow: none;
+}
+
+.input-group:focus-within .input-group-text {
+    border-color: var(--admin-primary);
+}
+
+/* ===== Rich Text Editor Customization ===== */
+.note-editor {
+    border-radius: 0.5rem;
+    border: 2px solid #e9ecef;
+}
+
+.note-editor:focus-within {
+    border-color: var(--admin-primary);
+    box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+}
+
+.note-toolbar {
+    background-color: var(--admin-light);
+    border-bottom: 1px solid #e9ecef;
+    border-radius: 0.5rem 0.5rem 0 0;
+}
+
+.note-editing-area {
+    border-radius: 0 0 0.5rem 0.5rem;
+}
+
+/* ===== File Upload Styles ===== */
+.form-control[type="file"] {
+    padding: 0.5rem;
+}
+
+.form-control[type="file"]::-webkit-file-upload-button {
+    background-color: var(--admin-primary);
+    color: white;
+    border: none;
+    border-radius: 0.375rem;
+    padding: 0.5rem 1rem;
+    margin-right: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--admin-transition);
+}
+
+.form-control[type="file"]::-webkit-file-upload-button:hover {
+    background-color: var(--admin-primary-dark);
+}
+
+/* ===== Image Preview ===== */
+#image-preview img,
+.current-image img {
+    border-radius: 0.5rem;
+    border: 2px solid #e9ecef;
+    transition: var(--admin-transition);
+}
+
+#image-preview img:hover,
+.current-image img:hover {
+    border-color: var(--admin-primary);
+}
+
+/* ===== Tag Suggestions ===== */
+.tag-suggestion {
+    cursor: pointer;
+    transition: var(--admin-transition);
+}
+
+.tag-suggestion:hover {
+    background-color: var(--admin-primary) !important;
+    color: white !important;
+}
+
+/* ===== Loading States ===== */
+.loading {
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+.spinner-border-sm {
+    width: 1rem;
+    height: 1rem;
+}
+
+/* ===== Admin Footer ===== */
+.admin-footer {
+    margin-top: auto;
+    background-color: var(--admin-white) !important;
+    border-top: 1px solid #e9ecef !important;
+}
+
+/* ===== User Avatar ===== */
+.user-avatar {
+    font-size: 0.75rem;
+}
+
+/* ===== Responsive Design ===== */
+@media (max-width: 991.98px) {
+    .content-wrapper {
+        padding: 1rem;
+    }
+    
+    .card-body {
+        padding: 1rem;
+    }
+    
+    .table-responsive {
+        font-size: 0.875rem;
+    }
+    
+    .btn-group {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .btn-group .btn {
+        margin-right: 0;
+        margin-bottom: 0.25rem;
+        border-radius: 0.375rem !important;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .main-content {
+        margin-top: var(--navbar-height);
+    }
+    
+    .content-wrapper {
+        padding: 0.75rem;
+    }
+    
+    .stat-icon {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .stat-icon i {
+        font-size: 1.25rem !important;
+    }
+    
+    .card-header {
+        padding: 0.75rem 1rem;
+    }
+    
+    .card-body {
+        padding: 0.75rem 1rem;
+    }
+    
+    .timeline {
+        padding-left: 1.5rem;
+    }
+    
+    .timeline-marker {
+        left: -1.5rem;
+    }
+    
+    .timeline-item:not(:last-child)::before {
+        left: -1.25rem;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .auth-form-container {
+        padding: 1rem;
+    }
+    
+    .branding-content {
+        padding: 1rem;
+    }
+    
+    .modal-dialog {
+        margin: 0.5rem;
+    }
+    
+    .btn-group .btn {
+        font-size: 0.75rem;
+        padding: 0.375rem 0.5rem;
+    }
+    
+    .table td,
+    .table th {
+        padding: 0.5rem 0.375rem;
+        font-size: 0.8rem;
+    }
+}
+
+/* ===== Print Styles ===== */
+@media print {
+    .admin-navbar,
+    .admin-footer,
+    .btn,
+    .pagination,
+    .breadcrumb {
+        display: none !important;
+    }
+    
+    .main-content {
+        margin-top: 0 !important;
+    }
+    
+    .content-wrapper {
+        padding: 0 !important;
+    }
+    
+    .card {
+        border: 1px solid #dee2e6 !important;
+        box-shadow: none !important;
+    }
+    
+    .table {
+        border-collapse: collapse !important;
+    }
+    
+    .table th,
+    .table td {
+        border: 1px solid #dee2e6 !important;
+    }
+}
+
+/* ===== Dark Mode Support (Future Enhancement) ===== */
+@media (prefers-color-scheme: dark) {
+    .admin-panel {
+        /* Dark mode styles can be added here in future updates */
+    }
+}
+
+/* ===== Animation Classes ===== */
+.fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.slide-in {
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(-100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+/* ===== Utility Classes ===== */
+.text-truncate-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.border-radius-lg {
+    border-radius: 0.75rem !important;
+}
+
+.shadow-hover {
+    transition: var(--admin-transition);
+}
+
+.shadow-hover:hover {
+    box-shadow: var(--admin-shadow-lg) !important;
+}
