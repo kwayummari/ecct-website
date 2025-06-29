@@ -12,8 +12,8 @@ if (!defined('ECCT_ROOT')) {
 // Database Configuration
 define('DB_HOST', 'localhost');
 define('DB_NAME', 'ecct_website');
-define('DB_USER', 'your_username');
-define('DB_PASS', 'your_password');
+define('DB_USER', 'root');
+define('DB_PASS', '');
 define('DB_CHARSET', 'utf8mb4');
 
 // Site Configuration
