@@ -409,7 +409,7 @@ function require_permission($action)
     return $auth->requirePermission($action);
 }
 
-function get_current_user()
+function get_current_admin_user()
 {
     global $auth;
     return $auth->getCurrentUser();
