@@ -17,7 +17,7 @@ require_once ECCT_ROOT . '/includes/functions.php';
 $db = new Database();
 $site_name = $db->getSetting('site_name', SITE_NAME);
 $site_tagline = $db->getSetting('site_tagline', 'Striving for a cleaner, greener, healthier environment');
-$site_logo = $db->getSetting('site_logo', 'assets/images/logo.png');
+$site_logo = $db->getSetting('site_logo', 'assets/images/logo.jpg');
 $facebook_url = $db->getSetting('facebook_url', '#');
 $twitter_url = $db->getSetting('twitter_url', '#');
 $instagram_url = $db->getSetting('instagram_url', '#');

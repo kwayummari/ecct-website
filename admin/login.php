@@ -75,7 +75,7 @@ $page_class = 'admin-login';
                 <!-- Left Side - Branding -->
                 <div class="col-lg-6 d-none d-lg-block auth-branding">
                     <div class="branding-content">
-                        <img src="<?php echo SITE_URL; ?>/assets/images/logo.png"
+                        <img src="<?php echo SITE_URL; ?>/assets/images/logo.jpg"
                             alt="ECCT Logo" class="brand-logo mb-4">
                         <h2 class="text-white mb-3">Environmental Conservation Community of Tanzania</h2>
                         <p class="text-white-50 lead">
