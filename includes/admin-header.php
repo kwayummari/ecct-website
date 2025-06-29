@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Admin Panel Header Template with Sidebar for ECCT
+ * Admin Panel Header Template with Sidebar for ECCT - FIXED VERSION
  */
 
 // Ensure we have the necessary includes
@@ -26,16 +26,34 @@ $page_class = $page_class ?? '';
 // Get database instance for notifications
 $db = new Database();
 
-// Get notification counts
+// Get notification counts with error handling
 $notifications = [
-    'unread_messages' => $db->count('contact_messages', ['is_read' => 0]),
-    'pending_volunteers' => $db->count('volunteers', ['status' => 'pending']),
-    'draft_news' => $db->count('news', ['is_published' => 0])
+    'unread_messages' => 0,
+    'pending_volunteers' => 0,
+    'draft_news' => 0
 ];
+
+try {
+    $notifications['unread_messages'] = $db->count('contact_messages', ['is_read' => 0]);
+    $notifications['pending_volunteers'] = $db->count('volunteers', ['status' => 'pending']);
+    $notifications['draft_news'] = $db->count('news', ['is_published' => 0]);
+} catch (Exception $e) {
+    // If there's an error getting notifications, use defaults
+    error_log("Error getting notifications: " . $e->getMessage());
+}
 
 // Get current page info for active menu highlighting
 $current_page = basename($_SERVER['PHP_SELF']);
 $current_dir = basename(dirname($_SERVER['PHP_SELF']));
+
+// Ensure current_user is an array
+if (!is_array($current_user)) {
+    $current_user = [
+        'name' => 'Unknown User',
+        'email' => 'unknown@example.com',
+        'role' => 'editor'
+    ];
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -57,7 +75,7 @@ $current_dir = basename(dirname($_SERVER['PHP_SELF']));
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Additional CSS for specific pages -->
-    <?php if (isset($additional_css)): ?>
+    <?php if (isset($additional_css) && is_array($additional_css)): ?>
         <?php foreach ($additional_css as $css): ?>
             <link href="<?php echo $css; ?>" rel="stylesheet">
         <?php endforeach; ?>
@@ -100,7 +118,7 @@ $current_dir = basename(dirname($_SERVER['PHP_SELF']));
                     </li>
 
                     <!-- Content Management -->
-                    <li class="menu-item <?php echo in_array($current_dir, ['pages']) ? 'active' : ''; ?>">
+                    <li class="menu-item <?php echo ($current_dir === 'pages') ? 'active' : ''; ?>">
                         <a href="#" class="menu-link has-submenu" data-bs-toggle="collapse" data-bs-target="#pagesMenu">
                             <i class="menu-icon fas fa-file-alt"></i>
                             <span class="menu-text">Pages</span>
@@ -117,7 +135,7 @@ $current_dir = basename(dirname($_SERVER['PHP_SELF']));
                     </li>
 
                     <!-- News Management -->
-                    <li class="menu-item <?php echo in_array($current_dir, ['news']) ? 'active' : ''; ?>">
+                    <li class="menu-item <?php echo ($current_dir === 'news') ? 'active' : ''; ?>">
                         <a href="#" class="menu-link has-submenu" data-bs-toggle="collapse" data-bs-target="#newsMenu">
                             <i class="menu-icon fas fa-newspaper"></i>
                             <span class="menu-text">News</span>
@@ -137,7 +155,7 @@ $current_dir = basename(dirname($_SERVER['PHP_SELF']));
                     </li>
 
                     <!-- Campaigns Management -->
-                    <li class="menu-item <?php echo in_array($current_dir, ['campaigns']) ? 'active' : ''; ?>">
+                    <li class="menu-item <?php echo ($current_dir === 'campaigns') ? 'active' : ''; ?>">
                         <a href="#" class="menu-link has-submenu" data-bs-toggle="collapse" data-bs-target="#campaignsMenu">
                             <i class="menu-icon fas fa-bullhorn"></i>
                             <span class="menu-text">Campaigns</span>
@@ -154,7 +172,7 @@ $current_dir = basename(dirname($_SERVER['PHP_SELF']));
                     </li>
 
                     <!-- Gallery Management -->
-                    <li class="menu-item <?php echo in_array($current_dir, ['gallery']) ? 'active' : ''; ?>">
+                    <li class="menu-item <?php echo ($current_dir === 'gallery') ? 'active' : ''; ?>">
                         <a href="#" class="menu-link has-submenu" data-bs-toggle="collapse" data-bs-target="#galleryMenu">
                             <i class="menu-icon fas fa-images"></i>
                             <span class="menu-text">Gallery</span>
@@ -171,7 +189,7 @@ $current_dir = basename(dirname($_SERVER['PHP_SELF']));
                     </li>
 
                     <!-- Volunteers -->
-                    <li class="menu-item <?php echo in_array($current_dir, ['volunteers']) ? 'active' : ''; ?>">
+                    <li class="menu-item <?php echo ($current_dir === 'volunteers') ? 'active' : ''; ?>">
                         <a href="<?php echo SITE_URL; ?>/admin/volunteers/manage-volunteers.php" class="menu-link">
                             <i class="menu-icon fas fa-users"></i>
                             <span class="menu-text">Volunteers</span>
@@ -182,7 +200,7 @@ $current_dir = basename(dirname($_SERVER['PHP_SELF']));
                     </li>
 
                     <!-- Messages -->
-                    <li class="menu-item <?php echo in_array($current_dir, ['contact']) ? 'active' : ''; ?>">
+                    <li class="menu-item <?php echo ($current_dir === 'contact') ? 'active' : ''; ?>">
                         <a href="<?php echo SITE_URL; ?>/admin/contact/manage-messages.php" class="menu-link">
                             <i class="menu-icon fas fa-envelope"></i>
                             <span class="menu-text">Messages</span>
@@ -196,8 +214,8 @@ $current_dir = basename(dirname($_SERVER['PHP_SELF']));
                     <li class="menu-divider"></li>
 
                     <!-- Settings (Admin only) -->
-                    <?php if (has_role('admin')): ?>
-                        <li class="menu-item <?php echo in_array($current_dir, ['settings']) ? 'active' : ''; ?>">
+                    <?php if (function_exists('has_role') && has_role('admin')): ?>
+                        <li class="menu-item <?php echo ($current_dir === 'settings') ? 'active' : ''; ?>">
                             <a href="#" class="menu-link has-submenu" data-bs-toggle="collapse" data-bs-target="#settingsMenu">
                                 <i class="menu-icon fas fa-cog"></i>
                                 <span class="menu-text">Settings</span>
@@ -218,7 +236,7 @@ $current_dir = basename(dirname($_SERVER['PHP_SELF']));
                     <?php endif; ?>
 
                     <!-- Analytics (if user has permission) -->
-                    <?php if (can_perform('view_analytics')): ?>
+                    <?php if (function_exists('can_perform') && can_perform('view_analytics')): ?>
                         <li class="menu-item">
                             <a href="<?php echo SITE_URL; ?>/admin/analytics/" class="menu-link">
                                 <i class="menu-icon fas fa-chart-bar"></i>
@@ -322,7 +340,7 @@ $current_dir = basename(dirname($_SERVER['PHP_SELF']));
             <!-- Content Area -->
             <div class="content-area">
                 <!-- Breadcrumb Navigation -->
-                <?php if (isset($breadcrumbs)): ?>
+                <?php if (isset($breadcrumbs) && is_array($breadcrumbs)): ?>
                     <nav aria-label="breadcrumb" class="mb-4">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item">
@@ -344,7 +362,7 @@ $current_dir = basename(dirname($_SERVER['PHP_SELF']));
                 <?php endif; ?>
 
                 <!-- Flash Messages -->
-                <?php if (has_flash()): ?>
+                <?php if (function_exists('has_flash') && has_flash()): ?>
                     <div class="flash-messages mb-4">
                         <?php
                         $flash_messages = get_flash();
