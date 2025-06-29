@@ -1,822 +1,480 @@
 /**
  * ECCT Admin Panel JavaScript
- * Common functionality for the admin interface
+ * Handles sidebar functionality, notifications, and UI interactions
  */
 
 document.addEventListener('DOMContentLoaded', function () {
-    // Initialize admin functionality
-    initializeAdmin();
-});
 
-function initializeAdmin() {
-    // Initialize tooltips
-    initializeTooltips();
+    // ===== Sidebar Functionality =====
+    const sidebar = document.getElementById('sidebar');
+    const sidebarCollapse = document.getElementById('sidebarCollapse');
+    const mobileToggle = document.getElementById('mobileToggle');
+    const sidebarToggle = document.getElementById('sidebarToggle');
 
-    // Initialize confirmation dialogs
-    initializeConfirmations();
+    // Sidebar collapse/expand for desktop
+    if (sidebarCollapse) {
+        sidebarCollapse.addEventListener('click', function () {
+            sidebar.classList.toggle('collapsed');
 
-    // Initialize form enhancements
-    initializeForms();
+            // Save state to localStorage
+            const isCollapsed = sidebar.classList.contains('collapsed');
+            localStorage.setItem('sidebar-collapsed', isCollapsed);
 
-    // Initialize table enhancements
-    initializeTables();
-
-    // Initialize notifications
-    initializeNotifications();
-
-    // Initialize search functionality
-    initializeSearch();
-
-    // Initialize auto-save functionality
-    initializeAutoSave();
-
-    // Initialize keyboard shortcuts
-    initializeKeyboardShortcuts();
-}
-
-/**
- * Initialize Bootstrap tooltips
- */
-function initializeTooltips() {
-    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-    tooltipTriggerList.map(function (tooltipTriggerEl) {
-        return new bootstrap.Tooltip(tooltipTriggerEl);
-    });
-}
-
-/**
- * Initialize confirmation dialogs for dangerous actions
- */
-function initializeConfirmations() {
-    // Delete confirmations
-    document.querySelectorAll('[data-confirm-delete]').forEach(function (element) {
-        element.addEventListener('click', function (e) {
-            if (!confirm('Are you sure you want to delete this item? This action cannot be undone.')) {
-                e.preventDefault();
-                return false;
-            }
-        });
-    });
-
-    // Custom confirmations
-    document.querySelectorAll('[data-confirm]').forEach(function (element) {
-        element.addEventListener('click', function (e) {
-            const message = this.getAttribute('data-confirm');
-            if (!confirm(message)) {
-                e.preventDefault();
-                return false;
-            }
-        });
-    });
-}
-
-/**
- * Initialize form enhancements
- */
-function initializeForms() {
-    // Auto-resize textareas
-    document.querySelectorAll('textarea[data-auto-resize]').forEach(function (textarea) {
-        textarea.addEventListener('input', function () {
-            this.style.height = 'auto';
-            this.style.height = this.scrollHeight + 'px';
-        });
-
-        // Initial resize
-        textarea.style.height = textarea.scrollHeight + 'px';
-    });
-
-    // Character counters
-    document.querySelectorAll('input[maxlength], textarea[maxlength]').forEach(function (input) {
-        const maxLength = input.getAttribute('maxlength');
-        const counter = document.createElement('div');
-        counter.className = 'form-text text-muted small';
-        counter.innerHTML = `<span class="char-count">0</span>/${maxLength} characters`;
-
-        input.parentNode.appendChild(counter);
-
-        input.addEventListener('input', function () {
-            const currentLength = this.value.length;
-            const countSpan = counter.querySelector('.char-count');
-            countSpan.textContent = currentLength;
-
-            if (currentLength > maxLength * 0.9) {
-                counter.classList.add('text-warning');
+            // Update collapse button icon
+            const icon = sidebarCollapse.querySelector('i');
+            if (isCollapsed) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-arrows-alt-h');
             } else {
-                counter.classList.remove('text-warning');
+                icon.classList.remove('fa-arrows-alt-h');
+                icon.classList.add('fa-bars');
             }
-
-            if (currentLength >= maxLength) {
-                counter.classList.add('text-danger');
-                counter.classList.remove('text-warning');
-            } else {
-                counter.classList.remove('text-danger');
-            }
-        });
-
-        // Initial count
-        input.dispatchEvent(new Event('input'));
-    });
-
-    // Slug generation
-    const titleInput = document.querySelector('input[name="title"]');
-    const slugInput = document.querySelector('input[name="slug"]');
-
-    if (titleInput && slugInput) {
-        titleInput.addEventListener('input', function () {
-            if (!slugInput.hasAttribute('data-manual')) {
-                slugInput.value = generateSlug(this.value);
-            }
-        });
-
-        slugInput.addEventListener('input', function () {
-            this.setAttribute('data-manual', 'true');
         });
     }
 
-    // Form validation feedback
-    document.querySelectorAll('.needs-validation').forEach(function (form) {
-        form.addEventListener('submit', function (event) {
-            if (!form.checkValidity()) {
-                event.preventDefault();
-                event.stopPropagation();
+    // Mobile sidebar toggle
+    if (mobileToggle) {
+        mobileToggle.addEventListener('click', function () {
+            sidebar.classList.add('show');
+            document.body.classList.add('sidebar-open');
+        });
+    }
 
-                // Focus on first invalid field
-                const firstInvalid = form.querySelector(':invalid');
-                if (firstInvalid) {
-                    firstInvalid.focus();
-                    firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }
+    // Close sidebar on mobile
+    if (sidebarToggle) {
+        sidebarToggle.addEventListener('click', function () {
+            sidebar.classList.remove('show');
+            document.body.classList.remove('sidebar-open');
+        });
+    }
+
+    // Close sidebar when clicking outside on mobile
+    document.addEventListener('click', function (e) {
+        if (window.innerWidth <= 991) {
+            if (!sidebar.contains(e.target) && !mobileToggle.contains(e.target)) {
+                sidebar.classList.remove('show');
+                document.body.classList.remove('sidebar-open');
             }
-            form.classList.add('was-validated');
-        });
-    });
-}
-
-/**
- * Initialize table enhancements
- */
-function initializeTables() {
-    // Table row selection
-    document.querySelectorAll('table[data-selectable] tbody tr').forEach(function (row) {
-        row.addEventListener('click', function () {
-            const checkbox = this.querySelector('input[type="checkbox"]');
-            if (checkbox) {
-                checkbox.checked = !checkbox.checked;
-                this.classList.toggle('table-active', checkbox.checked);
-            }
-        });
+        }
     });
 
-    // Select all functionality
-    document.querySelectorAll('input[data-select-all]').forEach(function (selectAll) {
-        selectAll.addEventListener('change', function () {
-            const target = this.getAttribute('data-select-all');
-            const checkboxes = document.querySelectorAll(target);
+    // Restore sidebar state on page load
+    const savedState = localStorage.getItem('sidebar-collapsed');
+    if (savedState === 'true' && window.innerWidth > 991) {
+        sidebar.classList.add('collapsed');
+        if (sidebarCollapse) {
+            const icon = sidebarCollapse.querySelector('i');
+            icon.classList.remove('fa-bars');
+            icon.classList.add('fa-arrows-alt-h');
+        }
+    }
 
-            checkboxes.forEach(function (checkbox) {
-                checkbox.checked = selectAll.checked;
-                const row = checkbox.closest('tr');
-                if (row) {
-                    row.classList.toggle('table-active', checkbox.checked);
-                }
-            });
-        });
+    // Handle window resize
+    window.addEventListener('resize', function () {
+        if (window.innerWidth > 991) {
+            sidebar.classList.remove('show');
+            document.body.classList.remove('sidebar-open');
+        } else {
+            sidebar.classList.remove('collapsed');
+        }
     });
 
-    // Bulk actions
-    document.querySelectorAll('[data-bulk-action]').forEach(function (button) {
-        button.addEventListener('click', function () {
-            const action = this.getAttribute('data-bulk-action');
-            const checkboxes = document.querySelectorAll('table input[type="checkbox"]:checked');
+    // ===== Submenu Functionality =====
+    const submenuToggles = document.querySelectorAll('.has-submenu');
 
-            if (checkboxes.length === 0) {
-                alert('Please select at least one item.');
+    submenuToggles.forEach(function (toggle) {
+        toggle.addEventListener('click', function (e) {
+            // Don't collapse if sidebar is collapsed
+            if (sidebar.classList.contains('collapsed')) {
                 return;
             }
 
-            if (confirm(`Are you sure you want to ${action} ${checkboxes.length} item(s)?`)) {
-                // Process bulk action
-                const ids = Array.from(checkboxes).map(cb => cb.value);
-                console.log(`Bulk ${action}:`, ids);
-                // Implement actual bulk action logic here
+            e.preventDefault();
+
+            const submenu = document.querySelector(toggle.getAttribute('data-bs-target'));
+            const arrow = toggle.querySelector('.submenu-arrow');
+
+            if (submenu) {
+                // Close other submenus
+                submenuToggles.forEach(function (otherToggle) {
+                    if (otherToggle !== toggle) {
+                        const otherSubmenu = document.querySelector(otherToggle.getAttribute('data-bs-target'));
+                        const otherArrow = otherToggle.querySelector('.submenu-arrow');
+
+                        if (otherSubmenu && otherSubmenu.classList.contains('show')) {
+                            otherSubmenu.classList.remove('show');
+                            otherToggle.setAttribute('aria-expanded', 'false');
+                            if (otherArrow) {
+                                otherArrow.style.transform = 'rotate(0deg)';
+                            }
+                        }
+                    }
+                });
+
+                // Toggle current submenu
+                submenu.classList.toggle('show');
+                const isExpanded = submenu.classList.contains('show');
+                toggle.setAttribute('aria-expanded', isExpanded);
+
+                if (arrow) {
+                    arrow.style.transform = isExpanded ? 'rotate(90deg)' : 'rotate(0deg)';
+                }
             }
         });
     });
-}
 
-/**
- * Initialize notifications
- */
-function initializeNotifications() {
-    // Auto-dismiss alerts
-    document.querySelectorAll('.alert:not(.alert-persistent)').forEach(function (alert) {
+    // ===== Auto-dismiss Alerts =====
+    const alerts = document.querySelectorAll('.alert:not(.alert-persistent)');
+    alerts.forEach(function (alert) {
         setTimeout(function () {
-            const bsAlert = new bootstrap.Alert(alert);
-            if (bsAlert) {
-                bsAlert.close();
+            if (alert && alert.parentNode) {
+                alert.classList.remove('show');
+                setTimeout(function () {
+                    if (alert && alert.parentNode) {
+                        alert.remove();
+                    }
+                }, 300);
             }
         }, 5000);
     });
 
-    // Toast notifications
-    document.querySelectorAll('.toast').forEach(function (toastEl) {
-        const toast = new bootstrap.Toast(toastEl);
-        toast.show();
+    // ===== Form Validation =====
+    const forms = document.querySelectorAll('.needs-validation');
+    forms.forEach(function (form) {
+        form.addEventListener('submit', function (event) {
+            if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+        });
     });
-}
 
-/**
- * Initialize search functionality
- */
-function initializeSearch() {
-    // Live search
-    document.querySelectorAll('input[data-live-search]').forEach(function (searchInput) {
-        const target = searchInput.getAttribute('data-live-search');
+    // ===== DataTables Initialization =====
+    if (typeof $.fn.DataTable !== 'undefined') {
+        $('.data-table').DataTable({
+            responsive: true,
+            pageLength: 25,
+            order: [[0, 'desc']],
+            language: {
+                search: "Search:",
+                lengthMenu: "Show _MENU_ entries",
+                info: "Showing _START_ to _END_ of _TOTAL_ entries",
+                paginate: {
+                    first: "First",
+                    last: "Last",
+                    next: "Next",
+                    previous: "Previous"
+                }
+            }
+        });
+    }
+
+    // ===== Tooltips Initialization =====
+    if (typeof bootstrap !== 'undefined' && bootstrap.Tooltip) {
+        const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+    }
+
+    // ===== Confirmation Dialogs =====
+    const confirmLinks = document.querySelectorAll('[data-confirm]');
+    confirmLinks.forEach(function (link) {
+        link.addEventListener('click', function (e) {
+            e.preventDefault();
+            const message = this.getAttribute('data-confirm') || 'Are you sure?';
+
+            if (confirm(message)) {
+                window.location.href = this.href;
+            }
+        });
+    });
+
+    // ===== AJAX Form Submissions =====
+    const ajaxForms = document.querySelectorAll('.ajax-form');
+    ajaxForms.forEach(function (form) {
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const formData = new FormData(form);
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+
+            // Show loading state
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Processing...';
+
+            fetch(form.action, {
+                method: form.method,
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        showNotification('success', data.message);
+                        if (data.redirect) {
+                            setTimeout(() => {
+                                window.location.href = data.redirect;
+                            }, 1000);
+                        }
+                    } else {
+                        showNotification('error', data.message);
+                    }
+                })
+                .catch(error => {
+                    showNotification('error', 'An error occurred. Please try again.');
+                    console.error('Error:', error);
+                })
+                .finally(() => {
+                    // Restore button state
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalText;
+                });
+        });
+    });
+
+    // ===== Image Preview =====
+    const imageInputs = document.querySelectorAll('input[type="file"][accept*="image"]');
+    imageInputs.forEach(function (input) {
+        input.addEventListener('change', function () {
+            const file = this.files[0];
+            const previewId = this.getAttribute('data-preview');
+
+            if (file && previewId) {
+                const preview = document.getElementById(previewId);
+                if (preview) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        preview.src = e.target.result;
+                        preview.style.display = 'block';
+                    };
+                    reader.readAsDataURL(file);
+                }
+            }
+        });
+    });
+
+    // ===== Character Counter =====
+    const textareas = document.querySelectorAll('textarea[data-max-length]');
+    textareas.forEach(function (textarea) {
+        const maxLength = parseInt(textarea.getAttribute('data-max-length'));
+        const counter = document.createElement('div');
+        counter.className = 'form-text text-end';
+        textarea.parentNode.appendChild(counter);
+
+        function updateCounter() {
+            const remaining = maxLength - textarea.value.length;
+            counter.textContent = `${textarea.value.length}/${maxLength} characters`;
+            counter.className = remaining < 50 ? 'form-text text-end text-warning' : 'form-text text-end text-muted';
+        }
+
+        textarea.addEventListener('input', updateCounter);
+        updateCounter();
+    });
+
+    // ===== Bulk Actions =====
+    const selectAllCheckbox = document.getElementById('selectAll');
+    const itemCheckboxes = document.querySelectorAll('.item-checkbox');
+    const bulkActionBtn = document.getElementById('bulkActionBtn');
+
+    if (selectAllCheckbox && itemCheckboxes.length > 0) {
+        selectAllCheckbox.addEventListener('change', function () {
+            itemCheckboxes.forEach(function (checkbox) {
+                checkbox.checked = selectAllCheckbox.checked;
+            });
+            updateBulkActionButton();
+        });
+
+        itemCheckboxes.forEach(function (checkbox) {
+            checkbox.addEventListener('change', function () {
+                const allChecked = Array.from(itemCheckboxes).every(cb => cb.checked);
+                const someChecked = Array.from(itemCheckboxes).some(cb => cb.checked);
+
+                selectAllCheckbox.checked = allChecked;
+                selectAllCheckbox.indeterminate = someChecked && !allChecked;
+
+                updateBulkActionButton();
+            });
+        });
+
+        function updateBulkActionButton() {
+            const checkedCount = Array.from(itemCheckboxes).filter(cb => cb.checked).length;
+            if (bulkActionBtn) {
+                bulkActionBtn.disabled = checkedCount === 0;
+                bulkActionBtn.textContent = `Bulk Actions (${checkedCount})`;
+            }
+        }
+    }
+
+    // ===== Auto-save Draft =====
+    const draftForms = document.querySelectorAll('.auto-save');
+    draftForms.forEach(function (form) {
+        const formId = form.id;
+        let saveTimeout;
+
+        // Load saved draft
+        const savedData = localStorage.getItem(`draft_${formId}`);
+        if (savedData) {
+            try {
+                const data = JSON.parse(savedData);
+                Object.keys(data).forEach(function (key) {
+                    const field = form.querySelector(`[name="${key}"]`);
+                    if (field) {
+                        field.value = data[key];
+                    }
+                });
+            } catch (e) {
+                console.error('Error loading draft:', e);
+            }
+        }
+
+        // Auto-save on input
+        form.addEventListener('input', function () {
+            clearTimeout(saveTimeout);
+            saveTimeout = setTimeout(function () {
+                const formData = new FormData(form);
+                const data = {};
+
+                formData.forEach(function (value, key) {
+                    data[key] = value;
+                });
+
+                localStorage.setItem(`draft_${formId}`, JSON.stringify(data));
+                showNotification('info', 'Draft saved automatically', 2000);
+            }, 2000);
+        });
+
+        // Clear draft on successful submit
+        form.addEventListener('submit', function () {
+            localStorage.removeItem(`draft_${formId}`);
+        });
+    });
+
+    // ===== Notification System =====
+    function showNotification(type, message, duration = 5000) {
+        const notification = document.createElement('div');
+        notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+        notification.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
+
+        notification.innerHTML = `
+            ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        `;
+
+        document.body.appendChild(notification);
+
+        // Auto-remove notification
+        setTimeout(function () {
+            if (notification && notification.parentNode) {
+                notification.classList.remove('show');
+                setTimeout(function () {
+                    if (notification && notification.parentNode) {
+                        notification.remove();
+                    }
+                }, 300);
+            }
+        }, duration);
+    }
+
+    // ===== Search Functionality =====
+    const searchInputs = document.querySelectorAll('.search-input');
+    searchInputs.forEach(function (input) {
         let searchTimeout;
 
-        searchInput.addEventListener('input', function () {
+        input.addEventListener('input', function () {
             clearTimeout(searchTimeout);
-            const query = this.value.toLowerCase();
+            const searchTerm = this.value.toLowerCase();
+            const targetSelector = this.getAttribute('data-target');
+            const targets = document.querySelectorAll(targetSelector);
 
             searchTimeout = setTimeout(function () {
-                const items = document.querySelectorAll(target);
-
-                items.forEach(function (item) {
-                    const text = item.textContent.toLowerCase();
-                    const matches = text.includes(query);
-                    item.style.display = matches ? '' : 'none';
+                targets.forEach(function (target) {
+                    const text = target.textContent.toLowerCase();
+                    const shouldShow = text.includes(searchTerm) || searchTerm === '';
+                    target.style.display = shouldShow ? '' : 'none';
                 });
             }, 300);
         });
     });
 
-    // Search highlighting
-    function highlightSearchTerms(element, query) {
-        if (!query) return;
+    // ===== Statistics Animation =====
+    const statNumbers = document.querySelectorAll('.stat-number');
 
-        const regex = new RegExp(`(${query})`, 'gi');
-        const walker = document.createTreeWalker(
-            element,
-            NodeFilter.SHOW_TEXT,
-            null,
-            false
-        );
+    function animateNumbers() {
+        statNumbers.forEach(function (stat) {
+            const target = parseInt(stat.getAttribute('data-target') || stat.textContent);
+            const duration = 2000;
+            const step = target / (duration / 16);
+            let current = 0;
 
-        const textNodes = [];
-        let node;
-
-        while (node = walker.nextNode()) {
-            textNodes.push(node);
-        }
-
-        textNodes.forEach(function (textNode) {
-            if (regex.test(textNode.textContent)) {
-                const parent = textNode.parentNode;
-                const wrapper = document.createElement('span');
-                wrapper.innerHTML = textNode.textContent.replace(regex, '<mark>$1</mark>');
-                parent.replaceChild(wrapper, textNode);
-            }
+            const timer = setInterval(function () {
+                current += step;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+                stat.textContent = Math.floor(current).toLocaleString();
+            }, 16);
         });
     }
-}
 
-/**
- * Initialize auto-save functionality
- */
-function initializeAutoSave() {
-    const forms = document.querySelectorAll('form[data-auto-save]');
-
-    forms.forEach(function (form) {
-        const interval = parseInt(form.getAttribute('data-auto-save')) || 30000; // Default 30 seconds
-        let autoSaveTimeout;
-        let hasChanges = false;
-
-        // Track changes
-        form.addEventListener('input', function () {
-            hasChanges = true;
-            clearTimeout(autoSaveTimeout);
-
-            autoSaveTimeout = setTimeout(function () {
-                if (hasChanges) {
-                    autoSaveForm(form);
-                    hasChanges = false;
-                }
-            }, interval);
+    // Trigger animation when stats come into view
+    const observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+                animateNumbers();
+                observer.disconnect();
+            }
         });
-
-        // Show auto-save indicator
-        const indicator = document.createElement('div');
-        indicator.className = 'auto-save-indicator';
-        indicator.innerHTML = '<small class="text-muted"><i class="fas fa-save"></i> Auto-saving...</small>';
-        indicator.style.display = 'none';
-        form.appendChild(indicator);
-
-        function autoSaveForm(form) {
-            const formData = new FormData(form);
-            formData.append('auto_save', '1');
-
-            indicator.style.display = 'block';
-
-            fetch(form.action || window.location.href, {
-                method: 'POST',
-                body: formData
-            })
-                .then(response => response.json())
-                .then(data => {
-                    indicator.innerHTML = '<small class="text-success"><i class="fas fa-check"></i> Auto-saved</small>';
-                    setTimeout(() => {
-                        indicator.style.display = 'none';
-                    }, 2000);
-                })
-                .catch(error => {
-                    indicator.innerHTML = '<small class="text-danger"><i class="fas fa-exclamation-triangle"></i> Auto-save failed</small>';
-                    setTimeout(() => {
-                        indicator.style.display = 'none';
-                    }, 3000);
-                });
-        }
     });
-}
 
-/**
- * Initialize keyboard shortcuts
- */
-function initializeKeyboardShortcuts() {
-    document.addEventListener('keydown', function (e) {
-        // Ctrl/Cmd + S: Save form
-        if ((e.ctrlKey || e.metaKey) && e.key === 's') {
-            e.preventDefault();
-            const saveButton = document.querySelector('button[type="submit"], input[type="submit"]');
-            if (saveButton) {
-                saveButton.click();
-            }
-        }
-
-        // Ctrl/Cmd + K: Focus search
-        if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
-            e.preventDefault();
-            const searchInput = document.querySelector('input[name="search"]');
-            if (searchInput) {
-                searchInput.focus();
-                searchInput.select();
-            }
-        }
-
-        // Escape: Close modals
-        if (e.key === 'Escape') {
-            const openModal = document.querySelector('.modal.show');
-            if (openModal) {
-                const modal = bootstrap.Modal.getInstance(openModal);
-                if (modal) {
-                    modal.hide();
-                }
-            }
-        }
-    });
-}
-
-/**
- * Utility Functions
- */
-
-/**
- * Generate URL-friendly slug from text
- */
-function generateSlug(text) {
-    return text
-        .toLowerCase()
-        .trim()
-        .replace(/[^\w\s-]/g, '') // Remove special characters
-        .replace(/[\s_-]+/g, '-') // Replace spaces and underscores with hyphens
-        .replace(/^-+|-+$/g, ''); // Remove leading/trailing hyphens
-}
-
-/**
- * Format file size
- */
-function formatFileSize(bytes) {
-    if (bytes === 0) return '0 Bytes';
-
-    const k = 1024;
-    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-}
-
-/**
- * Show loading state
- */
-function showLoading(element) {
-    element.classList.add('loading');
-    element.disabled = true;
-
-    const originalText = element.innerHTML;
-    element.setAttribute('data-original-text', originalText);
-    element.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
-}
-
-/**
- * Hide loading state
- */
-function hideLoading(element) {
-    element.classList.remove('loading');
-    element.disabled = false;
-
-    const originalText = element.getAttribute('data-original-text');
-    if (originalText) {
-        element.innerHTML = originalText;
-        element.removeAttribute('data-original-text');
+    if (statNumbers.length > 0) {
+        observer.observe(statNumbers[0].closest('.container, .container-fluid') || statNumbers[0]);
     }
-}
 
-/**
- * Show toast notification
- */
-function showToast(message, type = 'info') {
-    const toastContainer = document.querySelector('.toast-container') || createToastContainer();
+    // ===== Global Functions =====
+    window.adminPanel = {
+        showNotification: showNotification,
 
-    const toast = document.createElement('div');
-    toast.className = `toast align-items-center text-white bg-${type} border-0`;
-    toast.setAttribute('role', 'alert');
-    toast.innerHTML = `
-        <div class="d-flex">
-            <div class="toast-body">
-                ${message}
-            </div>
-            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
-        </div>
-    `;
-
-    toastContainer.appendChild(toast);
-
-    const bsToast = new bootstrap.Toast(toast);
-    bsToast.show();
-
-    // Remove from DOM after hiding
-    toast.addEventListener('hidden.bs.toast', function () {
-        toast.remove();
-    });
-}
-
-/**
- * Create toast container if it doesn't exist
- */
-function createToastContainer() {
-    const container = document.createElement('div');
-    container.className = 'toast-container position-fixed bottom-0 end-0 p-3';
-    container.style.zIndex = '1080';
-    document.body.appendChild(container);
-    return container;
-}
-
-/**
- * Confirm dialog with custom styling
- */
-function confirmDialog(message, title = 'Confirm Action') {
-    return new Promise((resolve) => {
-        const modal = document.createElement('div');
-        modal.className = 'modal fade';
-        modal.innerHTML = `
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">${title}</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body">
-                        <p>${message}</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-danger confirm-yes">Confirm</button>
-                    </div>
-                </div>
-            </div>
-        `;
-
-        document.body.appendChild(modal);
-
-        const bsModal = new bootstrap.Modal(modal);
-        bsModal.show();
-
-        modal.querySelector('.confirm-yes').addEventListener('click', function () {
-            resolve(true);
-            bsModal.hide();
-        });
-
-        modal.addEventListener('hidden.bs.modal', function () {
-            if (!modal.querySelector('.confirm-yes').clicked) {
-                resolve(false);
+        confirmAction: function (message, callback) {
+            if (confirm(message)) {
+                callback();
             }
-            modal.remove();
-        });
+        },
 
-        modal.querySelector('.confirm-yes').addEventListener('click', function () {
-            this.clicked = true;
-        });
-    });
-}
+        toggleSidebar: function () {
+            sidebar.classList.toggle('collapsed');
+        },
 
-/**
- * AJAX form submission with loading states
- */
-function submitFormAjax(form, options = {}) {
-    return new Promise((resolve, reject) => {
-        const submitButton = form.querySelector('button[type="submit"], input[type="submit"]');
-
-        if (submitButton) {
-            showLoading(submitButton);
-        }
-
-        const formData = new FormData(form);
-
-        fetch(form.action || window.location.href, {
-            method: form.method || 'POST',
-            body: formData,
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest'
-            }
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (submitButton) {
-                    hideLoading(submitButton);
-                }
-
-                if (data.success) {
-                    if (options.showSuccess !== false) {
-                        showToast(data.message || 'Operation completed successfully', 'success');
-                    }
-                    resolve(data);
-                } else {
-                    showToast(data.message || 'An error occurred', 'danger');
-                    reject(new Error(data.message || 'Operation failed'));
-                }
-            })
-            .catch(error => {
-                if (submitButton) {
-                    hideLoading(submitButton);
-                }
-
-                showToast('An error occurred while processing your request', 'danger');
-                reject(error);
-            });
-    });
-}
-
-/**
- * Data table enhancements
- */
-function enhanceDataTable(tableSelector) {
-    const table = document.querySelector(tableSelector);
-    if (!table) return;
-
-    // Add sorting functionality
-    const headers = table.querySelectorAll('th[data-sortable]');
-    headers.forEach(header => {
-        header.style.cursor = 'pointer';
-        header.innerHTML += ' <i class="fas fa-sort text-muted"></i>';
-
-        header.addEventListener('click', function () {
-            const column = this.dataset.sortable;
-            const currentSort = this.dataset.sort || 'asc';
-            const newSort = currentSort === 'asc' ? 'desc' : 'asc';
-
-            // Update header icons
-            headers.forEach(h => {
-                const icon = h.querySelector('i');
-                icon.className = 'fas fa-sort text-muted';
-                h.removeAttribute('data-sort');
-            });
-
-            const icon = this.querySelector('i');
-            icon.className = `fas fa-sort-${newSort === 'asc' ? 'up' : 'down'} text-primary`;
-            this.dataset.sort = newSort;
-
-            // Sort table rows
-            sortTable(table, column, newSort);
-        });
-    });
-}
-
-/**
- * Sort table by column
- */
-function sortTable(table, column, direction) {
-    const tbody = table.querySelector('tbody');
-    const rows = Array.from(tbody.querySelectorAll('tr'));
-
-    rows.sort((a, b) => {
-        const aVal = a.querySelector(`[data-sort-value="${column}"]`)?.dataset.sortValue ||
-            a.querySelector(`td:nth-child(${getColumnIndex(table, column)})`)?.textContent || '';
-        const bVal = b.querySelector(`[data-sort-value="${column}"]`)?.dataset.sortValue ||
-            b.querySelector(`td:nth-child(${getColumnIndex(table, column)})`)?.textContent || '';
-
-        const comparison = aVal.localeCompare(bVal, undefined, { numeric: true });
-        return direction === 'asc' ? comparison : -comparison;
-    });
-
-    rows.forEach(row => tbody.appendChild(row));
-}
-
-/**
- * Get column index by data attribute
- */
-function getColumnIndex(table, column) {
-    const headers = table.querySelectorAll('th');
-    for (let i = 0; i < headers.length; i++) {
-        if (headers[i].dataset.sortable === column) {
-            return i + 1;
-        }
-    }
-    return 1;
-}
-
-/**
- * Image upload with preview
- */
-function setupImageUpload(inputSelector, previewSelector) {
-    const input = document.querySelector(inputSelector);
-    const preview = document.querySelector(previewSelector);
-
-    if (!input || !preview) return;
-
-    input.addEventListener('change', function (e) {
-        const file = e.target.files[0];
-        if (!file) return;
-
-        // Validate file type
-        if (!file.type.startsWith('image/')) {
-            showToast('Please select a valid image file', 'warning');
-            return;
-        }
-
-        // Validate file size (5MB limit)
-        if (file.size > 5 * 1024 * 1024) {
-            showToast('Image size must be less than 5MB', 'warning');
-            return;
-        }
-
-        const reader = new FileReader();
-        reader.onload = function (e) {
-            if (preview.tagName === 'IMG') {
-                preview.src = e.target.result;
-                preview.style.display = 'block';
-            } else {
-                preview.innerHTML = `<img src="${e.target.result}" class="img-fluid rounded" style="max-height: 200px;">`;
-            }
-            preview.classList.remove('d-none');
-        };
-        reader.readAsDataURL(file);
-    });
-}
-
-/**
- * Initialize rich text editor
- */
-function initializeRichTextEditor(selector, options = {}) {
-    const element = document.querySelector(selector);
-    if (!element) return;
-
-    const defaultOptions = {
-        height: 300,
-        toolbar: [
-            ['style', ['style']],
-            ['font', ['bold', 'underline', 'clear']],
-            ['color', ['color']],
-            ['para', ['ul', 'ol', 'paragraph']],
-            ['table', ['table']],
-            ['insert', ['link', 'picture']],
-            ['view', ['fullscreen', 'codeview']]
-        ],
-        placeholder: 'Start writing...',
-        callbacks: {
-            onImageUpload: function (files) {
-                uploadEditorImage(files[0], this);
-            }
+        reloadPage: function () {
+            window.location.reload();
         }
     };
 
-    const finalOptions = { ...defaultOptions, ...options };
+    // ===== Performance Monitoring =====
+    if (window.performance && window.performance.timing) {
+        window.addEventListener('load', function () {
+            const loadTime = window.performance.timing.loadEventEnd - window.performance.timing.navigationStart;
+            console.log(`Page loaded in ${loadTime}ms`);
 
-    if (typeof $ !== 'undefined' && $.fn.summernote) {
-        $(element).summernote(finalOptions);
-    }
-}
-
-/**
- * Upload image for rich text editor
- */
-function uploadEditorImage(file, editor) {
-    const formData = new FormData();
-    formData.append('image', file);
-    formData.append('action', 'upload_editor_image');
-
-    fetch('/admin/upload-image.php', {
-        method: 'POST',
-        body: formData
-    })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                if (typeof $ !== 'undefined' && $.fn.summernote) {
-                    $(editor).summernote('insertImage', data.url);
-                }
-            } else {
-                showToast('Failed to upload image', 'danger');
+            // Log slow page loads
+            if (loadTime > 3000) {
+                console.warn('Slow page load detected:', loadTime + 'ms');
             }
-        })
-        .catch(error => {
-            showToast('Error uploading image', 'danger');
         });
-}
-
-/**
- * Setup clipboard functionality
- */
-function setupClipboard() {
-    document.querySelectorAll('[data-clipboard]').forEach(element => {
-        element.addEventListener('click', function () {
-            const text = this.dataset.clipboard;
-            navigator.clipboard.writeText(text).then(() => {
-                showToast('Copied to clipboard', 'success');
-            }).catch(() => {
-                showToast('Failed to copy to clipboard', 'danger');
-            });
-        });
-    });
-}
-
-/**
- * Format date for display
- */
-function formatDate(dateString, format = 'short') {
-    const date = new Date(dateString);
-    const options = {
-        short: { month: 'short', day: 'numeric', year: 'numeric' },
-        long: { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' },
-        time: { hour: '2-digit', minute: '2-digit' }
-    };
-
-    return date.toLocaleDateString('en-US', options[format] || options.short);
-}
-
-/**
- * Debounce function
- */
-function debounce(func, wait, immediate) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            timeout = null;
-            if (!immediate) func(...args);
-        };
-        const callNow = immediate && !timeout;
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-        if (callNow) func(...args);
-    };
-}
-
-/**
- * Throttle function
- */
-function throttle(func, limit) {
-    let inThrottle;
-    return function (...args) {
-        if (!inThrottle) {
-            func.apply(this, args);
-            inThrottle = true;
-            setTimeout(() => inThrottle = false, limit);
-        }
-    };
-}
-
-// Export functions for use in other files
-window.AdminUtils = {
-    showToast,
-    confirmDialog,
-    submitFormAjax,
-    enhanceDataTable,
-    setupImageUpload,
-    initializeRichTextEditor,
-    setupClipboard,
-    formatDate,
-    generateSlug,
-    formatFileSize,
-    showLoading,
-    hideLoading,
-    debounce,
-    throttle
-};
-
-// Initialize clipboard functionality when DOM is ready
-document.addEventListener('DOMContentLoaded', function () {
-    setupClipboard();
+    }
 });
+
+// ===== Service Worker Registration (Optional) =====
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function () {
+        navigator.serviceWorker.register('/admin/sw.js')
+            .then(function (registration) {
+                console.log('ServiceWorker registration successful');
+            })
+            .catch(function (err) {
+                console.log('ServiceWorker registration failed');
+            });
+    });
+}

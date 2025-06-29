@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Admin Panel Header Template for ECCT
+ * Admin Panel Header Template with Sidebar for ECCT
  */
 
 // Ensure we have the necessary includes
@@ -32,6 +32,10 @@ $notifications = [
     'pending_volunteers' => $db->count('volunteers', ['status' => 'pending']),
     'draft_news' => $db->count('news', ['is_published' => 0])
 ];
+
+// Get current page info for active menu highlighting
+$current_page = basename($_SERVER['PHP_SELF']);
+$current_dir = basename(dirname($_SERVER['PHP_SELF']));
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -62,158 +66,238 @@ $notifications = [
 
 <body class="admin-panel <?php echo $page_class; ?>">
 
-    <!-- Admin Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top admin-navbar">
-        <div class="container-fluid">
-            <!-- Brand -->
-            <a class="navbar-brand d-flex align-items-center" href="<?php echo SITE_URL; ?>/admin/">
-                <img src="<?php echo SITE_URL; ?>/assets/images/logo.jpg" alt="ECCT" height="35" class="me-2">
-                <span class="fw-bold">ECCT Admin</span>
-            </a>
+    <div class="admin-wrapper">
+        <!-- Sidebar -->
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-brand">
+                    <img src="<?php echo SITE_URL; ?>/assets/images/logo.png" alt="ECCT" height="40">
+                    <span class="brand-text">ECCT Admin</span>
+                </div>
+                <button class="sidebar-toggle d-lg-none" type="button" id="sidebarToggle">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
 
-            <!-- Mobile menu button -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#adminNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+            <div class="sidebar-content">
+                <div class="sidebar-user">
+                    <div class="user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="user-info">
+                        <div class="user-name"><?php echo htmlspecialchars($current_user['name']); ?></div>
+                        <div class="user-role"><?php echo ucfirst($current_user['role']); ?></div>
+                    </div>
+                </div>
 
-            <!-- Navigation Menu -->
-            <div class="collapse navbar-collapse" id="adminNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?php echo SITE_URL; ?>/admin/">
-                            <i class="fas fa-tachometer-alt me-2"></i>Dashboard
+                <ul class="sidebar-menu">
+                    <!-- Dashboard -->
+                    <li class="menu-item <?php echo ($current_page === 'index.php' && $current_dir === 'admin') ? 'active' : ''; ?>">
+                        <a href="<?php echo SITE_URL; ?>/admin/" class="menu-link">
+                            <i class="menu-icon fas fa-tachometer-alt"></i>
+                            <span class="menu-text">Dashboard</span>
                         </a>
                     </li>
 
                     <!-- Content Management -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                            <i class="fas fa-file-alt me-2"></i>Pages
+                    <li class="menu-item <?php echo in_array($current_dir, ['pages']) ? 'active' : ''; ?>">
+                        <a href="#" class="menu-link has-submenu" data-bs-toggle="collapse" data-bs-target="#pagesMenu">
+                            <i class="menu-icon fas fa-file-alt"></i>
+                            <span class="menu-text">Pages</span>
+                            <i class="submenu-arrow fas fa-chevron-right"></i>
                         </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="<?php echo SITE_URL; ?>/admin/pages/manage-pages.php">
-                                    <i class="fas fa-list me-2"></i>Manage Pages
+                        <ul class="submenu collapse <?php echo ($current_dir === 'pages') ? 'show' : ''; ?>" id="pagesMenu">
+                            <li><a href="<?php echo SITE_URL; ?>/admin/pages/manage-pages.php" class="submenu-link">
+                                    <i class="fas fa-list"></i>Manage Pages
                                 </a></li>
-                            <li><a class="dropdown-item" href="<?php echo SITE_URL; ?>/admin/pages/add-page.php">
-                                    <i class="fas fa-plus me-2"></i>Add Page
+                            <li><a href="<?php echo SITE_URL; ?>/admin/pages/add-page.php" class="submenu-link">
+                                    <i class="fas fa-plus"></i>Add Page
                                 </a></li>
                         </ul>
                     </li>
 
                     <!-- News Management -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                            <i class="fas fa-newspaper me-2"></i>News
+                    <li class="menu-item <?php echo in_array($current_dir, ['news']) ? 'active' : ''; ?>">
+                        <a href="#" class="menu-link has-submenu" data-bs-toggle="collapse" data-bs-target="#newsMenu">
+                            <i class="menu-icon fas fa-newspaper"></i>
+                            <span class="menu-text">News</span>
                             <?php if ($notifications['draft_news'] > 0): ?>
-                                <span class="badge bg-warning text-dark ms-1"><?php echo $notifications['draft_news']; ?></span>
+                                <span class="notification-badge"><?php echo $notifications['draft_news']; ?></span>
                             <?php endif; ?>
+                            <i class="submenu-arrow fas fa-chevron-right"></i>
                         </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="<?php echo SITE_URL; ?>/admin/news/manage-news.php">
-                                    <i class="fas fa-list me-2"></i>Manage Articles
+                        <ul class="submenu collapse <?php echo ($current_dir === 'news') ? 'show' : ''; ?>" id="newsMenu">
+                            <li><a href="<?php echo SITE_URL; ?>/admin/news/manage-news.php" class="submenu-link">
+                                    <i class="fas fa-list"></i>Manage Articles
                                 </a></li>
-                            <li><a class="dropdown-item" href="<?php echo SITE_URL; ?>/admin/news/add-news.php">
-                                    <i class="fas fa-plus me-2"></i>Add Article
+                            <li><a href="<?php echo SITE_URL; ?>/admin/news/add-news.php" class="submenu-link">
+                                    <i class="fas fa-plus"></i>Add Article
                                 </a></li>
                         </ul>
                     </li>
 
                     <!-- Campaigns Management -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                            <i class="fas fa-bullhorn me-2"></i>Campaigns
+                    <li class="menu-item <?php echo in_array($current_dir, ['campaigns']) ? 'active' : ''; ?>">
+                        <a href="#" class="menu-link has-submenu" data-bs-toggle="collapse" data-bs-target="#campaignsMenu">
+                            <i class="menu-icon fas fa-bullhorn"></i>
+                            <span class="menu-text">Campaigns</span>
+                            <i class="submenu-arrow fas fa-chevron-right"></i>
                         </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="<?php echo SITE_URL; ?>/admin/campaigns/manage-campaigns.php">
-                                    <i class="fas fa-list me-2"></i>Manage Campaigns
+                        <ul class="submenu collapse <?php echo ($current_dir === 'campaigns') ? 'show' : ''; ?>" id="campaignsMenu">
+                            <li><a href="<?php echo SITE_URL; ?>/admin/campaigns/manage-campaigns.php" class="submenu-link">
+                                    <i class="fas fa-list"></i>Manage Campaigns
                                 </a></li>
-                            <li><a class="dropdown-item" href="<?php echo SITE_URL; ?>/admin/campaigns/add-campaign.php">
-                                    <i class="fas fa-plus me-2"></i>Add Campaign
+                            <li><a href="<?php echo SITE_URL; ?>/admin/campaigns/add-campaign.php" class="submenu-link">
+                                    <i class="fas fa-plus"></i>Add Campaign
                                 </a></li>
                         </ul>
                     </li>
 
                     <!-- Gallery Management -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                            <i class="fas fa-images me-2"></i>Gallery
+                    <li class="menu-item <?php echo in_array($current_dir, ['gallery']) ? 'active' : ''; ?>">
+                        <a href="#" class="menu-link has-submenu" data-bs-toggle="collapse" data-bs-target="#galleryMenu">
+                            <i class="menu-icon fas fa-images"></i>
+                            <span class="menu-text">Gallery</span>
+                            <i class="submenu-arrow fas fa-chevron-right"></i>
                         </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="<?php echo SITE_URL; ?>/admin/gallery/manage-gallery.php">
-                                    <i class="fas fa-list me-2"></i>Manage Images
+                        <ul class="submenu collapse <?php echo ($current_dir === 'gallery') ? 'show' : ''; ?>" id="galleryMenu">
+                            <li><a href="<?php echo SITE_URL; ?>/admin/gallery/manage-gallery.php" class="submenu-link">
+                                    <i class="fas fa-list"></i>Manage Images
                                 </a></li>
-                            <li><a class="dropdown-item" href="<?php echo SITE_URL; ?>/admin/gallery/upload-images.php">
-                                    <i class="fas fa-upload me-2"></i>Upload Images
+                            <li><a href="<?php echo SITE_URL; ?>/admin/gallery/upload-images.php" class="submenu-link">
+                                    <i class="fas fa-upload"></i>Upload Images
                                 </a></li>
                         </ul>
                     </li>
 
                     <!-- Volunteers -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?php echo SITE_URL; ?>/admin/volunteers/manage-volunteers.php">
-                            <i class="fas fa-users me-2"></i>Volunteers
+                    <li class="menu-item <?php echo in_array($current_dir, ['volunteers']) ? 'active' : ''; ?>">
+                        <a href="<?php echo SITE_URL; ?>/admin/volunteers/manage-volunteers.php" class="menu-link">
+                            <i class="menu-icon fas fa-users"></i>
+                            <span class="menu-text">Volunteers</span>
                             <?php if ($notifications['pending_volunteers'] > 0): ?>
-                                <span class="badge bg-warning text-dark ms-1"><?php echo $notifications['pending_volunteers']; ?></span>
+                                <span class="notification-badge"><?php echo $notifications['pending_volunteers']; ?></span>
                             <?php endif; ?>
                         </a>
                     </li>
 
                     <!-- Messages -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?php echo SITE_URL; ?>/admin/contact/manage-messages.php">
-                            <i class="fas fa-envelope me-2"></i>Messages
+                    <li class="menu-item <?php echo in_array($current_dir, ['contact']) ? 'active' : ''; ?>">
+                        <a href="<?php echo SITE_URL; ?>/admin/contact/manage-messages.php" class="menu-link">
+                            <i class="menu-icon fas fa-envelope"></i>
+                            <span class="menu-text">Messages</span>
                             <?php if ($notifications['unread_messages'] > 0): ?>
-                                <span class="badge bg-danger ms-1"><?php echo $notifications['unread_messages']; ?></span>
+                                <span class="notification-badge notification-danger"><?php echo $notifications['unread_messages']; ?></span>
                             <?php endif; ?>
                         </a>
                     </li>
-                </ul>
 
-                <!-- Right side menu -->
-                <ul class="navbar-nav">
-                    <!-- View Website -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?php echo SITE_URL; ?>" target="_blank">
-                            <i class="fas fa-external-link-alt me-2"></i>View Website
-                        </a>
-                    </li>
+                    <!-- Divider -->
+                    <li class="menu-divider"></li>
 
-                    <!-- Settings Dropdown -->
+                    <!-- Settings (Admin only) -->
                     <?php if (has_role('admin')): ?>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                                <i class="fas fa-cog me-2"></i>Settings
+                        <li class="menu-item <?php echo in_array($current_dir, ['settings']) ? 'active' : ''; ?>">
+                            <a href="#" class="menu-link has-submenu" data-bs-toggle="collapse" data-bs-target="#settingsMenu">
+                                <i class="menu-icon fas fa-cog"></i>
+                                <span class="menu-text">Settings</span>
+                                <i class="submenu-arrow fas fa-chevron-right"></i>
                             </a>
-                            <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item" href="<?php echo SITE_URL; ?>/admin/settings/site-settings.php">
-                                        <i class="fas fa-globe me-2"></i>Site Settings
+                            <ul class="submenu collapse <?php echo ($current_dir === 'settings') ? 'show' : ''; ?>" id="settingsMenu">
+                                <li><a href="<?php echo SITE_URL; ?>/admin/settings/site-settings.php" class="submenu-link">
+                                        <i class="fas fa-globe"></i>Site Settings
                                     </a></li>
-                                <li><a class="dropdown-item" href="<?php echo SITE_URL; ?>/admin/settings/user-management.php">
-                                        <i class="fas fa-users-cog me-2"></i>User Management
+                                <li><a href="<?php echo SITE_URL; ?>/admin/settings/user-management.php" class="submenu-link">
+                                        <i class="fas fa-users-cog"></i>User Management
                                     </a></li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li><a class="dropdown-item" href="<?php echo SITE_URL; ?>/admin/settings/backup.php">
-                                        <i class="fas fa-download me-2"></i>Backup Database
+                                <li><a href="<?php echo SITE_URL; ?>/admin/settings/backup.php" class="submenu-link">
+                                        <i class="fas fa-download"></i>Backup Database
                                     </a></li>
                             </ul>
                         </li>
                     <?php endif; ?>
 
-                    <!-- User Profile Dropdown -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown">
-                            <div class="user-avatar bg-primary rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 32px; height: 32px;">
+                    <!-- Analytics (if user has permission) -->
+                    <?php if (can_perform('view_analytics')): ?>
+                        <li class="menu-item">
+                            <a href="<?php echo SITE_URL; ?>/admin/analytics/" class="menu-link">
+                                <i class="menu-icon fas fa-chart-bar"></i>
+                                <span class="menu-text">Analytics</span>
+                            </a>
+                        </li>
+                    <?php endif; ?>
+                </ul>
+
+                <!-- Bottom Menu -->
+                <div class="sidebar-bottom">
+                    <ul class="sidebar-menu">
+                        <li class="menu-item">
+                            <a href="<?php echo SITE_URL; ?>" target="_blank" class="menu-link">
+                                <i class="menu-icon fas fa-external-link-alt"></i>
+                                <span class="menu-text">View Website</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="<?php echo SITE_URL; ?>/admin/profile.php" class="menu-link">
+                                <i class="menu-icon fas fa-user"></i>
+                                <span class="menu-text">My Profile</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="<?php echo SITE_URL; ?>/admin/logout.php" class="menu-link text-danger">
+                                <i class="menu-icon fas fa-sign-out-alt"></i>
+                                <span class="menu-text">Logout</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Top Header -->
+            <header class="top-header">
+                <div class="header-left">
+                    <button class="sidebar-toggle d-lg-none" type="button" id="mobileToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <button class="sidebar-collapse d-none d-lg-block" type="button" id="sidebarCollapse">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+
+                <div class="header-right">
+                    <!-- Notifications -->
+                    <div class="header-notifications">
+                        <?php if ($notifications['unread_messages'] > 0): ?>
+                            <a href="<?php echo SITE_URL; ?>/admin/contact/manage-messages.php" class="notification-item" title="Unread Messages">
+                                <i class="fas fa-envelope"></i>
+                                <span class="notification-count"><?php echo $notifications['unread_messages']; ?></span>
+                            </a>
+                        <?php endif; ?>
+
+                        <?php if ($notifications['pending_volunteers'] > 0): ?>
+                            <a href="<?php echo SITE_URL; ?>/admin/volunteers/manage-volunteers.php" class="notification-item" title="Pending Volunteers">
+                                <i class="fas fa-users"></i>
+                                <span class="notification-count"><?php echo $notifications['pending_volunteers']; ?></span>
+                            </a>
+                        <?php endif; ?>
+                    </div>
+
+                    <!-- User Dropdown -->
+                    <div class="dropdown">
+                        <button class="user-dropdown" type="button" data-bs-toggle="dropdown">
+                            <div class="user-avatar-small">
                                 <i class="fas fa-user"></i>
                             </div>
-                            <span><?php echo htmlspecialchars($current_user['name']); ?></span>
-                        </a>
+                            <span class="user-name d-none d-md-inline"><?php echo htmlspecialchars($current_user['name']); ?></span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li class="dropdown-header">
                                 <div class="fw-bold"><?php echo htmlspecialchars($current_user['name']); ?></div>
                                 <small class="text-muted"><?php echo htmlspecialchars($current_user['email']); ?></small>
-                                <small class="text-muted d-block"><?php echo ucfirst($current_user['role']); ?></small>
                             </li>
                             <li>
                                 <hr class="dropdown-divider">
@@ -231,55 +315,54 @@ $notifications = [
                                     <i class="fas fa-sign-out-alt me-2"></i>Logout
                                 </a></li>
                         </ul>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Main Content Area -->
-    <main class="main-content">
-        <div class="content-wrapper">
-            <!-- Breadcrumb Navigation -->
-            <?php if (isset($breadcrumbs)): ?>
-                <nav aria-label="breadcrumb" class="mb-4">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item">
-                            <a href="<?php echo SITE_URL; ?>/admin/"><i class="fas fa-home"></i></a>
-                        </li>
-                        <?php foreach ($breadcrumbs as $crumb): ?>
-                            <?php if (isset($crumb['url'])): ?>
-                                <li class="breadcrumb-item">
-                                    <a href="<?php echo $crumb['url']; ?>"><?php echo htmlspecialchars($crumb['title']); ?></a>
-                                </li>
-                            <?php else: ?>
-                                <li class="breadcrumb-item active" aria-current="page">
-                                    <?php echo htmlspecialchars($crumb['title']); ?>
-                                </li>
-                            <?php endif; ?>
-                        <?php endforeach; ?>
-                    </ol>
-                </nav>
-            <?php endif; ?>
-
-            <!-- Flash Messages -->
-            <?php if (has_flash()): ?>
-                <div class="flash-messages mb-4">
-                    <?php
-                    $flash_messages = get_flash();
-                    foreach ($flash_messages as $type => $message):
-                        $alert_class = match ($type) {
-                            'success' => 'alert-success',
-                            'error' => 'alert-danger',
-                            'warning' => 'alert-warning',
-                            'info' => 'alert-info',
-                            default => 'alert-info'
-                        };
-                    ?>
-                        <div class="alert <?php echo $alert_class; ?> alert-dismissible fade show" role="alert">
-                            <?php echo htmlspecialchars($message); ?>
-                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                        </div>
-                    <?php endforeach; ?>
+                    </div>
                 </div>
-            <?php endif; ?>
+            </header>
+
+            <!-- Content Area -->
+            <div class="content-area">
+                <!-- Breadcrumb Navigation -->
+                <?php if (isset($breadcrumbs)): ?>
+                    <nav aria-label="breadcrumb" class="mb-4">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="<?php echo SITE_URL; ?>/admin/"><i class="fas fa-home"></i></a>
+                            </li>
+                            <?php foreach ($breadcrumbs as $crumb): ?>
+                                <?php if (isset($crumb['url'])): ?>
+                                    <li class="breadcrumb-item">
+                                        <a href="<?php echo $crumb['url']; ?>"><?php echo htmlspecialchars($crumb['title']); ?></a>
+                                    </li>
+                                <?php else: ?>
+                                    <li class="breadcrumb-item active" aria-current="page">
+                                        <?php echo htmlspecialchars($crumb['title']); ?>
+                                    </li>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+                        </ol>
+                    </nav>
+                <?php endif; ?>
+
+                <!-- Flash Messages -->
+                <?php if (has_flash()): ?>
+                    <div class="flash-messages mb-4">
+                        <?php
+                        $flash_messages = get_flash();
+                        foreach ($flash_messages as $type => $message):
+                            $alert_class = match ($type) {
+                                'success' => 'alert-success',
+                                'error' => 'alert-danger',
+                                'warning' => 'alert-warning',
+                                'info' => 'alert-info',
+                                default => 'alert-info'
+                            };
+                        ?>
+                            <div class="alert <?php echo $alert_class; ?> alert-dismissible fade show" role="alert">
+                                <?php echo htmlspecialchars($message); ?>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
+
+                <!-- Page Content Starts Here -->
