@@ -719,3 +719,129 @@ function has_flash($type = null)
     }
     return !empty($_SESSION['flash']);
 }
+
+
+/**
+ * Send volunteer confirmation email to applicant
+ */
+function send_volunteer_confirmation_email($form_data)
+{
+    $subject = 'Thank you for volunteering with ECCT!';
+
+    $message = '
+    <html>
+    <head>
+        <title>Volunteer Application Confirmation</title>
+    </head>
+    <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+        <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
+            <div style="text-align: center; margin-bottom: 30px;">
+                <img src="' . SITE_URL . '/assets/images/logo.jpg" alt="ECCT" style="max-height: 60px;">
+                <h1 style="color: #2c5f2d; margin-top: 10px;">Welcome to ECCT!</h1>
+            </div>
+            
+            <p>Dear ' . htmlspecialchars($form_data['first_name']) . ',</p>
+            
+            <p>Thank you for your interest in volunteering with the Environmental Conservation Community of Tanzania (ECCT)!</p>
+            
+            <p>We have received your volunteer application and our team will review it carefully. Here\'s what happens next:</p>
+            
+            <div style="background-color: #f8f9fa; padding: 20px; border-radius: 5px; margin: 20px 0;">
+                <h3 style="color: #2c5f2d; margin-top: 0;">Next Steps:</h3>
+                <ul>
+                    <li><strong>Review Process:</strong> We will review your application within 5-7 business days</li>
+                    <li><strong>Background Check:</strong> We may contact your references if provided</li>
+                    <li><strong>Orientation:</strong> Approved volunteers will be invited to an orientation session</li>
+                    <li><strong>Placement:</strong> We\'ll match you with opportunities based on your interests and availability</li>
+                </ul>
+            </div>
+            
+            <p><strong>Your Application Summary:</strong></p>
+            <div style="border: 1px solid #ddd; padding: 15px; border-radius: 5px; background-color: #f9f9f9;">
+                <p><strong>Areas of Interest:</strong> ' . htmlspecialchars($form_data['areas_of_interest']) . '</p>
+                <p><strong>Availability:</strong> ' . htmlspecialchars($form_data['availability']) . '</p>
+                <p><strong>Location:</strong> ' . htmlspecialchars($form_data['city']) . ', ' . htmlspecialchars($form_data['region']) . '</p>
+            </div>
+            
+            <p>In the meantime, you can:</p>
+            <ul>
+                <li>Follow us on social media for updates on our activities</li>
+                <li>Visit our website to learn more about our current campaigns</li>
+                <li>Share our mission with friends and family</li>
+            </ul>
+            
+            <div style="text-align: center; margin: 30px 0;">
+                <a href="' . SITE_URL . '" style="background-color: #2c5f2d; color: white; padding: 12px 24px; text-decoration: none; border-radius: 5px; display: inline-block;">Visit Our Website</a>
+            </div>
+            
+            <p>If you have any questions, please don\'t hesitate to contact us at <a href="mailto:' . SITE_EMAIL . '">' . SITE_EMAIL . '</a></p>
+            
+            <p>Thank you for your commitment to environmental conservation!</p>
+            
+            <p style="margin-top: 30px;">
+                Best regards,<br>
+                <strong>ECCT Team</strong><br>
+                Environmental Conservation Community of Tanzania
+            </p>
+            
+            <hr style="margin: 30px 0; border: none; border-top: 1px solid #eee;">
+            <p style="font-size: 12px; color: #666; text-align: center;">
+                This email was sent from the ECCT volunteer application system.<br>
+                If you did not apply to volunteer with us, please ignore this email.
+            </p>
+        </div>
+    </body>
+    </html>';
+
+    return send_email($form_data['email'], $subject, $message);
+}
+
+/**
+ * Send admin notification for new volunteer application
+ */
+function send_admin_notification($subject_prefix, $message_text, $additional_data = [])
+{
+    $subject = $subject_prefix . ' - ECCT Website';
+
+    $message = '
+    <html>
+    <head>
+        <title>' . htmlspecialchars($subject) . '</title>
+    </head>
+    <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+        <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
+            <div style="background-color: #2c5f2d; color: white; padding: 20px; text-align: center; border-radius: 5px 5px 0 0;">
+                <h1 style="margin: 0;">ECCT Admin Notification</h1>
+            </div>
+            
+            <div style="border: 1px solid #ddd; border-top: none; padding: 20px; border-radius: 0 0 5px 5px;">
+                <h2 style="color: #2c5f2d; margin-top: 0;">' . htmlspecialchars($subject_prefix) . '</h2>
+                
+                <p>' . htmlspecialchars($message_text) . '</p>
+                
+                ' . (!empty($additional_data) ? '<div style="background-color: #f8f9fa; padding: 15px; border-radius: 5px; margin: 20px 0;">
+                    <h3 style="margin-top: 0; color: #2c5f2d;">Additional Details:</h3>' .
+        implode('', array_map(function ($key, $value) {
+            return '<p><strong>' . htmlspecialchars(ucfirst(str_replace('_', ' ', $key))) . ':</strong> ' . htmlspecialchars($value) . '</p>';
+        }, array_keys($additional_data), $additional_data)) .
+        '</div>' : '') . '
+                
+                <div style="text-align: center; margin: 30px 0;">
+                    <a href="' . SITE_URL . '/admin/" style="background-color: #2c5f2d; color: white; padding: 12px 24px; text-decoration: none; border-radius: 5px; display: inline-block;">
+                        Go to Admin Panel
+                    </a>
+                </div>
+                
+                <hr style="margin: 20px 0; border: none; border-top: 1px solid #eee;">
+                <p style="font-size: 12px; color: #666;">
+                    <strong>Timestamp:</strong> ' . date('Y-m-d H:i:s') . '<br>
+                    <strong>IP Address:</strong> ' . get_user_ip() . '<br>
+                    <strong>User Agent:</strong> ' . htmlspecialchars($_SERVER['HTTP_USER_AGENT'] ?? 'Unknown') . '
+                </p>
+            </div>
+        </div>
+    </body>
+    </html>';
+
+    return send_email(ADMIN_EMAIL, $subject, $message);
+}
