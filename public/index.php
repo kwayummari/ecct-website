@@ -352,6 +352,132 @@ include 'includes/header.php';
     </div>
 <?php endif; ?>
 
+<style>
+    /* Optimized Video Background */
+    .hero-video {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        min-width: 100%;
+        min-height: 100%;
+        width: auto;
+        height: auto;
+        transform: translate(-50%, -50%);
+        object-fit: cover;
+        z-index: -2;
+        /* Optimize video performance */
+        will-change: transform;
+        filter: brightness(0.8);
+        /* Slightly darken for better text readability */
+    }
+
+    /* Loading state for video */
+    .hero-video-background::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(45deg, #2c5f2d, #4a9c4f);
+        z-index: -1;
+        opacity: 1;
+        transition: opacity 0.5s ease;
+    }
+
+    .hero-video-background.loaded::before {
+        opacity: 0;
+    }
+
+    /* Mobile optimizations - disable video on smaller screens */
+    @media (max-width: 768px) {
+        .hero-video {
+            display: none !important;
+        }
+
+        .hero-video-background {
+            background-image: url('<?php echo SITE_URL . '/' . $hero_background; ?>');
+            background-size: cover;
+            background-position: center;
+        }
+    }
+
+    /* Slow connection detection */
+    @media (prefers-reduced-data: reduce) {
+        .hero-video {
+            display: none !important;
+        }
+
+        .hero-video-background {
+            background-image: url('<?php echo SITE_URL . '/' . $hero_background; ?>');
+            background-size: cover;
+            background-position: center;
+        }
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const video = document.querySelector('.hero-video');
+        const videoBackground = document.querySelector('.hero-video-background');
+        const toggleBtn = document.getElementById('videoToggle');
+        const toggleIcon = toggleBtn?.querySelector('i');
+
+        // Check if user prefers reduced data or is on slow connection
+        const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+        const slowConnection = connection && (connection.effectiveType === 'slow-2g' || connection.effectiveType === '2g');
+        const prefersReducedData = window.matchMedia('(prefers-reduced-data: reduce)').matches;
+
+        // Only load video if conditions are good
+        if (!slowConnection && !prefersReducedData && window.innerWidth > 768) {
+            // Video is already in HTML, just add event listeners
+            if (video) {
+                video.addEventListener('loadeddata', function() {
+                    videoBackground.classList.add('loaded');
+                });
+
+                video.addEventListener('error', function() {
+                    console.log('Video failed to load, falling back to image');
+                    video.style.display = 'none';
+                });
+            }
+
+            // Video controls
+            if (toggleBtn && video) {
+                toggleBtn.addEventListener('click', function() {
+                    if (video.paused) {
+                        video.play();
+                        toggleIcon.className = 'fas fa-pause';
+                        toggleBtn.title = 'Pause video';
+                    } else {
+                        video.pause();
+                        toggleIcon.className = 'fas fa-play';
+                        toggleBtn.title = 'Play video';
+                    }
+                });
+            }
+        } else {
+            // Remove video for slow connections or mobile
+            if (video) {
+                video.remove();
+            }
+            if (toggleBtn) {
+                toggleBtn.remove();
+            }
+        }
+
+        // Smooth scroll for scroll indicator
+        const scrollIndicator = document.querySelector('.scroll-indicator');
+        if (scrollIndicator) {
+            scrollIndicator.addEventListener('click', function() {
+                window.scrollTo({
+                    top: window.innerHeight,
+                    behavior: 'smooth'
+                });
+            });
+        }
+    });
+</script>
 <?php
 // Additional JavaScript for homepage
 $additional_js = [ASSETS_PATH . '/js/homepage.js'];
