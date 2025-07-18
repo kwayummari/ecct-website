@@ -38,10 +38,19 @@ include 'includes/header.php';
 ?>
 
 <!-- Hero Section -->
+<!-- Hero Section -->
 <section class="hero-section position-relative overflow-hidden">
-    <div class="hero-background" style="background-image: url('<?php echo SITE_URL . '/' . $hero_background; ?>');">
+    <!-- Video Background -->
+    <div class="hero-video-background">
+        <video autoplay muted loop playsinline preload="auto" class="hero-video">
+            <source src="<?php echo SITE_URL; ?>/assets/videos/MAZINGIRA.mp4" type="video/mp4">
+            <source src="<?php echo SITE_URL; ?>/assets/videos/MAZINGIRA.webm" type="video/webm">
+            <!-- Fallback image if video doesn't load -->
+            <img src="<?php echo SITE_URL . '/' . $hero_background; ?>" alt="ECCT Environmental Conservation" class="hero-fallback-image">
+        </video>
         <div class="hero-overlay"></div>
     </div>
+
     <div class="container position-relative">
         <div class="row align-items-center min-vh-75">
             <div class="col-lg-6">
@@ -53,48 +62,51 @@ include 'includes/header.php';
                         <?php echo htmlspecialchars($hero_subtitle); ?>
                     </p>
                     <div class="hero-buttons animate-fade-in-delay-2">
-                        <a href="<?php echo SITE_URL; ?>/volunteer.php" class="btn btn-primary btn-lg me-3">
+                        <a href="<?php echo SITE_URL; ?>/volunteer" class="btn btn-primary btn-lg me-3">
                             <i class="fas fa-hands-helping me-2"></i>
                             Join as Volunteer
                         </a>
-                        <a href="<?php echo SITE_URL; ?>/about.php" class="btn btn-outline-light btn-lg">
+                        <a href="<?php echo SITE_URL; ?>/about" class="btn btn-outline-light btn-lg">
                             <i class="fas fa-info-circle me-2"></i>
                             Learn More
                         </a>
                     </div>
                 </div>
             </div>
+
+            <!-- Statistics Cards (optional - you can keep or remove) -->
             <div class="col-lg-6">
-                <div class="hero-stats bg-white bg-opacity-90 p-4 rounded-4 shadow animate-slide-up">
-                    <div class="row text-center">
+                <div class="hero-stats bg-white bg-opacity-10 p-4 rounded-3 backdrop-blur">
+                    <div class="row text-center text-white">
                         <div class="col-4">
                             <div class="stat-item">
-                                <h3 class="text-primary fw-bold mb-1"><?php echo $successful_campaigns; ?>+</h3>
-                                <p class="text-muted small mb-0">Successful Campaigns</p>
+                                <h3 class="display-6 fw-bold mb-1"><?php echo $successful_campaigns; ?>+</h3>
+                                <p class="small mb-0">Successful Campaigns</p>
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="stat-item">
-                                <h3 class="text-primary fw-bold mb-1"><?php echo $volunteers_count; ?>+</h3>
-                                <p class="text-muted small mb-0">Active Volunteers</p>
+                                <h3 class="display-6 fw-bold mb-1"><?php echo $volunteers_count; ?>+</h3>
+                                <p class="small mb-0">Volunteers</p>
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="stat-item">
-                                <h3 class="text-primary fw-bold mb-1"><?php echo $communities_served; ?>+</h3>
-                                <p class="text-muted small mb-0">Communities Served</p>
+                                <h3 class="display-6 fw-bold mb-1"><?php echo $communities_served; ?>+</h3>
+                                <p class="small mb-0">Communities</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Scroll indicator -->
-    <div class="scroll-indicator text-center text-white position-absolute bottom-0 start-50 translate-middle-x pb-4">
-        <div class="animate-bounce">
-            <i class="fas fa-chevron-down fa-2x"></i>
+        <!-- Scroll Indicator -->
+        <div class="scroll-indicator position-absolute bottom-0 start-50 translate-middle-x pb-4">
+            <div class="scroll-arrow text-white text-center">
+                <i class="fas fa-chevron-down fa-2x opacity-75"></i>
+                <p class="small mt-2 mb-0">Scroll Down</p>
+            </div>
         </div>
     </div>
 </section>
