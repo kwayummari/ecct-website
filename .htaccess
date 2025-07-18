@@ -1,0 +1,246 @@
+# ECCT Website .htaccess Configuration
+# Environmental Conservation Community of Tanzania
+
+# Enable URL Rewriting
+RewriteEngine On
+
+# Security Headers
+<IfModule mod_headers.c>
+    # Prevent clickjacking
+    Header always append X-Frame-Options SAMEORIGIN
+    
+    # Prevent MIME type sniffing
+    Header always set X-Content-Type-Options nosniff
+    
+    # Enable XSS protection
+    Header always set X-XSS-Protection "1; mode=block"
+    
+    # Strict Transport Security (HTTPS only)
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+    
+    # Content Security Policy
+    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self'"
+    
+    # Referrer Policy
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# Compression
+<IfModule mod_deflate.c>
+    # Compress HTML, CSS, JavaScript, Text, XML and fonts
+    AddOutputFilterByType DEFLATE application/javascript
+    AddOutputFilterByType DEFLATE application/rss+xml
+    AddOutputFilterByType DEFLATE application/vnd.ms-fontobject
+    AddOutputFilterByType DEFLATE application/x-font
+    AddOutputFilterByType DEFLATE application/x-font-opentype
+    AddOutputFilterByType DEFLATE application/x-font-otf
+    AddOutputFilterByType DEFLATE application/x-font-truetype
+    AddOutputFilterByType DEFLATE application/x-font-ttf
+    AddOutputFilterByType DEFLATE application/x-javascript
+    AddOutputFilterByType DEFLATE application/xhtml+xml
+    AddOutputFilterByType DEFLATE application/xml
+    AddOutputFilterByType DEFLATE font/opentype
+    AddOutputFilterByType DEFLATE font/otf
+    AddOutputFilterByType DEFLATE font/ttf
+    AddOutputFilterByType DEFLATE image/svg+xml
+    AddOutputFilterByType DEFLATE image/x-icon
+    AddOutputFilterByType DEFLATE text/css
+    AddOutputFilterByType DEFLATE text/html
+    AddOutputFilterByType DEFLATE text/javascript
+    AddOutputFilterByType DEFLATE text/plain
+    AddOutputFilterByType DEFLATE text/xml
+</IfModule>
+
+# Browser Caching
+<IfModule mod_expires.c>
+    ExpiresActive on
+    
+    # Images
+    ExpiresByType image/jpg "access plus 1 month"
+    ExpiresByType image/jpeg "access plus 1 month"
+    ExpiresByType image/gif "access plus 1 month"
+    ExpiresByType image/png "access plus 1 month"
+    ExpiresByType image/webp "access plus 1 month"
+    ExpiresByType image/svg+xml "access plus 1 month"
+    
+    # CSS and JavaScript
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+    ExpiresByType text/javascript "access plus 1 month"
+    
+    # Fonts
+    ExpiresByType font/woff "access plus 1 year"
+    ExpiresByType font/woff2 "access plus 1 year"
+    ExpiresByType application/font-woff "access plus 1 year"
+    ExpiresByType application/font-woff2 "access plus 1 year"
+    
+    # Other
+    ExpiresByType application/pdf "access plus 1 month"
+    ExpiresByType image/x-icon "access plus 1 year"
+</IfModule>
+
+# Security: Block access to sensitive files
+<Files "config.php">
+    Order allow,deny
+    Deny from all
+</Files>
+
+<Files "*.log">
+    Order allow,deny
+    Deny from all
+</Files>
+
+<FilesMatch "\.(htaccess|htpasswd|ini|log|sh|inc|bak|sql)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Block access to includes directory from web
+RewriteRule ^includes/ - [F,L]
+
+# Block access to SQL files
+RewriteRule \.sql$ - [F,L]
+
+# Block access to backup files
+RewriteRule \.(bak|backup|old|orig|save|swp|tmp)$ - [F,L]
+
+# Redirect www to non-www (optional)
+# RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+# RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
+
+# Force HTTPS (uncomment when SSL is available)
+# RewriteCond %{HTTPS} off
+# RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Main URL Rewriting Rules
+
+# Admin panel routes
+RewriteRule ^admin/?$ admin/index.php [L]
+RewriteRule ^admin/login/?$ admin/login.php [L]
+RewriteRule ^admin/logout/?$ admin/logout.php [L]
+
+# Admin sub-routes
+RewriteRule ^admin/([^/]+)/([^/]+)/?$ admin/$1/$2.php [L]
+RewriteRule ^admin/([^/]+)/?$ admin/$1/index.php [L]
+
+# Public page routes (clean URLs)
+RewriteRule ^about/?$ public/about.php [L]
+RewriteRule ^contact/?$ public/contact.php [L]
+RewriteRule ^news/?$ public/news.php [L,QSA]
+RewriteRule ^campaigns/?$ public/campaigns.php [L,QSA]
+RewriteRule ^gallery/?$ public/gallery.php [L,QSA]
+RewriteRule ^volunteer/?$ public/volunteer.php [L]
+RewriteRule ^programs/?$ public/programs.php [L]
+
+# API routes (if needed in future)
+RewriteRule ^api/([^/]+)/?$ api/$1.php [L,QSA]
+
+# Handle file downloads
+RewriteRule ^download/([^/]+)/?$ includes/download.php?file=$1 [L]
+
+# Assets and uploads - serve directly
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^(assets|uploads)/.*$ - [L]
+
+# Dynamic pages from database
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} !^/(admin|api|assets|uploads|includes)/
+RewriteRule ^([a-zA-Z0-9\-_]+)/?$ index.php [L,QSA]
+
+# Default fallback to homepage
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^.*$ index.php [L,QSA]
+
+# Custom Error Pages
+ErrorDocument 404 /404.php
+ErrorDocument 403 /403.php
+ErrorDocument 500 /500.php
+
+# File Upload Security
+# Prevent execution of PHP files in upload directories
+<Directory "assets/uploads">
+    <Files "*.php">
+        Order allow,deny
+        Deny from all
+    </Files>
+    <Files "*.phtml">
+        Order allow,deny
+        Deny from all
+    </Files>
+    <Files "*.php3">
+        Order allow,deny
+        Deny from all
+    </Files>
+    <Files "*.php4">
+        Order allow,deny
+        Deny from all
+    </Files>
+    <Files "*.php5">
+        Order allow,deny
+        Deny from all
+    </Files>
+    <Files "*.pl">
+        Order allow,deny
+        Deny from all
+    </Files>
+    <Files "*.py">
+        Order allow,deny
+        Deny from all
+    </Files>
+    <Files "*.jsp">
+        Order allow,deny
+        Deny from all
+    </Files>
+    <Files "*.asp">
+        Order allow,deny
+        Deny from all
+    </Files>
+    <Files "*.sh">
+        Order allow,deny
+        Deny from all
+    </Files>
+    <Files "*.cgi">
+        Order allow,deny
+        Deny from all
+    </Files>
+</Directory>
+
+# Optimize file serving
+<IfModule mod_mime.c>
+    # Proper MIME types
+    AddType application/javascript .js
+    AddType text/css .css
+    AddType image/webp .webp
+    AddType font/woff .woff
+    AddType font/woff2 .woff2
+</IfModule>
+
+# Prevent access to git files
+RedirectMatch 404 /\.git
+
+# Prevent access to composer files
+<Files "composer.json">
+    Order allow,deny
+    Deny from all
+</Files>
+
+<Files "composer.lock">
+    Order allow,deny
+    Deny from all
+</Files>
+
+# Prevent access to package files
+<Files "package.json">
+    Order allow,deny
+    Deny from all
+</Files>
+
+<Files "package-lock.json">
+    Order allow,deny
+    Deny from all
+</Files>
+
+# Set default charset
+AddDefaultCharset UTF-8
