@@ -159,7 +159,7 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
                         <?php foreach ($menu_items as $item): ?>
                             <li class="nav-item">
                                 <a class="nav-link <?php echo ($current_page === $item['slug']) ? 'active' : ''; ?>"
-                                    href="<?php echo SITE_URL . '/' . $item['slug'] . '.php'; ?>">
+                                    href="<?php echo SITE_URL . '/' . $item['slug']; ?>">
                                     <?php echo htmlspecialchars($item['title']); ?>
                                 </a>
                             </li>
@@ -168,26 +168,26 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
 
                     <li class="nav-item">
                         <a class="nav-link <?php echo ($current_page === 'news') ? 'active' : ''; ?>"
-                            href="<?php echo SITE_URL; ?>/news.php">News</a>
+                            href="<?php echo SITE_URL; ?>/news">News</a>
                     </li>
 
                     <li class="nav-item">
                         <a class="nav-link <?php echo ($current_page === 'campaigns') ? 'active' : ''; ?>"
-                            href="<?php echo SITE_URL; ?>/campaigns.php">Campaigns</a>
+                            href="<?php echo SITE_URL; ?>/campaigns">Campaigns</a>
                     </li>
 
                     <li class="nav-item">
                         <a class="nav-link <?php echo ($current_page === 'gallery') ? 'active' : ''; ?>"
-                            href="<?php echo SITE_URL; ?>/gallery.php">Gallery</a>
+                            href="<?php echo SITE_URL; ?>/gallery">Gallery</a>
                     </li>
 
                     <li class="nav-item">
                         <a class="nav-link <?php echo ($current_page === 'contact') ? 'active' : ''; ?>"
-                            href="<?php echo SITE_URL; ?>/contact.php">Contact</a>
+                            href="<?php echo SITE_URL; ?>/contact">Contact</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="btn btn-primary ms-2" href="<?php echo SITE_URL; ?>/volunteer.php">
+                        <a class="btn btn-primary ms-2" href="<?php echo SITE_URL; ?>/volunteer">
                             Volunteer
                         </a>
                     </li>
