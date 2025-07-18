@@ -81,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (empty($validation_errors)) {
                 // Check for duplicate email
                 $existing_volunteer = $db->selectOne('volunteers', ['email' => $form_data['email']]);
-                
+
                 if ($existing_volunteer) {
                     $error_message = 'An application with this email already exists. Please contact us if you need to update your information.';
                 } else {
@@ -98,10 +98,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     if ($volunteer_id) {
                         // Send confirmation email
                         send_volunteer_confirmation_email($form_data);
-                        
+
                         // Send notification to admin
                         send_admin_notification('New Volunteer Application', "A new volunteer application has been submitted by {$form_data['first_name']} {$form_data['last_name']}.");
-                        
+
                         $success_message = 'Thank you for your application! We will review it and contact you soon with next steps.';
                         // Clear form data on success
                         $form_data = [];
@@ -189,7 +189,7 @@ include 'includes/header.php';
                         Become a Volunteer
                     </h1>
                     <p class="lead mb-5 animate-fade-in-delay">
-                        Join our community of passionate environmental champions and make a real difference in Tanzania. 
+                        Join our community of passionate environmental champions and make a real difference in Tanzania.
                         No matter how small your contribution, everything helps conserve our environment.
                     </p>
                     <div class="hero-buttons animate-fade-in-delay-2">
@@ -259,10 +259,10 @@ include 'includes/header.php';
             <div class="col-lg-6 mb-5 mb-lg-0">
                 <h2 class="display-5 fw-bold mb-4">Why Volunteer with ECCT?</h2>
                 <p class="lead text-muted mb-4">
-                    Environmental Conservation Community of Tanzania (ECCT) is officially recognized as Tanzania's Environmental Ambassador, 
+                    Environmental Conservation Community of Tanzania (ECCT) is officially recognized as Tanzania's Environmental Ambassador,
                     working tirelessly to empower local communities in creating cleaner, greener, and more sustainable environments.
                 </p>
-                
+
                 <div class="benefit-list">
                     <div class="benefit-item d-flex mb-3">
                         <div class="benefit-icon bg-primary bg-opacity-10 text-primary rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
@@ -273,7 +273,7 @@ include 'includes/header.php';
                             <p class="text-muted mb-0">Directly contribute to environmental conservation and see tangible results in communities.</p>
                         </div>
                     </div>
-                    
+
                     <div class="benefit-item d-flex mb-3">
                         <div class="benefit-icon bg-success bg-opacity-10 text-success rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
                             <i class="fas fa-users"></i>
@@ -283,7 +283,7 @@ include 'includes/header.php';
                             <p class="text-muted mb-0">Connect with like-minded individuals passionate about environmental conservation.</p>
                         </div>
                     </div>
-                    
+
                     <div class="benefit-item d-flex mb-3">
                         <div class="benefit-icon bg-warning bg-opacity-10 text-warning rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
                             <i class="fas fa-graduation-cap"></i>
@@ -293,7 +293,7 @@ include 'includes/header.php';
                             <p class="text-muted mb-0">Develop new skills, gain experience, and enhance your environmental knowledge.</p>
                         </div>
                     </div>
-                    
+
                     <div class="benefit-item d-flex">
                         <div class="benefit-icon bg-info bg-opacity-10 text-info rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
                             <i class="fas fa-certificate"></i>
@@ -305,24 +305,24 @@ include 'includes/header.php';
                     </div>
                 </div>
             </div>
-            
+
             <div class="col-lg-6">
                 <div class="volunteer-image-grid">
                     <div class="row g-3">
                         <div class="col-6">
-                            <img src="<?php echo ASSETS_PATH; ?>/images/volunteers/beach-cleanup.jpg" 
-                                 alt="Beach cleanup volunteers" 
-                                 class="img-fluid rounded-3 shadow">
+                            <img src="<?php echo ASSETS_PATH; ?>/images/volunteers/beach-cleanup.jpg"
+                                alt="Beach cleanup volunteers"
+                                class="img-fluid rounded-3 shadow">
                         </div>
                         <div class="col-6">
-                            <img src="<?php echo ASSETS_PATH; ?>/images/volunteers/tree-planting.jpg" 
-                                 alt="Tree planting activity" 
-                                 class="img-fluid rounded-3 shadow">
+                            <img src="<?php echo ASSETS_PATH; ?>/images/volunteers/tree-planting.jpg"
+                                alt="Tree planting activity"
+                                class="img-fluid rounded-3 shadow">
                         </div>
                         <div class="col-12">
-                            <img src="<?php echo ASSETS_PATH; ?>/images/volunteers/community-education.jpg" 
-                                 alt="Community education program" 
-                                 class="img-fluid rounded-3 shadow">
+                            <img src="<?php echo ASSETS_PATH; ?>/images/volunteers/community-education.jpg"
+                                alt="Community education program"
+                                class="img-fluid rounded-3 shadow">
                         </div>
                     </div>
                 </div>
@@ -340,29 +340,29 @@ include 'includes/header.php';
                 Choose from various volunteer opportunities that match your interests, skills, and availability.
             </p>
         </div>
-        
+
         <div class="row">
             <?php foreach ($volunteer_opportunities as $opportunity): ?>
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="opportunity-card bg-white p-4 rounded-3 shadow-sm h-100">
-                    <div class="opportunity-icon text-primary mb-3">
-                        <i class="<?php echo $opportunity['icon']; ?> fa-2x"></i>
-                    </div>
-                    <h4 class="mb-3"><?php echo $opportunity['title']; ?></h4>
-                    <p class="text-muted mb-3"><?php echo $opportunity['description']; ?></p>
-                    
-                    <div class="opportunity-details">
-                        <div class="detail-item mb-2">
-                            <i class="fas fa-clock text-muted me-2"></i>
-                            <small class="text-muted"><?php echo $opportunity['commitment']; ?></small>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="opportunity-card bg-white p-4 rounded-3 shadow-sm h-100">
+                        <div class="opportunity-icon text-primary mb-3">
+                            <i class="<?php echo $opportunity['icon']; ?> fa-2x"></i>
                         </div>
-                        <div class="detail-item">
-                            <i class="fas fa-tools text-muted me-2"></i>
-                            <small class="text-muted"><?php echo $opportunity['skills']; ?></small>
+                        <h4 class="mb-3"><?php echo $opportunity['title']; ?></h4>
+                        <p class="text-muted mb-3"><?php echo $opportunity['description']; ?></p>
+
+                        <div class="opportunity-details">
+                            <div class="detail-item mb-2">
+                                <i class="fas fa-clock text-muted me-2"></i>
+                                <small class="text-muted"><?php echo $opportunity['commitment']; ?></small>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-tools text-muted me-2"></i>
+                                <small class="text-muted"><?php echo $opportunity['skills']; ?></small>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
             <?php endforeach; ?>
         </div>
     </div>
@@ -374,14 +374,14 @@ include 'includes/header.php';
         <div class="text-center mb-5">
             <h2 class="display-5 fw-bold mb-4">What Our Volunteers Say</h2>
         </div>
-        
+
         <div class="row">
             <div class="col-lg-4 mb-4">
                 <div class="testimonial-card bg-white p-4 rounded-3 shadow-sm h-100">
                     <div class="testimonial-content mb-3">
                         <i class="fas fa-quote-left text-primary fa-2x mb-3"></i>
                         <p class="text-muted">
-                            "Volunteering with ECCT has been life-changing. I've learned so much about environmental conservation 
+                            "Volunteering with ECCT has been life-changing. I've learned so much about environmental conservation
                             and made a real impact in my community. The beach cleanups are especially rewarding!"
                         </p>
                     </div>
@@ -396,13 +396,13 @@ include 'includes/header.php';
                     </div>
                 </div>
             </div>
-            
+
             <div class="col-lg-4 mb-4">
                 <div class="testimonial-card bg-white p-4 rounded-3 shadow-sm h-100">
                     <div class="testimonial-content mb-3">
                         <i class="fas fa-quote-left text-primary fa-2x mb-3"></i>
                         <p class="text-muted">
-                            "The sense of community and purpose I found through ECCT is incredible. Every cleanup, 
+                            "The sense of community and purpose I found through ECCT is incredible. Every cleanup,
                             every tree we plant, every person we educate - it all makes a difference."
                         </p>
                     </div>
@@ -417,13 +417,13 @@ include 'includes/header.php';
                     </div>
                 </div>
             </div>
-            
+
             <div class="col-lg-4 mb-4">
                 <div class="testimonial-card bg-white p-4 rounded-3 shadow-sm h-100">
                     <div class="testimonial-content mb-3">
                         <i class="fas fa-quote-left text-primary fa-2x mb-3"></i>
                         <p class="text-muted">
-                            "As a student, volunteering with ECCT has given me valuable experience and skills. 
+                            "As a student, volunteering with ECCT has given me valuable experience and skills.
                             I've grown professionally while contributing to something meaningful."
                         </p>
                     </div>
@@ -473,53 +473,53 @@ include 'includes/header.php';
                 <div class="application-card bg-white p-5 rounded-3 shadow">
                     <form method="POST" action="" class="volunteer-form needs-validation" novalidate>
                         <?php echo csrf_field(); ?>
-                        
+
                         <!-- Personal Information -->
                         <div class="form-section mb-5">
                             <h4 class="section-title text-primary mb-4">
                                 <i class="fas fa-user me-2"></i>Personal Information
                             </h4>
-                            
+
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label for="first_name" class="form-label">First Name <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" id="first_name" name="first_name" 
-                                           value="<?php echo htmlspecialchars($form_data['first_name'] ?? ''); ?>" required>
+                                    <input type="text" class="form-control" id="first_name" name="first_name"
+                                        value="<?php echo htmlspecialchars($form_data['first_name'] ?? ''); ?>" required>
                                     <div class="invalid-feedback">Please provide your first name.</div>
                                 </div>
-                                
+
                                 <div class="col-md-6 mb-3">
                                     <label for="last_name" class="form-label">Last Name <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" id="last_name" name="last_name" 
-                                           value="<?php echo htmlspecialchars($form_data['last_name'] ?? ''); ?>" required>
+                                    <input type="text" class="form-control" id="last_name" name="last_name"
+                                        value="<?php echo htmlspecialchars($form_data['last_name'] ?? ''); ?>" required>
                                     <div class="invalid-feedback">Please provide your last name.</div>
                                 </div>
                             </div>
-                            
+
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label for="email" class="form-label">Email Address <span class="text-danger">*</span></label>
-                                    <input type="email" class="form-control" id="email" name="email" 
-                                           value="<?php echo htmlspecialchars($form_data['email'] ?? ''); ?>" required>
+                                    <input type="email" class="form-control" id="email" name="email"
+                                        value="<?php echo htmlspecialchars($form_data['email'] ?? ''); ?>" required>
                                     <div class="invalid-feedback">Please provide a valid email address.</div>
                                 </div>
-                                
+
                                 <div class="col-md-6 mb-3">
                                     <label for="phone" class="form-label">Phone Number <span class="text-danger">*</span></label>
-                                    <input type="tel" class="form-control" id="phone" name="phone" 
-                                           value="<?php echo htmlspecialchars($form_data['phone'] ?? ''); ?>" required>
+                                    <input type="tel" class="form-control" id="phone" name="phone"
+                                        value="<?php echo htmlspecialchars($form_data['phone'] ?? ''); ?>" required>
                                     <div class="invalid-feedback">Please provide your phone number.</div>
                                 </div>
                             </div>
-                            
+
                             <div class="row">
                                 <div class="col-md-4 mb-3">
                                     <label for="date_of_birth" class="form-label">Date of Birth <span class="text-danger">*</span></label>
-                                    <input type="date" class="form-control" id="date_of_birth" name="date_of_birth" 
-                                           value="<?php echo htmlspecialchars($form_data['date_of_birth'] ?? ''); ?>" required>
+                                    <input type="date" class="form-control" id="date_of_birth" name="date_of_birth"
+                                        value="<?php echo htmlspecialchars($form_data['date_of_birth'] ?? ''); ?>" required>
                                     <div class="invalid-feedback">Please provide your date of birth.</div>
                                 </div>
-                                
+
                                 <div class="col-md-4 mb-3">
                                     <label for="gender" class="form-label">Gender</label>
                                     <select class="form-select" id="gender" name="gender">
@@ -529,7 +529,7 @@ include 'includes/header.php';
                                         <option value="other" <?php echo ($form_data['gender'] ?? '') === 'other' ? 'selected' : ''; ?>>Other</option>
                                     </select>
                                 </div>
-                                
+
                                 <div class="col-md-4 mb-3">
                                     <label for="education_level" class="form-label">Education Level <span class="text-danger">*</span></label>
                                     <select class="form-select" id="education_level" name="education_level" required>
@@ -544,12 +544,12 @@ include 'includes/header.php';
                                     <div class="invalid-feedback">Please select your education level.</div>
                                 </div>
                             </div>
-                            
+
                             <div class="mb-3">
                                 <label for="occupation" class="form-label">Current Occupation</label>
-                                <input type="text" class="form-control" id="occupation" name="occupation" 
-                                       value="<?php echo htmlspecialchars($form_data['occupation'] ?? ''); ?>" 
-                                       placeholder="Student, Teacher, Engineer, etc.">
+                                <input type="text" class="form-control" id="occupation" name="occupation"
+                                    value="<?php echo htmlspecialchars($form_data['occupation'] ?? ''); ?>"
+                                    placeholder="Student, Teacher, Engineer, etc.">
                             </div>
                         </div>
 
@@ -558,22 +558,22 @@ include 'includes/header.php';
                             <h4 class="section-title text-primary mb-4">
                                 <i class="fas fa-map-marker-alt me-2"></i>Location Information
                             </h4>
-                            
+
                             <div class="mb-3">
                                 <label for="address" class="form-label">Address <span class="text-danger">*</span></label>
-                                <textarea class="form-control" id="address" name="address" rows="2" required 
-                                          placeholder="Street address or location description"><?php echo htmlspecialchars($form_data['address'] ?? ''); ?></textarea>
+                                <textarea class="form-control" id="address" name="address" rows="2" required
+                                    placeholder="Street address or location description"><?php echo htmlspecialchars($form_data['address'] ?? ''); ?></textarea>
                                 <div class="invalid-feedback">Please provide your address.</div>
                             </div>
-                            
+
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label for="city" class="form-label">City <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" id="city" name="city" 
-                                           value="<?php echo htmlspecialchars($form_data['city'] ?? ''); ?>" required>
+                                    <input type="text" class="form-control" id="city" name="city"
+                                        value="<?php echo htmlspecialchars($form_data['city'] ?? ''); ?>" required>
                                     <div class="invalid-feedback">Please provide your city.</div>
                                 </div>
-                                
+
                                 <div class="col-md-6 mb-3">
                                     <label for="region" class="form-label">Region</label>
                                     <select class="form-select" id="region" name="region">
@@ -614,30 +614,30 @@ include 'includes/header.php';
                             <h4 class="section-title text-primary mb-4">
                                 <i class="fas fa-heart me-2"></i>Volunteer Interests & Availability
                             </h4>
-                            
+
                             <div class="mb-4">
                                 <label class="form-label">Areas of Interest <span class="text-danger">*</span></label>
                                 <p class="text-muted small mb-3">Select all areas you're interested in volunteering for:</p>
-                                
+
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-check mb-2">
-                                            <input class="form-check-input" type="checkbox" id="interest_beach_cleanup" 
-                                                   name="areas_of_interest[]" value="Beach & Marine Cleanup">
+                                            <input class="form-check-input" type="checkbox" id="interest_beach_cleanup"
+                                                name="areas_of_interest[]" value="Beach & Marine Cleanup">
                                             <label class="form-check-label" for="interest_beach_cleanup">
                                                 <i class="fas fa-water text-primary me-2"></i>Beach & Marine Cleanup
                                             </label>
                                         </div>
                                         <div class="form-check mb-2">
-                                            <input class="form-check-input" type="checkbox" id="interest_education" 
-                                                   name="areas_of_interest[]" value="Environmental Education">
+                                            <input class="form-check-input" type="checkbox" id="interest_education"
+                                                name="areas_of_interest[]" value="Environmental Education">
                                             <label class="form-check-label" for="interest_education">
                                                 <i class="fas fa-graduation-cap text-primary me-2"></i>Environmental Education
                                             </label>
                                         </div>
                                         <div class="form-check mb-2">
-                                            <input class="form-check-input" type="checkbox" id="interest_tree_planting" 
-                                                   name="areas_of_interest[]" value="Tree Planting & Restoration">
+                                            <input class="form-check-input" type="checkbox" id="interest_tree_planting"
+                                                name="areas_of_interest[]" value="Tree Planting & Restoration">
                                             <label class="form-check-label" for="interest_tree_planting">
                                                 <i class="fas fa-seedling text-primary me-2"></i>Tree Planting & Restoration
                                             </label>
@@ -645,22 +645,22 @@ include 'includes/header.php';
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-check mb-2">
-                                            <input class="form-check-input" type="checkbox" id="interest_waste_management" 
-                                                   name="areas_of_interest[]" value="Waste Management Programs">
+                                            <input class="form-check-input" type="checkbox" id="interest_waste_management"
+                                                name="areas_of_interest[]" value="Waste Management Programs">
                                             <label class="form-check-label" for="interest_waste_management">
                                                 <i class="fas fa-recycle text-primary me-2"></i>Waste Management Programs
                                             </label>
                                         </div>
                                         <div class="form-check mb-2">
-                                            <input class="form-check-input" type="checkbox" id="interest_media" 
-                                                   name="areas_of_interest[]" value="Documentation & Media">
+                                            <input class="form-check-input" type="checkbox" id="interest_media"
+                                                name="areas_of_interest[]" value="Documentation & Media">
                                             <label class="form-check-label" for="interest_media">
                                                 <i class="fas fa-camera text-primary me-2"></i>Documentation & Media
                                             </label>
                                         </div>
                                         <div class="form-check mb-2">
-                                            <input class="form-check-input" type="checkbox" id="interest_outreach" 
-                                                   name="areas_of_interest[]" value="Community Outreach">
+                                            <input class="form-check-input" type="checkbox" id="interest_outreach"
+                                                name="areas_of_interest[]" value="Community Outreach">
                                             <label class="form-check-label" for="interest_outreach">
                                                 <i class="fas fa-handshake text-primary me-2"></i>Community Outreach
                                             </label>
@@ -668,23 +668,23 @@ include 'includes/header.php';
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="mb-4">
                                 <label class="form-label">Availability <span class="text-danger">*</span></label>
                                 <p class="text-muted small mb-3">When are you available to volunteer?</p>
-                                
+
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-check mb-2">
-                                            <input class="form-check-input" type="checkbox" id="availability_weekdays" 
-                                                   name="availability[]" value="Weekdays">
+                                            <input class="form-check-input" type="checkbox" id="availability_weekdays"
+                                                name="availability[]" value="Weekdays">
                                             <label class="form-check-label" for="availability_weekdays">
                                                 Weekdays (Monday - Friday)
                                             </label>
                                         </div>
                                         <div class="form-check mb-2">
-                                            <input class="form-check-input" type="checkbox" id="availability_weekends" 
-                                                   name="availability[]" value="Weekends">
+                                            <input class="form-check-input" type="checkbox" id="availability_weekends"
+                                                name="availability[]" value="Weekends">
                                             <label class="form-check-label" for="availability_weekends">
                                                 Weekends (Saturday - Sunday)
                                             </label>
@@ -692,15 +692,15 @@ include 'includes/header.php';
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-check mb-2">
-                                            <input class="form-check-input" type="checkbox" id="availability_morning" 
-                                                   name="availability[]" value="Morning">
+                                            <input class="form-check-input" type="checkbox" id="availability_morning"
+                                                name="availability[]" value="Morning">
                                             <label class="form-check-label" for="availability_morning">
                                                 Morning (6AM - 12PM)
                                             </label>
                                         </div>
                                         <div class="form-check mb-2">
-                                            <input class="form-check-input" type="checkbox" id="availability_afternoon" 
-                                                   name="availability[]" value="Afternoon">
+                                            <input class="form-check-input" type="checkbox" id="availability_afternoon"
+                                                name="availability[]" value="Afternoon">
                                             <label class="form-check-label" for="availability_afternoon">
                                                 Afternoon (12PM - 6PM)
                                             </label>
@@ -708,11 +708,11 @@ include 'includes/header.php';
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="mb-3">
                                 <label for="skills" class="form-label">Skills & Expertise</label>
-                                <textarea class="form-control" id="skills" name="skills" rows="3" 
-                                          placeholder="List any relevant skills, languages, or expertise you have..."><?php echo htmlspecialchars($form_data['skills'] ?? ''); ?></textarea>
+                                <textarea class="form-control" id="skills" name="skills" rows="3"
+                                    placeholder="List any relevant skills, languages, or expertise you have..."><?php echo htmlspecialchars($form_data['skills'] ?? ''); ?></textarea>
                                 <div class="form-text">Examples: Photography, Teaching, First Aid, Social Media, Computer Skills, etc.</div>
                             </div>
                         </div>
@@ -722,22 +722,22 @@ include 'includes/header.php';
                             <h4 class="section-title text-primary mb-4">
                                 <i class="fas fa-lightbulb me-2"></i>About You
                             </h4>
-                            
+
                             <div class="mb-4">
                                 <label for="motivation" class="form-label">Why do you want to volunteer with ECCT? <span class="text-danger">*</span></label>
-                                <textarea class="form-control" id="motivation" name="motivation" rows="4" required 
-                                          placeholder="Tell us about your motivation to join our environmental conservation efforts..."><?php echo htmlspecialchars($form_data['motivation'] ?? ''); ?></textarea>
+                                <textarea class="form-control" id="motivation" name="motivation" rows="4" required
+                                    placeholder="Tell us about your motivation to join our environmental conservation efforts..."><?php echo htmlspecialchars($form_data['motivation'] ?? ''); ?></textarea>
                                 <div class="invalid-feedback">Please tell us why you want to volunteer.</div>
                                 <div class="form-text">Minimum 50 characters</div>
                             </div>
-                            
+
                             <div class="mb-3">
                                 <label for="experience" class="form-label">Previous Volunteer Experience</label>
-                                <textarea class="form-control" id="experience" name="experience" rows="3" 
-                                          placeholder="Describe any previous volunteer work, environmental activities, or community involvement..."><?php echo htmlspecialchars($form_data['experience'] ?? ''); ?></textarea>
+                                <textarea class="form-control" id="experience" name="experience" rows="3"
+                                    placeholder="Describe any previous volunteer work, environmental activities, or community involvement..."><?php echo htmlspecialchars($form_data['experience'] ?? ''); ?></textarea>
                                 <div class="form-text">Include any environmental, community, or social volunteer work</div>
                             </div>
-                            
+
                             <div class="mb-3">
                                 <label for="hear_about_us" class="form-label">How did you hear about ECCT?</label>
                                 <select class="form-select" id="hear_about_us" name="hear_about_us">
@@ -758,28 +758,28 @@ include 'includes/header.php';
                             <h4 class="section-title text-primary mb-4">
                                 <i class="fas fa-phone me-2"></i>Emergency Contact
                             </h4>
-                            
+
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label for="emergency_contact_name" class="form-label">Contact Name <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" id="emergency_contact_name" name="emergency_contact_name" 
-                                           value="<?php echo htmlspecialchars($form_data['emergency_contact_name'] ?? ''); ?>" required>
+                                    <input type="text" class="form-control" id="emergency_contact_name" name="emergency_contact_name"
+                                        value="<?php echo htmlspecialchars($form_data['emergency_contact_name'] ?? ''); ?>" required>
                                     <div class="invalid-feedback">Please provide emergency contact name.</div>
                                 </div>
-                                
+
                                 <div class="col-md-6 mb-3">
                                     <label for="emergency_contact_phone" class="form-label">Contact Phone <span class="text-danger">*</span></label>
-                                    <input type="tel" class="form-control" id="emergency_contact_phone" name="emergency_contact_phone" 
-                                           value="<?php echo htmlspecialchars($form_data['emergency_contact_phone'] ?? ''); ?>" required>
+                                    <input type="tel" class="form-control" id="emergency_contact_phone" name="emergency_contact_phone"
+                                        value="<?php echo htmlspecialchars($form_data['emergency_contact_phone'] ?? ''); ?>" required>
                                     <div class="invalid-feedback">Please provide emergency contact phone.</div>
                                 </div>
                             </div>
-                            
+
                             <div class="mb-3">
                                 <label for="emergency_contact_relationship" class="form-label">Relationship</label>
-                                <input type="text" class="form-control" id="emergency_contact_relationship" name="emergency_contact_relationship" 
-                                       value="<?php echo htmlspecialchars($form_data['emergency_contact_relationship'] ?? ''); ?>" 
-                                       placeholder="Parent, Spouse, Sibling, Friend, etc.">
+                                <input type="text" class="form-control" id="emergency_contact_relationship" name="emergency_contact_relationship"
+                                    value="<?php echo htmlspecialchars($form_data['emergency_contact_relationship'] ?? ''); ?>"
+                                    placeholder="Parent, Spouse, Sibling, Friend, etc.">
                             </div>
                         </div>
 
@@ -789,12 +789,12 @@ include 'includes/header.php';
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" id="terms_accepted" name="terms_accepted" required>
                                     <label class="form-check-label" for="terms_accepted">
-                                        I agree to the <a href="<?php echo SITE_URL; ?>/terms" target="_blank">Terms and Conditions</a> 
+                                        I agree to the <a href="<?php echo SITE_URL; ?>/terms" target="_blank">Terms and Conditions</a>
                                         and <a href="<?php echo SITE_URL; ?>/privacy" target="_blank">Privacy Policy</a> <span class="text-danger">*</span>
                                     </label>
                                     <div class="invalid-feedback">You must accept the terms and conditions.</div>
                                 </div>
-                                
+
                                 <div class="form-check mt-2">
                                     <input class="form-check-input" type="checkbox" id="newsletter_consent" name="newsletter_consent">
                                     <label class="form-check-label" for="newsletter_consent">
@@ -802,14 +802,14 @@ include 'includes/header.php';
                                     </label>
                                 </div>
                             </div>
-                            
+
                             <div class="d-grid">
                                 <button type="submit" class="btn btn-primary btn-lg">
                                     <i class="fas fa-paper-plane me-2"></i>
                                     Submit Application
                                 </button>
                             </div>
-                            
+
                             <p class="text-muted text-center mt-3 small">
                                 <i class="fas fa-info-circle me-1"></i>
                                 We will review your application and contact you within 5-7 business days.
@@ -829,7 +829,7 @@ include 'includes/header.php';
             <div class="col-lg-8">
                 <h3 class="display-6 fw-bold mb-3">Ready to Make a Difference?</h3>
                 <p class="lead mb-0">
-                    Join our mission today and be part of Tanzania's environmental conservation movement. 
+                    Join our mission today and be part of Tanzania's environmental conservation movement.
                     Every action counts towards creating a cleaner, greener future.
                 </p>
             </div>
@@ -846,199 +846,200 @@ include 'includes/header.php';
 </section>
 
 <style>
-.hero-section {
-    position: relative;
-    min-height: 60vh;
-}
-
-.stat-card {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.stat-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.15) !important;
-}
-
-.opportunity-card {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border-left: 4px solid transparent;
-}
-
-.opportunity-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.15) !important;
-    border-left-color: var(--bs-primary);
-}
-
-.testimonial-card {
-    transition: transform 0.3s ease;
-}
-
-.testimonial-card:hover {
-    transform: translateY(-3px);
-}
-
-.form-section {
-    border-bottom: 1px solid #eee;
-    padding-bottom: 2rem;
-}
-
-.form-section:last-child {
-    border-bottom: none;
-    padding-bottom: 0;
-}
-
-.section-title {
-    position: relative;
-    padding-bottom: 0.5rem;
-}
-
-.section-title::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 50px;
-    height: 2px;
-    background-color: var(--bs-primary);
-}
-
-.volunteer-image-grid img {
-    transition: transform 0.3s ease;
-}
-
-.volunteer-image-grid img:hover {
-    transform: scale(1.05);
-}
-
-.animate-fade-in {
-    animation: fadeIn 0.8s ease-in-out;
-}
-
-.animate-fade-in-delay {
-    animation: fadeIn 0.8s ease-in-out 0.2s both;
-}
-
-.animate-fade-in-delay-2 {
-    animation: fadeIn 0.8s ease-in-out 0.4s both;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.application-card {
-    position: relative;
-}
-
-.application-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, var(--bs-primary), var(--bs-success));
-    border-radius: 3px 3px 0 0;
-}
-
-@media (max-width: 768px) {
     .hero-section {
-        min-height: 50vh;
+        position: relative;
+        min-height: 60vh;
     }
-    
-    .display-3 {
-        font-size: 2.5rem;
+
+    .stat-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
-    
-    .hero-buttons .btn {
-        margin-bottom: 1rem;
-        width: 100%;
+
+    .stat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15) !important;
     }
-}
+
+    .opportunity-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border-left: 4px solid transparent;
+    }
+
+    .opportunity-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15) !important;
+        border-left-color: var(--bs-primary);
+    }
+
+    .testimonial-card {
+        transition: transform 0.3s ease;
+    }
+
+    .testimonial-card:hover {
+        transform: translateY(-3px);
+    }
+
+    .form-section {
+        border-bottom: 1px solid #eee;
+        padding-bottom: 2rem;
+    }
+
+    .form-section:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+
+    .section-title {
+        position: relative;
+        padding-bottom: 0.5rem;
+    }
+
+    .section-title::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 50px;
+        height: 2px;
+        background-color: var(--bs-primary);
+    }
+
+    .volunteer-image-grid img {
+        transition: transform 0.3s ease;
+    }
+
+    .volunteer-image-grid img:hover {
+        transform: scale(1.05);
+    }
+
+    .animate-fade-in {
+        animation: fadeIn 0.8s ease-in-out;
+    }
+
+    .animate-fade-in-delay {
+        animation: fadeIn 0.8s ease-in-out 0.2s both;
+    }
+
+    .animate-fade-in-delay-2 {
+        animation: fadeIn 0.8s ease-in-out 0.4s both;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .application-card {
+        position: relative;
+    }
+
+    .application-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, var(--bs-primary), var(--bs-success));
+        border-radius: 3px 3px 0 0;
+    }
+
+    @media (max-width: 768px) {
+        .hero-section {
+            min-height: 50vh;
+        }
+
+        .display-3 {
+            font-size: 2.5rem;
+        }
+
+        .hero-buttons .btn {
+            margin-bottom: 1rem;
+            width: 100%;
+        }
+    }
 </style>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Form validation
-    const form = document.querySelector('.volunteer-form');
-    
-    form.addEventListener('submit', function(event) {
-        if (!form.checkValidity()) {
-            event.preventDefault();
-            event.stopPropagation();
-        }
-        
-        // Check if at least one interest is selected
-        const interests = form.querySelectorAll('input[name="areas_of_interest[]"]:checked');
-        if (interests.length === 0) {
-            event.preventDefault();
-            alert('Please select at least one area of interest.');
-            return;
-        }
-        
-        // Check if at least one availability option is selected
-        const availability = form.querySelectorAll('input[name="availability[]"]:checked');
-        if (availability.length === 0) {
-            event.preventDefault();
-            alert('Please select your availability.');
-            return;
-        }
-        
-        form.classList.add('was-validated');
-    });
-    
-    // Smooth scrolling for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
+    document.addEventListener('DOMContentLoaded', function() {
+        // Form validation
+        const form = document.querySelector('.volunteer-form');
+
+        form.addEventListener('submit', function(event) {
+            if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
             }
+
+            // Check if at least one interest is selected
+            const interests = form.querySelectorAll('input[name="areas_of_interest[]"]:checked');
+            if (interests.length === 0) {
+                event.preventDefault();
+                alert('Please select at least one area of interest.');
+                return;
+            }
+
+            // Check if at least one availability option is selected
+            const availability = form.querySelectorAll('input[name="availability[]"]:checked');
+            if (availability.length === 0) {
+                event.preventDefault();
+                alert('Please select your availability.');
+                return;
+            }
+
+            form.classList.add('was-validated');
         });
-    });
-    
-    // Character counter for motivation field
-    const motivationField = document.getElementById('motivation');
-    if (motivationField) {
-        const createCounter = (field, minLength) => {
-            const counter = document.createElement('div');
-            counter.className = 'form-text text-muted';
-            counter.style.textAlign = 'right';
-            field.parentNode.appendChild(counter);
-            
-            const updateCounter = () => {
-                const length = field.value.length;
-                counter.textContent = `${length} / ${minLength} characters minimum`;
-                
-                if (length >= minLength) {
-                    counter.classList.remove('text-danger');
-                    counter.classList.add('text-success');
-                } else {
-                    counter.classList.remove('text-success');
-                    counter.classList.add('text-warning');
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
                 }
+            });
+        });
+
+        // Character counter for motivation field
+        const motivationField = document.getElementById('motivation');
+        if (motivationField) {
+            const createCounter = (field, minLength) => {
+                const counter = document.createElement('div');
+                counter.className = 'form-text text-muted';
+                counter.style.textAlign = 'right';
+                field.parentNode.appendChild(counter);
+
+                const updateCounter = () => {
+                    const length = field.value.length;
+                    counter.textContent = `${length} / ${minLength} characters minimum`;
+
+                    if (length >= minLength) {
+                        counter.classList.remove('text-danger');
+                        counter.classList.add('text-success');
+                    } else {
+                        counter.classList.remove('text-success');
+                        counter.classList.add('text-warning');
+                    }
+                };
+
+                field.addEventListener('input', updateCounter);
+                updateCounter();
             };
-            
-            field.addEventListener('input', updateCounter);
-            updateCounter();
-        };
-        
-        createCounter(motivationField, 50);
-    }
-});
+
+            createCounter(motivationField, 50);
+        }
+    });
 </script>
 
 <?php include 'includes/footer.php'; ?>
