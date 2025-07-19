@@ -63,12 +63,14 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
     <link rel="icon" type="image/x-icon" href="<?php echo SITE_URL; ?>/assets/images/favicon.ico">
     <link rel="apple-touch-icon" href="<?php echo SITE_URL; ?>/assets/images/apple-touch-icon.png">
 
-    <!-- REQUIRED: Bootstrap & Font Awesome -->
+    <!-- Stylesheets -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://ecct.serengetibytes.com/assets/css/style.css" rel="stylesheet">
+    <link href="<?php echo ASSETS_PATH; ?>/css/responsive.css" rel="stylesheet">
 
-    <!-- Our Creative CSS (loads AFTER Bootstrap) -->
-    <link href="<?php echo ASSETS_PATH; ?>/css/style.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Additional CSS for specific pages -->
     <?php if (isset($additional_css)): ?>
@@ -87,7 +89,6 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
 </head>
 
 <body class="<?php echo $page_class; ?>">
-    <!-- Rest of your body content stays the same -->
 
     <!-- Skip to main content for accessibility -->
     <a class="skip-link sr-only sr-only-focusable" href="#main-content">Skip to main content</a>
