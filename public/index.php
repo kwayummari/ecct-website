@@ -1,7 +1,7 @@
 <?php
 
 /**
- * ECCT Website Homepage - Enhanced with Creative Design
+ * ECCT Website Homepage
  * Environmental Conservation Community of Tanzania
  */
 
@@ -37,67 +37,61 @@ $recent_gallery = get_recent_content('gallery', 6);
 include 'includes/header.php';
 ?>
 
-<!-- Epic Hero Section -->
+<!-- Hero Section -->
+<!-- Hero Section -->
 <section class="hero-section position-relative overflow-hidden">
     <!-- Video Background -->
     <div class="hero-video-background">
-        <div class="hero-image-placeholder">
-            <img src="<?php echo SITE_URL . '/' . $hero_background; ?>"
-                alt="ECCT Environmental Conservation"
-                class="hero-fallback-image">
-        </div>
-
-        <video autoplay muted loop playsinline preload="metadata" class="hero-video">
-            <source src="<?php echo SITE_URL; ?>/assets/videos/MAZINGIRA.webm" type="video/webm">
+        <video autoplay muted loop playsinline preload="auto" class="hero-video">
             <source src="<?php echo SITE_URL; ?>/assets/videos/MAZINGIRA.mp4" type="video/mp4">
+            <source src="<?php echo SITE_URL; ?>/assets/videos/MAZINGIRA.webm" type="video/webm">
+            <!-- Fallback image if video doesn't load -->
+            <img src="<?php echo SITE_URL . '/' . $hero_background; ?>" alt="ECCT Environmental Conservation" class="hero-fallback-image">
         </video>
-
         <div class="hero-overlay"></div>
     </div>
 
     <div class="container position-relative">
-        <div class="row align-items-center min-vh-100">
+        <div class="row align-items-center min-vh-75">
             <div class="col-lg-6">
-                <div class="hero-content">
-                    <h1 class="animate-fade-in">
-                        <span class="highlight-text">Together We Can</span><br>
-                        Save Our Environment
+                <div class="hero-content text-white">
+                    <h1 class="display-4 fw-bold mb-4 animate-fade-in">
+                        <?php echo htmlspecialchars($hero_title); ?>
                     </h1>
-                    <p class="animate-fade-in-delay">
+                    <p class="lead mb-4 animate-fade-in-delay">
                         <?php echo htmlspecialchars($hero_subtitle); ?>
                     </p>
                     <div class="hero-buttons animate-fade-in-delay-2">
-                        <a href="<?php echo SITE_URL; ?>/volunteer" class="btn btn-primary btn-lg">
-                            <i class="fas fa-hands-helping"></i>
+                        <a href="<?php echo SITE_URL; ?>/volunteer" class="btn btn-primary btn-lg me-3">
                             Join as Volunteer
                         </a>
                         <a href="<?php echo SITE_URL; ?>/about" class="btn btn-outline-light btn-lg">
-                            <i class="fas fa-info-circle"></i>
                             Learn More
                         </a>
                     </div>
                 </div>
             </div>
 
+            <!-- Statistics Cards (optional - you can keep or remove) -->
             <div class="col-lg-6">
-                <div class="hero-stats animate-slide-up">
-                    <div class="row text-center">
+                <div class="hero-stats bg-white bg-opacity-10 p-4 rounded-3 backdrop-blur">
+                    <div class="row text-center text-white">
                         <div class="col-4">
                             <div class="stat-item">
-                                <h3><?php echo $successful_campaigns; ?></h3>
-                                <p>Successful Campaigns</p>
+                                <h3 class="display-6 fw-bold mb-1"><?php echo $successful_campaigns; ?>+</h3>
+                                <p class="small mb-0">Successful Campaigns</p>
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="stat-item">
-                                <h3><?php echo $volunteers_count; ?></h3>
-                                <p>Active Volunteers</p>
+                                <h3 class="display-6 fw-bold mb-1"><?php echo $volunteers_count; ?>+</h3>
+                                <p class="small mb-0">Volunteers</p>
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="stat-item">
-                                <h3><?php echo $communities_served; ?></h3>
-                                <p>Communities Served</p>
+                                <h3 class="display-6 fw-bold mb-1"><?php echo $communities_served; ?>+</h3>
+                                <p class="small mb-0">Communities</p>
                             </div>
                         </div>
                     </div>
@@ -106,19 +100,12 @@ include 'includes/header.php';
         </div>
 
         <!-- Scroll Indicator -->
-        <div class="scroll-indicator">
-            <div class="scroll-arrow">
-                <i class="fas fa-chevron-down"></i>
+        <div class="scroll-indicator position-absolute bottom-0 start-50 translate-middle-x pb-4">
+            <div class="scroll-arrow text-white text-center">
+                <i class="fas fa-chevron-down fa-2x opacity-75"></i>
+                <p class="small mt-2 mb-0">Scroll Down</p>
             </div>
-            <p>Scroll to explore</p>
         </div>
-    </div>
-
-    <!-- Video Controls -->
-    <div class="video-controls">
-        <button class="video-toggle-btn" id="videoToggle" title="Pause/Play video">
-            <i class="fas fa-pause"></i>
-        </button>
     </div>
 </section>
 
@@ -128,9 +115,7 @@ include 'includes/header.php';
         <div class="row align-items-center">
             <div class="col-lg-6 mb-4 mb-lg-0">
                 <div class="mission-content">
-                    <h2 class="section-title">
-                        <span class="highlight-text">Our Mission</span>
-                    </h2>
+                    <h2 class="section-title mb-4">Our Mission</h2>
                     <p class="text-muted mb-4">
                         To empower local communities to create cleaner, greener, resilient and sustainable environments
                         through tackling global environmental pollution from plastic waste, climate change and loss of
@@ -177,10 +162,8 @@ include 'includes/header.php';
         <div class="container">
             <div class="row">
                 <div class="col-12 text-center mb-5">
-                    <h2 class="section-title">
-                        <span class="highlight-text">Featured Campaigns</span>
-                    </h2>
-                    <p class="section-subtitle">Join our ongoing environmental conservation campaigns</p>
+                    <h2 class="section-title">Featured Campaigns</h2>
+                    <p class="text-muted">Join our ongoing environmental conservation campaigns</p>
                 </div>
             </div>
             <div class="row">
@@ -194,7 +177,7 @@ include 'includes/header.php';
                             <?php endif; ?>
                             <div class="card-body d-flex flex-column">
                                 <h5 class="card-title">
-                                    <a href="<?php echo SITE_URL; ?>/campaigns?id=<?php echo $campaign['id']; ?>"
+                                    <a href="<?php echo SITE_URL; ?>/campaigns.php?id=<?php echo $campaign['id']; ?>"
                                         class="text-decoration-none">
                                         <?php echo htmlspecialchars($campaign['title']); ?>
                                     </a>
@@ -222,7 +205,7 @@ include 'includes/header.php';
                                 </div>
                             </div>
                             <div class="card-footer bg-transparent border-0">
-                                <a href="<?php echo SITE_URL; ?>/campaigns?id=<?php echo $campaign['id']; ?>"
+                                <a href="<?php echo SITE_URL; ?>/campaigns.php?id=<?php echo $campaign['id']; ?>"
                                     class="btn btn-primary btn-sm">
                                     Learn More
                                 </a>
@@ -232,7 +215,7 @@ include 'includes/header.php';
                 <?php endforeach; ?>
             </div>
             <div class="text-center mt-4">
-                <a href="<?php echo SITE_URL; ?>/campaigns" class="btn btn-outline-primary">
+                <a href="<?php echo SITE_URL; ?>/campaigns.php" class="btn btn-outline-primary">
                     View All Campaigns
                     <i class="fas fa-arrow-right ms-2"></i>
                 </a>
@@ -247,10 +230,8 @@ include 'includes/header.php';
         <div class="container">
             <div class="row">
                 <div class="col-12 text-center mb-5">
-                    <h2 class="section-title">
-                        <span class="highlight-text">Latest News</span> & Updates
-                    </h2>
-                    <p class="section-subtitle">Stay informed about our environmental conservation activities</p>
+                    <h2 class="section-title">Latest News & Updates</h2>
+                    <p class="text-muted">Stay informed about our environmental conservation activities</p>
                 </div>
             </div>
             <div class="row">
@@ -270,7 +251,7 @@ include 'includes/header.php';
                                     </small>
                                 </div>
                                 <h5 class="card-title">
-                                    <a href="<?php echo SITE_URL; ?>/news?id=<?php echo $news['id']; ?>"
+                                    <a href="<?php echo SITE_URL; ?>/news.php?id=<?php echo $news['id']; ?>"
                                         class="text-decoration-none">
                                         <?php echo htmlspecialchars($news['title']); ?>
                                     </a>
@@ -280,7 +261,7 @@ include 'includes/header.php';
                                 </p>
                             </div>
                             <div class="card-footer bg-transparent border-0">
-                                <a href="<?php echo SITE_URL; ?>/news?id=<?php echo $news['id']; ?>"
+                                <a href="<?php echo SITE_URL; ?>/news.php?id=<?php echo $news['id']; ?>"
                                     class="btn btn-outline-primary btn-sm">
                                     Read More
                                 </a>
@@ -290,7 +271,7 @@ include 'includes/header.php';
                 <?php endforeach; ?>
             </div>
             <div class="text-center mt-4">
-                <a href="<?php echo SITE_URL; ?>/news" class="btn btn-outline-primary">
+                <a href="<?php echo SITE_URL; ?>/news.php" class="btn btn-outline-primary">
                     View All News
                     <i class="fas fa-arrow-right ms-2"></i>
                 </a>
@@ -304,15 +285,13 @@ include 'includes/header.php';
     <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-8">
-                <h3 class="mb-3">
-                    <span class="highlight-text">Ready to Make</span> a Difference?
-                </h3>
+                <h3 class="mb-3">Ready to Make a Difference?</h3>
                 <p class="mb-0 lead">
                     Join our community of environmental champions and help create a sustainable future for Tanzania.
                 </p>
             </div>
             <div class="col-lg-4 text-lg-end">
-                <a href="<?php echo SITE_URL; ?>/volunteer" class="btn btn-light btn-lg">
+                <a href="<?php echo SITE_URL; ?>/volunteer.php" class="btn btn-light btn-lg">
                     <i class="fas fa-heart me-2"></i>
                     Become a Volunteer
                 </a>
@@ -327,10 +306,8 @@ include 'includes/header.php';
         <div class="container">
             <div class="row">
                 <div class="col-12 text-center mb-5">
-                    <h2 class="section-title">
-                        <span class="highlight-text">Our Impact</span> in Pictures
-                    </h2>
-                    <p class="section-subtitle">See the positive change we're making in communities across Tanzania</p>
+                    <h2 class="section-title">Our Impact in Pictures</h2>
+                    <p class="text-muted">See the positive change we're making in communities across Tanzania</p>
                 </div>
             </div>
             <div class="row">
@@ -349,7 +326,7 @@ include 'includes/header.php';
                 <?php endforeach; ?>
             </div>
             <div class="text-center mt-4">
-                <a href="<?php echo SITE_URL; ?>/gallery" class="btn btn-outline-primary">
+                <a href="<?php echo SITE_URL; ?>/gallery.php" class="btn btn-outline-primary">
                     View Full Gallery
                     <i class="fas fa-images ms-2"></i>
                 </a>
@@ -357,98 +334,117 @@ include 'includes/header.php';
         </div>
     </section>
 
-    <!-- Enhanced Gallery Modal -->
+    <!-- Gallery Modal -->
     <div class="modal fade" id="galleryModal" tabindex="-1">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="galleryModalLabel">Image Gallery</h5>
+                    <h5 class="modal-title" id="galleryModalLabel">Image</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <div class="modal-body text-center p-0">
-                    <img src="" alt="" class="img-fluid w-100" id="galleryModalImage">
-                </div>
-                <div class="modal-footer justify-content-center">
-                    <div class="image-info">
-                        <p class="mb-0 text-muted" id="galleryModalDescription"></p>
-                    </div>
+                <div class="modal-body text-center">
+                    <img src="" alt="" class="img-fluid" id="galleryModalImage">
                 </div>
             </div>
         </div>
     </div>
 <?php endif; ?>
 
-<!-- Enhanced JavaScript -->
+<style>
+    /* Optimized Video Background */
+    .hero-video {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        min-width: 100%;
+        min-height: 100%;
+        width: auto;
+        height: auto;
+        transform: translate(-50%, -50%);
+        object-fit: cover;
+        z-index: -2;
+        /* Optimize video performance */
+        will-change: transform;
+        filter: brightness(0.8);
+        /* Slightly darken for better text readability */
+    }
+
+    /* Loading state for video */
+    .hero-video-background::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(45deg, #2c5f2d, #4a9c4f);
+        z-index: -1;
+        opacity: 1;
+        transition: opacity 0.5s ease;
+    }
+
+    .hero-video-background.loaded::before {
+        opacity: 0;
+    }
+
+    /* Mobile optimizations - disable video on smaller screens */
+    @media (max-width: 768px) {
+        .hero-video {
+            display: none !important;
+        }
+
+        .hero-video-background {
+            background-image: url('<?php echo SITE_URL . '/' . $hero_background; ?>');
+            background-size: cover;
+            background-position: center;
+        }
+    }
+
+    /* Slow connection detection */
+    @media (prefers-reduced-data: reduce) {
+        .hero-video {
+            display: none !important;
+        }
+
+        .hero-video-background {
+            background-image: url('<?php echo SITE_URL . '/' . $hero_background; ?>');
+            background-size: cover;
+            background-position: center;
+        }
+    }
+</style>
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Enhanced video handling with loading states
         const video = document.querySelector('.hero-video');
         const videoBackground = document.querySelector('.hero-video-background');
-        const imagePlaceholder = document.querySelector('.hero-image-placeholder');
         const toggleBtn = document.getElementById('videoToggle');
         const toggleIcon = toggleBtn?.querySelector('i');
 
-        let videoLoaded = false;
-
-        // Check connection and device capabilities
+        // Check if user prefers reduced data or is on slow connection
         const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
         const slowConnection = connection && (connection.effectiveType === 'slow-2g' || connection.effectiveType === '2g');
         const prefersReducedData = window.matchMedia('(prefers-reduced-data: reduce)').matches;
-        const isMobile = window.innerWidth <= 768;
 
-        function showImageFallback() {
-            if (video) video.style.display = 'none';
-            if (imagePlaceholder) imagePlaceholder.style.opacity = '1';
-            videoBackground.classList.add('loaded');
-            if (toggleBtn) toggleBtn.style.display = 'none';
-        }
+        // Only load video if conditions are good
+        if (!slowConnection && !prefersReducedData && window.innerWidth > 768) {
+            // Video is already in HTML, just add event listeners
+            if (video) {
+                video.addEventListener('loadeddata', function() {
+                    videoBackground.classList.add('loaded');
+                });
 
-        function showVideo() {
-            if (imagePlaceholder) {
-                imagePlaceholder.style.opacity = '0';
-                setTimeout(() => imagePlaceholder.style.display = 'none', 500);
+                video.addEventListener('error', function() {
+                    console.log('Video failed to load, falling back to image');
+                    video.style.display = 'none';
+                });
             }
-            video.classList.add('loaded');
-            videoBackground.classList.add('loaded');
-            if (toggleBtn) toggleBtn.style.display = 'block';
-        }
-
-        // Decide whether to load video
-        if (slowConnection || prefersReducedData || isMobile) {
-            console.log('Using image fallback due to device/connection constraints');
-            showImageFallback();
-        } else if (video) {
-            // Set timeout for video loading (10 seconds max)
-            const loadTimeout = setTimeout(() => {
-                if (!videoLoaded) {
-                    console.log('Video loading timeout, falling back to image');
-                    showImageFallback();
-                }
-            }, 10000);
-
-            // Video loaded successfully
-            video.addEventListener('loadeddata', function() {
-                videoLoaded = true;
-                clearTimeout(loadTimeout);
-                console.log('Video loaded successfully');
-                showVideo();
-            });
-
-            // Video failed to load
-            video.addEventListener('error', function(e) {
-                clearTimeout(loadTimeout);
-                console.log('Video failed to load:', e);
-                showImageFallback();
-            });
 
             // Video controls
-            if (toggleBtn) {
+            if (toggleBtn && video) {
                 toggleBtn.addEventListener('click', function() {
                     if (video.paused) {
-                        video.play().catch(e => {
-                            console.log('Video play failed:', e);
-                            showImageFallback();
-                        });
+                        video.play();
                         toggleIcon.className = 'fas fa-pause';
                         toggleBtn.title = 'Pause video';
                     } else {
@@ -458,215 +454,28 @@ include 'includes/header.php';
                     }
                 });
             }
-
-            // Try to load the video
-            video.load();
+        } else {
+            // Remove video for slow connections or mobile
+            if (video) {
+                video.remove();
+            }
+            if (toggleBtn) {
+                toggleBtn.remove();
+            }
         }
 
-        // Enhanced navbar scroll effect
-        const navbar = document.querySelector('.navbar');
-        let lastScrollY = window.scrollY;
-
-        window.addEventListener('scroll', function() {
-            const currentScrollY = window.scrollY;
-
-            if (currentScrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-
-            // Hide navbar on scroll down, show on scroll up
-            if (currentScrollY > lastScrollY && currentScrollY > 100) {
-                navbar.style.transform = 'translateY(-100%)';
-            } else {
-                navbar.style.transform = 'translateY(0)';
-            }
-
-            lastScrollY = currentScrollY;
-        });
-
-        // Enhanced scroll indicator
+        // Smooth scroll for scroll indicator
         const scrollIndicator = document.querySelector('.scroll-indicator');
         if (scrollIndicator) {
             scrollIndicator.addEventListener('click', function() {
-                const nextSection = document.querySelector('.mission-section');
-                if (nextSection) {
-                    nextSection.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                } else {
-                    window.scrollTo({
-                        top: window.innerHeight,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-
-            // Hide scroll indicator when scrolled
-            window.addEventListener('scroll', function() {
-                if (window.scrollY > 100) {
-                    scrollIndicator.style.opacity = '0';
-                    scrollIndicator.style.transform = 'translateX(-50%) translateY(20px)';
-                } else {
-                    scrollIndicator.style.opacity = '1';
-                    scrollIndicator.style.transform = 'translateX(-50%) translateY(0)';
-                }
-            });
-        }
-
-        // Enhanced back to top button (auto-created)
-        let backToTop = document.getElementById('backToTop');
-        if (!backToTop) {
-            backToTop = document.createElement('button');
-            backToTop.id = 'backToTop';
-            backToTop.innerHTML = '<i class="fas fa-arrow-up"></i>';
-            backToTop.title = 'Back to top';
-            backToTop.setAttribute('aria-label', 'Back to top');
-            document.body.appendChild(backToTop);
-        }
-
-        window.addEventListener('scroll', function() {
-            if (window.scrollY > 300) {
-                backToTop.classList.add('show');
-            } else {
-                backToTop.classList.remove('show');
-            }
-        });
-
-        backToTop.addEventListener('click', function() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-
-        // Enhanced highlight text animation on scroll
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver(function(entries) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animate');
-                    // Add a slight delay for staggered animation effect
-                    const delay = Array.from(entry.target.parentNode.children).indexOf(entry.target) * 100;
-                    setTimeout(() => {
-                        entry.target.style.animationDelay = '0s';
-                    }, delay);
-                }
-            });
-        }, observerOptions);
-
-        // Observe highlight text elements
-        document.querySelectorAll('.highlight-text').forEach(el => {
-            observer.observe(el);
-        });
-
-        // Observe other animated elements
-        document.querySelectorAll('.animate-fade-in, .animate-fade-in-delay, .animate-fade-in-delay-2, .animate-slide-up').forEach(el => {
-            observer.observe(el);
-        });
-
-        // Enhanced gallery modal
-        const galleryModal = document.getElementById('galleryModal');
-        if (galleryModal) {
-            galleryModal.addEventListener('show.bs.modal', function(event) {
-                const button = event.relatedTarget;
-                const imageSrc = button.getAttribute('data-bs-image');
-                const imageTitle = button.getAttribute('data-bs-title');
-
-                const modalImage = galleryModal.querySelector('#galleryModalImage');
-                const modalTitle = galleryModal.querySelector('#galleryModalLabel');
-                const modalDescription = galleryModal.querySelector('#galleryModalDescription');
-
-                modalImage.src = imageSrc;
-                modalImage.alt = imageTitle;
-                modalTitle.textContent = imageTitle;
-
-                if (modalDescription) {
-                    modalDescription.textContent = imageTitle;
-                }
-
-                // Add loading state
-                modalImage.style.opacity = '0';
-                modalImage.onload = function() {
-                    modalImage.style.opacity = '1';
-                };
-            });
-
-            // Keyboard navigation for modal
-            galleryModal.addEventListener('keydown', function(event) {
-                if (event.key === 'Escape') {
-                    const modal = bootstrap.Modal.getInstance(galleryModal);
-                    modal.hide();
-                }
-            });
-        }
-
-        // Enhanced card hover effects
-        const cards = document.querySelectorAll('.card');
-        cards.forEach(card => {
-            card.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-15px) rotateX(5deg)';
-            });
-
-            card.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(0) rotateX(0)';
-            });
-        });
-
-        // Smooth scrolling for all internal links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        // Performance optimization: Lazy load images
-        if ('IntersectionObserver' in window) {
-            const imageObserver = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const img = entry.target;
-                        if (img.dataset.src) {
-                            img.src = img.dataset.src;
-                            img.classList.remove('lazy');
-                            observer.unobserve(img);
-                        }
-                    }
+                window.scrollTo({
+                    top: window.innerHeight,
+                    behavior: 'smooth'
                 });
             });
-
-            document.querySelectorAll('img[data-src]').forEach(img => {
-                imageObserver.observe(img);
-            });
         }
-
-        // Add some interactive elements feedback
-        document.querySelectorAll('.btn').forEach(button => {
-            button.addEventListener('click', function() {
-                this.style.transform = 'scale(0.95)';
-                setTimeout(() => {
-                    this.style.transform = '';
-                }, 150);
-            });
-        });
-
-        console.log('🎨 ECCT Enhanced Homepage Loaded Successfully! 🌿');
     });
 </script>
-
 <?php
 // Additional JavaScript for homepage
 $additional_js = [ASSETS_PATH . '/js/homepage.js'];
