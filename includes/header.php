@@ -65,7 +65,6 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
 
 
     <link href="<?php echo ASSETS_PATH; ?>/css/style.css" rel="stylesheet">
-    <link href="<?php echo ASSETS_PATH; ?>/css/responsive.css" rel="stylesheet">
 
     <!-- Additional CSS for specific pages -->
     <?php if (isset($additional_css)): ?>
