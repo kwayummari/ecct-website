@@ -353,7 +353,21 @@ include 'includes/header.php';
 <?php endif; ?>
 
 <style>
-    /* Optimized Video Background */
+    /* Hero Video Background with Image Fallback */
+    .hero-video-background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -2;
+        /* Set background image as fallback */
+        background-image: url('<?php echo SITE_URL . "/" . $hero_background; ?>');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
     .hero-video {
         position: absolute;
         top: 50%;
@@ -364,54 +378,47 @@ include 'includes/header.php';
         height: auto;
         transform: translate(-50%, -50%);
         object-fit: cover;
-        z-index: -2;
-        /* Optimize video performance */
-        will-change: transform;
-        filter: brightness(0.8);
-        /* Slightly darken for better text readability */
+        z-index: -1;
+        /* Hide video initially until loaded */
+        opacity: 0;
+        transition: opacity 0.5s ease;
     }
 
-    /* Loading state for video */
+    /* Show video when loaded */
+    .hero-video.loaded {
+        opacity: 1;
+    }
+
+    /* Loading indicator */
     .hero-video-background::before {
         content: '';
         position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(45deg, #2c5f2d, #4a9c4f);
-        z-index: -1;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 50px;
+        height: 50px;
+        border: 3px solid rgba(255, 255, 255, 0.3);
+        border-top: 3px solid #fff;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        z-index: 1;
         opacity: 1;
-        transition: opacity 0.5s ease;
+        transition: opacity 0.3s ease;
     }
 
     .hero-video-background.loaded::before {
         opacity: 0;
+        pointer-events: none;
     }
 
-    /* Mobile optimizations - disable video on smaller screens */
-    @media (max-width: 768px) {
-        .hero-video {
-            display: none !important;
+    @keyframes spin {
+        0% {
+            transform: translate(-50%, -50%) rotate(0deg);
         }
 
-        .hero-video-background {
-            background-image: url('<?php echo SITE_URL . '/' . $hero_background; ?>');
-            background-size: cover;
-            background-position: center;
-        }
-    }
-
-    /* Slow connection detection */
-    @media (prefers-reduced-data: reduce) {
-        .hero-video {
-            display: none !important;
-        }
-
-        .hero-video-background {
-            background-image: url('<?php echo SITE_URL . '/' . $hero_background; ?>');
-            background-size: cover;
-            background-position: center;
+        100% {
+            transform: translate(-50%, -50%) rotate(360deg);
         }
     }
 </style>
