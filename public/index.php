@@ -352,6 +352,69 @@ include 'includes/header.php';
     </div>
 <?php endif; ?>
 
+<style>
+    /* Optimized Video Background */
+    .hero-video {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        min-width: 100%;
+        min-height: 100%;
+        width: auto;
+        height: auto;
+        transform: translate(-50%, -50%);
+        object-fit: cover;
+        z-index: -2;
+        /* Optimize video performance */
+        will-change: transform;
+        filter: brightness(0.8);
+        /* Slightly darken for better text readability */
+    }
+
+    /* Loading state for video */
+    .hero-video-background::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(45deg, #2c5f2d, #4a9c4f);
+        z-index: -1;
+        opacity: 1;
+        transition: opacity 0.5s ease;
+    }
+
+    .hero-video-background.loaded::before {
+        opacity: 0;
+    }
+
+    /* Mobile optimizations - disable video on smaller screens */
+    @media (max-width: 768px) {
+        .hero-video {
+            display: none !important;
+        }
+
+        .hero-video-background {
+            background-image: url('<?php echo SITE_URL . '/' . $hero_background; ?>');
+            background-size: cover;
+            background-position: center;
+        }
+    }
+
+    /* Slow connection detection */
+    @media (prefers-reduced-data: reduce) {
+        .hero-video {
+            display: none !important;
+        }
+
+        .hero-video-background {
+            background-image: url('<?php echo SITE_URL . '/' . $hero_background; ?>');
+            background-size: cover;
+            background-position: center;
+        }
+    }
+</style>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
