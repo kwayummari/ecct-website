@@ -68,7 +68,7 @@ body {
     font-weight: 400;
     line-height: 1.7;
     color: #1f2937;
-    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 50%, #e2e8f0 100%);
+    background: red;
     overflow-x: hidden;
     position: relative;
 }
