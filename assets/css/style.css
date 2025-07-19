@@ -1061,7 +1061,9 @@ footer .social-links a:hover {
     padding: 1.5rem;
 }
 
-
+.modal-header .btn-close {
+    filter: invert(1);
+}
 
 .modal-body {
     padding: 2rem;
