@@ -66,7 +66,7 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
     <!-- Stylesheets -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <!-- <link href="https://ecct.serengetibytes.com/assets/css/style.css" rel="stylesheet"> -->
+    <link href="<?php echo ASSETS_PATH; ?>/css/style.css" rel="stylesheet">
     <link href="<?php echo ASSETS_PATH; ?>/css/responsive.css" rel="stylesheet">
 
     <!-- Google Fonts -->
