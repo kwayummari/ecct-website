@@ -37,7 +37,9 @@ $recent_gallery = get_recent_content('gallery', 6);
 include 'includes/header.php';
 ?>
 
-<?php include 'assets/css/style.css' ?>
+<style>
+    <?php include 'assets/css/style.css' ?>
+</style>
 <!-- Hero Section -->
 <section class="hero-section position-relative overflow-hidden">
     <!-- Video Background -->
