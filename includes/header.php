@@ -63,14 +63,9 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
     <link rel="icon" type="image/x-icon" href="<?php echo SITE_URL; ?>/assets/images/favicon.ico">
     <link rel="apple-touch-icon" href="<?php echo SITE_URL; ?>/assets/images/apple-touch-icon.png">
 
-    <!-- Stylesheets -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
     <link href="<?php echo ASSETS_PATH; ?>/css/style.css" rel="stylesheet">
     <link href="<?php echo ASSETS_PATH; ?>/css/responsive.css" rel="stylesheet">
-
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Additional CSS for specific pages -->
     <?php if (isset($additional_css)): ?>
