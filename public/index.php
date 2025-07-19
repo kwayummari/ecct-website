@@ -354,73 +354,68 @@ include 'includes/header.php';
 
 <style>
     /* Hero Video Background with Image Fallback */
-    .hero-video-background {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: -2;
-        /* Set background image as fallback */
-        background-image: url('<?php echo SITE_URL . "/" . $hero_background; ?>');
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-    }
+.hero-video-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    /* Set background image as fallback */
+    background-image: url('<?php echo SITE_URL . "/" . $hero_background; ?>');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
 
-    .hero-video {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        min-width: 100%;
-        min-height: 100%;
-        width: auto;
-        height: auto;
-        transform: translate(-50%, -50%);
-        object-fit: cover;
-        z-index: -1;
-        /* Hide video initially until loaded */
-        opacity: 0;
-        transition: opacity 0.5s ease;
-    }
+.hero-video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+    z-index: -1;
+    /* Hide video initially until loaded */
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
 
-    /* Show video when loaded */
-    .hero-video.loaded {
-        opacity: 1;
-    }
+/* Show video when loaded */
+.hero-video.loaded {
+    opacity: 1;
+}
 
-    /* Loading indicator */
-    .hero-video-background::before {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 50px;
-        height: 50px;
-        border: 3px solid rgba(255, 255, 255, 0.3);
-        border-top: 3px solid #fff;
-        border-radius: 50%;
-        animation: spin 1s linear infinite;
-        z-index: 1;
-        opacity: 1;
-        transition: opacity 0.3s ease;
-    }
+/* Loading indicator */
+.hero-video-background::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50px;
+    height: 50px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-top: 3px solid #fff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    z-index: 1;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
 
-    .hero-video-background.loaded::before {
-        opacity: 0;
-        pointer-events: none;
-    }
+.hero-video-background.loaded::before {
+    opacity: 0;
+    pointer-events: none;
+}
 
-    @keyframes spin {
-        0% {
-            transform: translate(-50%, -50%) rotate(0deg);
-        }
-
-        100% {
-            transform: translate(-50%, -50%) rotate(360deg);
-        }
-    }
+@keyframes spin {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
 </style>
 
 <script>
