@@ -176,7 +176,7 @@ include 'includes/header.php';
 <!-- Hero Section -->
 <section class="hero-section position-relative overflow-hidden bg-gradient-primary">
     <div class="hero-background" style="background: linear-gradient(135deg, #2c5f2d 0%, #4a9c4f 100%);">
-        <div class="hero-overlay" style="background: rgba(0,0,0,0.3);"></div>
+        <div class="hero-overlay1" style="background: rgba(0,0,0,0.3);"></div>
     </div>
     <div class="container position-relative">
         <div class="row align-items-center min-vh-50">
