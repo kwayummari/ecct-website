@@ -149,7 +149,7 @@ include 'includes/header.php';
             </div>
             <div class="col-lg-6">
                 <div class="mission-image">
-                    <img src="<?php echo ASSETS_PATH; ?>/images/mission-image.jpg"
+                    <img src="<?php echo ASSETS_PATH; ?>/images/_X4A8064.jpg"
                         alt="ECCT Mission" class="img-fluid rounded-4 shadow">
                 </div>
             </div>
