@@ -62,13 +62,14 @@ include 'includes/header.php';
                         <?php echo htmlspecialchars($hero_subtitle); ?>
                     </p>
                     <div class="hero-buttons animate-fade-in-delay-2">
-                        <a href="<?php echo SITE_URL; ?>/volunteer" class="btn btn-primary btn-lg me-3" style="opacity:0.9;background:#28a745;"></a>
+                        <a href="<?php echo SITE_URL; ?>/volunteer" class="btn btn-primary btn-lg me-3" style="opacity:0.9; background:#28a745;">
                             Join as Volunteer
                         </a>
                         <a href="<?php echo SITE_URL; ?>/about" class="btn btn-outline-light btn-lg">
                             Learn More
                         </a>
                     </div>
+
                 </div>
             </div>
 
