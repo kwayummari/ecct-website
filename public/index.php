@@ -55,7 +55,7 @@ include 'includes/header.php';
         <div class="row align-items-center min-vh-75">
             <div class="col-lg-6">
                 <div class="hero-content text-white">
-                    <h1 class="display-4 fw-bold mb-4 animate-fade-in">
+                    <h1 class="display-4 fw-bold mb-4 animate-fade-in text-white">
                         <?php echo htmlspecialchars($hero_title); ?>
                     </h1>
                     <p class="lead mb-4 animate-fade-in-delay">
