@@ -64,6 +64,8 @@ function authenticate_user($username, $password)
     $db = new Database();
 
     echo "Authenticating user: $username";
+    echo "<br>";
+    echo "Using password: $password";
 
     // Try to find the user by username first, then email
     $user = $db->selectOne('admin_users', ['username' => $username]);
