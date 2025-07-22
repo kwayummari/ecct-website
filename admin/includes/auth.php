@@ -117,17 +117,22 @@ function authenticate_user($username, $password)
  */
 function logout_user()
 {
+    error_log("Logging out user. Current session admin_user_id: " . ($_SESSION['admin_user_id'] ?? 'none'));
+
     if (is_logged_in()) {
         $user = get_logged_in_user();
         if ($user) {
+            error_log("Logging activity for user: " . $user['id']);
             log_activity($user['id'], 'logout', 'User logged out');
         }
     }
 
     session_unset();
     session_destroy();
-    // Do NOT start a new session here
+
+    error_log("Session destroyed");
 }
+
 
 
 /**
