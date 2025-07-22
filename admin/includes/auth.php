@@ -94,15 +94,15 @@ function authenticate_user($username, $password)
     }
 
     // Update last login and increment login count
-    $db->update('admin_users', [
-        'last_login' => date('Y-m-d H:i:s'),
-        'login_count' => isset($user['login_count']) ? $user['login_count'] + 1 : 1
-    ], ['id' => $user['id']]);
+    // $db->update('admin_users', [
+    //     'last_login' => date('Y-m-d H:i:s'),
+    //     'login_count' => isset($user['login_count']) ? $user['login_count'] + 1 : 1
+    // ], ['id' => $user['id']]);
 
-    // Log activity (optional helper function)
-    if (function_exists('log_activity')) {
-        log_activity($user['id'], 'login', 'User logged in');
-    }
+    // // Log activity (optional helper function)
+    // if (function_exists('log_activity')) {
+    //     log_activity($user['id'], 'login', 'User logged in');
+    // }
 
     return $user;
 }
