@@ -74,8 +74,7 @@ function authenticate_user($username, $password)
         $user = $db->selectOne('admin_users', ['email' => $username]);
     }
 
-    echo "User found: " . ($user ? 'Yes' : 'No');
-    echo "<br>";
+  
     echo $user ? 'User data: ' . print_r($user, true) : 'No user data found';
 
     // If user not found or password field missing, reject login
