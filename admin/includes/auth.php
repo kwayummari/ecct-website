@@ -25,13 +25,20 @@ function is_logged_in()
  */
 function require_login()
 {
+    error_log("Checking login. Session admin_user_id: " . ($_SESSION['admin_user_id'] ?? 'none'));
+
     if (!is_logged_in()) {
+        error_log("Not logged in, redirecting to login.php");
         header('Location: ' . SITE_URL . '/admin/login.php');
         exit;
     }
 
-    // Check session timeout
+    if (isset($_SESSION['last_activity'])) {
+        error_log("Last activity: {$_SESSION['last_activity']}, Now: " . time());
+    }
+
     if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) > SESSION_TIMEOUT) {
+        error_log("Session expired, logging out");
         logout_user();
         header('Location: ' . SITE_URL . '/admin/login.php?error=session_expired');
         exit;
@@ -39,6 +46,7 @@ function require_login()
 
     $_SESSION['last_activity'] = time();
 }
+
 
 /**
  * Get current logged in user
