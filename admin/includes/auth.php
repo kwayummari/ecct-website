@@ -25,20 +25,13 @@ function is_logged_in()
  */
 function require_login()
 {
-    error_log("Checking login. Session admin_user_id: " . ($_SESSION['admin_user_id'] ?? 'none'));
-
     if (!is_logged_in()) {
-        error_log("Not logged in, redirecting to login.php");
         header('Location: ' . SITE_URL . '/admin/login.php');
         exit;
     }
 
-    if (isset($_SESSION['last_activity'])) {
-        error_log("Last activity: {$_SESSION['last_activity']}, Now: " . time());
-    }
-
+    // Check session timeout
     if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) > SESSION_TIMEOUT) {
-        error_log("Session expired, logging out");
         logout_user();
         header('Location: ' . SITE_URL . '/admin/login.php?error=session_expired');
         exit;
@@ -46,7 +39,6 @@ function require_login()
 
     $_SESSION['last_activity'] = time();
 }
-
 
 /**
  * Get current logged in user
@@ -117,22 +109,17 @@ function authenticate_user($username, $password)
  */
 function logout_user()
 {
-    error_log("Logging out user. Current session admin_user_id: " . ($_SESSION['admin_user_id'] ?? 'none'));
-
     if (is_logged_in()) {
         $user = get_logged_in_user();
         if ($user) {
-            error_log("Logging activity for user: " . $user['id']);
             log_activity($user['id'], 'logout', 'User logged out');
         }
     }
 
     session_unset();
     session_destroy();
-
-    error_log("Session destroyed");
+    // Do NOT start a new session here
 }
-
 
 
 /**
