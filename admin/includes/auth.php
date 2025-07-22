@@ -26,7 +26,9 @@ function is_logged_in()
 function require_login()
 {
     if (!is_logged_in()) {
-        header('Location: ' . SITE_URL . '/admin/login.php');
+        echo 'You must be logged in to access this page.';
+        echo $_SESSION['admin_user_id'] ? 'Session ID: ' . $_SESSION['admin_user_id'] : 'No session ID found';
+        // header('Location: ' . SITE_URL . '/admin/login.php');
         exit;
     }
 
