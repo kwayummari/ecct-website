@@ -89,7 +89,7 @@ function authenticate_user($username, $password)
     }
 
     // Verify password
-    if (!password_verify($password, $user['password'])) {
+    if (!password_verify($password, $user['password_hash'])) {
         return false;
     }
 
