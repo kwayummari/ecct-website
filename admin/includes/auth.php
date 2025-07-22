@@ -79,7 +79,7 @@ function authenticate_user($username, $password)
     echo $user ? 'User data: ' . print_r($user, true) : 'No user data found';
 
     // If user not found or password field missing, reject login
-    if (!$user || !isset($user['password'])) {
+    if (!$user || !isset($user['password_hash'])) {
         return false;
     }
 
