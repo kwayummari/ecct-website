@@ -19,7 +19,8 @@ if (!$current_user || !is_array($current_user)) {
         $current_user = $db->selectOne('admin_users', ['id' => $_SESSION['admin_user_id']]);
     }
     if (!$current_user) {
-        header('Location: login.php');
+        echo "User not found. Redirecting to login.php...";
+        // header('Location: login.php');
         exit;
     }
 }

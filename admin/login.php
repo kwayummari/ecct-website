@@ -7,7 +7,8 @@ require_once ECCT_ROOT . '/admin/includes/auth.php';
 
 // Redirect if already logged in
 if (is_logged_in()) {
-    header('Location: index.php');
+     echo "You are already logged in. Redirecting to dashboard...";   
+    // header('Location: index.php');
     exit;
 }
 
@@ -26,7 +27,8 @@ if ($_POST) {
         echo $user ? 'User data: ' . print_r($user, true) : 'No user data found';
         if ($user) {
             $_SESSION['admin_user_id'] = $user['id'];
-            header('Location: index.php');
+            echo "Redirecting to index.php...";
+            // header('Location: index.php');
             exit;
         } else {
             $error = 'Invalid username or password';

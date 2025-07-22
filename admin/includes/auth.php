@@ -26,14 +26,16 @@ function is_logged_in()
 function require_login()
 {
     if (!is_logged_in()) {
-        header('Location: ' . SITE_URL . '/admin/login.php');
+        echo "You must be logged in to access this page.";
+        // header('Location: ' . SITE_URL . '/admin/login.php');
         exit;
     }
 
     // Check session timeout
     if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) > SESSION_TIMEOUT) {
         logout_user();
-        header('Location: ' . SITE_URL . '/admin/login.php?error=session_expired');
+        echo "Your session has expired. Please log in again.";
+        // header('Location: ' . SITE_URL . '/admin/login.php?error=session_expired');
         exit;
     }
 
