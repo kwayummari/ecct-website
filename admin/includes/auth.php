@@ -63,6 +63,10 @@ function authenticate_user($username, $password)
 {
     $db = new Database();
 
+    echo "Authenticating user: $username";
+    echo "<br>";
+    echo "Using password: $password";
+
     // Try to find the user by username first, then email
     $user = $db->selectOne('admin_users', ['username' => $username]);
 
@@ -70,8 +74,9 @@ function authenticate_user($username, $password)
         $user = $db->selectOne('admin_users', ['email' => $username]);
     }
 
-  
-    echo $user ? 'User data: ' . print_r($user['password_hash'], true) : 'No user data found';
+    echo "User found: " . ($user ? 'Yes' : 'No');
+    echo "<br>";
+    echo $user ? 'User data: ' . print_r($user, true) : 'No user data found';
 
     // If user not found or password field missing, reject login
     if (!$user || !isset($user['password_hash'])) {
