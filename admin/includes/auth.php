@@ -116,12 +116,11 @@ function logout_user()
         }
     }
 
-    // Clear session
     session_unset();
     session_destroy();
-    session_start();
-    session_regenerate_id(true);
+    // Do NOT start a new session here
 }
+
 
 /**
  * Check if user has specific role
