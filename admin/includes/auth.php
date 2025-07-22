@@ -63,18 +63,20 @@ function authenticate_user($username, $password)
 {
     $db = new Database();
 
-    // Find user by username or email
+    // Try to find the user by username first, then email
     $user = $db->selectOne('admin_users', ['username' => $username]);
+
     if (!$user) {
         $user = $db->selectOne('admin_users', ['email' => $username]);
     }
 
-    if (!$user) {
+    // If user not found or password field missing, reject login
+    if (!$user || !isset($user['password'])) {
         return false;
     }
 
     // Check if user is active
-    if (!$user['is_active']) {
+    if (isset($user['is_active']) && !$user['is_active']) {
         return false;
     }
 
@@ -83,17 +85,20 @@ function authenticate_user($username, $password)
         return false;
     }
 
-    // Update last login
+    // Update last login and increment login count
     $db->update('admin_users', [
         'last_login' => date('Y-m-d H:i:s'),
-        'login_count' => $user['login_count'] + 1
+        'login_count' => isset($user['login_count']) ? $user['login_count'] + 1 : 1
     ], ['id' => $user['id']]);
 
-    // Log activity
-    log_activity($user['id'], 'login', 'User logged in');
+    // Log activity (optional helper function)
+    if (function_exists('log_activity')) {
+        log_activity($user['id'], 'login', 'User logged in');
+    }
 
     return $user;
 }
+
 
 /**
  * Logout user
