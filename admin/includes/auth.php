@@ -63,6 +63,10 @@ function authenticate_user($username, $password)
 {
     $db = new Database();
 
+    echo "Authenticating user: $username";
+    echo "<br>";
+    echo "Using password: $password";
+
     // Try to find the user by username first, then email
     $user = $db->selectOne('admin_users', ['username' => $username]);
 
@@ -70,8 +74,12 @@ function authenticate_user($username, $password)
         $user = $db->selectOne('admin_users', ['email' => $username]);
     }
 
-    // If user not found or password hash missing, reject login
-    if (!$user || !isset($user['password_hash'])) {
+    echo "User found: " . ($user ? 'Yes' : 'No');
+    echo "<br>";
+    echo $user ? 'User data: ' . print_r($user, true) : 'No user data found';
+
+    // If user not found or password field missing, reject login
+    if (!$user || !isset($user['password'])) {
         return false;
     }
 
@@ -80,7 +88,7 @@ function authenticate_user($username, $password)
         return false;
     }
 
-    // Verify password using correct field
+    // Verify password
     if (!password_verify($password, $user['password_hash'])) {
         return false;
     }
@@ -91,14 +99,13 @@ function authenticate_user($username, $password)
         'login_count' => isset($user['login_count']) ? $user['login_count'] + 1 : 1
     ], ['id' => $user['id']]);
 
-    // Log activity (optional)
+    // Log activity (optional helper function)
     if (function_exists('log_activity')) {
         log_activity($user['id'], 'login', 'User logged in');
     }
 
     return $user;
 }
-
 
 
 /**
