@@ -39,7 +39,7 @@ function require_login()
 /**
  * Get current logged in user
  */
-function get_current_user()
+function get_logged_in_user()
 {
     if (!is_logged_in()) {
         return false;
@@ -101,7 +101,7 @@ function authenticate_user($username, $password)
 function logout_user()
 {
     if (is_logged_in()) {
-        $user = get_current_user();
+        $user = get_logged_in_user();
         if ($user) {
             log_activity($user['id'], 'logout', 'User logged out');
         }
@@ -119,7 +119,7 @@ function logout_user()
  */
 function has_role($role)
 {
-    $user = get_current_user();
+    $user = get_logged_in_user();
     if (!$user) {
         return false;
     }
@@ -132,7 +132,7 @@ function has_role($role)
  */
 function has_permission($permission)
 {
-    $user = get_current_user();
+    $user = get_logged_in_user();
     if (!$user) {
         return false;
     }
@@ -245,7 +245,7 @@ function delete_admin_user($user_id)
     $db = new Database();
 
     // Don't allow deleting yourself
-    $current_user = get_current_user();
+    $current_user = get_logged_in_user();
     if ($current_user && $current_user['id'] == $user_id) {
         return ['error' => 'Cannot delete your own account'];
     }
