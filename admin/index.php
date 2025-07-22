@@ -9,6 +9,17 @@ require_login();
 $db = new Database();
 $current_user = get_current_user();
 
+// If user data is not properly loaded, try to get it directly
+if (!$current_user || !is_array($current_user)) {
+    if (isset($_SESSION['admin_user_id'])) {
+        $current_user = $db->selectOne('admin_users', ['id' => $_SESSION['admin_user_id']]);
+    }
+    if (!$current_user) {
+        header('Location: login.php');
+        exit;
+    }
+}
+
 $stats = [
     'news' => $db->count('news'),
     'campaigns' => $db->count('campaigns'),

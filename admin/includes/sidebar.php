@@ -2,6 +2,13 @@
 $current_page = basename($_SERVER['PHP_SELF']);
 $current_dir = basename(dirname($_SERVER['PHP_SELF']));
 
+// Ensure we have proper user data
+if (!$current_user || !is_array($current_user)) {
+    if (isset($_SESSION['admin_user_id'])) {
+        $current_user = $db->selectOne('admin_users', ['id' => $_SESSION['admin_user_id']]);
+    }
+}
+
 // Get notifications
 $notifications = [
     'messages' => $db->count('contact_messages', ['is_read' => 0]),
@@ -13,7 +20,7 @@ $notifications = [
     <div class="position-sticky pt-3">
         <div class="text-center text-white mb-4">
             <h4>ECCT Admin</h4>
-            <small>Welcome, <?php echo htmlspecialchars($current_user['full_name']); ?></small>
+            <small>Welcome, <?php echo htmlspecialchars($current_user['full_name'] ?? $current_user['username'] ?? 'Admin'); ?></small>
         </div>
 
         <ul class="nav flex-column">
