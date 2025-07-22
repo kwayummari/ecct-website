@@ -8,7 +8,7 @@ require_once ECCT_ROOT . '/admin/includes/auth.php';
 // Redirect if already logged in
 if (is_logged_in()) {
      echo "You are already logged in. Redirecting to dashboard...";   
-    // header('Location: index.php');
+    header('Location: index.php');
     exit;
 }
 
