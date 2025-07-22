@@ -21,6 +21,9 @@ if ($_POST) {
         $error = 'Please enter both username and password';
     } else {
         $user = authenticate_user($username, $password);
+        echo "User found: " . ($user ? 'Yes' : 'No');
+        echo "<br>";
+        echo $user ? 'User data: ' . print_r($user, true) : 'No user data found';
         if ($user) {
             $_SESSION['admin_user_id'] = $user['id'];
             header('Location: index.php');
