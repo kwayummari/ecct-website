@@ -1,8 +1,9 @@
 <?php
 define('ECCT_ROOT', dirname(__FILE__, 2));
-require_once ECCT_ROOT . '/includes/config.php';
-require_once ECCT_ROOT . '/includes/database.php';
-require_once ECCT_ROOT . '/includes/auth.php';
+require_once ECCT_ROOT . '/admin/includes/config.php';
+require_once ECCT_ROOT . '/admin/includes/database.php';
+require_once ECCT_ROOT . '/admin/includes/auth.php';
+
 
 // Redirect if already logged in
 if (is_logged_in()) {
@@ -88,4 +89,5 @@ if ($_POST) {
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
