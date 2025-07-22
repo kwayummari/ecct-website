@@ -17,8 +17,8 @@ if (session_status() === PHP_SESSION_NONE) {
 // Database Configuration
 define('DB_HOST', 'localhost');
 define('DB_NAME', 'u750269652_ecct2025');
-define('DB_USER', 'u750269652_ecct2025');
-define('DB_PASS', 'your_database_password');
+define('DB_USER', 'u750269652_ecctAdmin');
+define('DB_PASS', ']R6yP;OW58Z');
 define('DB_CHARSET', 'utf8mb4');
 
 // Site Configuration
