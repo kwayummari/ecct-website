@@ -33,11 +33,11 @@ function require_login()
     }
 
     // Check session timeout
-    if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) > SESSION_TIMEOUT) {
-        logout_user();
-        header('Location: ' . SITE_URL . '/admin/login.php?error=session_expired');
-        exit;
-    }
+    // if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) > SESSION_TIMEOUT) {
+    //     logout_user();
+    //     header('Location: ' . SITE_URL . '/admin/login.php?error=session_expired');
+    //     exit;
+    // }
 
     $_SESSION['last_activity'] = time();
 }
