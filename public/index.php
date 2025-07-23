@@ -172,7 +172,7 @@ include 'includes/header.php';
                     <div class="col-lg-4 col-md-6 mb-4">
                         <div class="campaign-card card h-100 shadow-sm border-0">
                             <?php if ($campaign['featured_image']): ?>
-                                <img src="<?php echo SITE_URL . '/' . $campaign['featured_image']; ?>"
+                                <img src="<?php echo SITE_URL; ?>/<?php echo $news['featured_image']; ?>"
                                     class="card-img-top" alt="<?php echo htmlspecialchars($campaign['featured_image']); ?>"
                                     style="height: 200px; object-fit: cover;">
                             <?php endif; ?>
@@ -240,7 +240,7 @@ include 'includes/header.php';
                     <div class="col-lg-4 col-md-6 mb-4">
                         <article class="news-card card h-100 shadow-sm border-0">
                             <?php if ($news['featured_image']): ?>
-                                <img src="<?php echo UPLOADS_URL . '/news/' . $news['featured_image']; ?>"
+                                <img src="<?php echo SITE_URL; ?>/<?php echo $news['featured_image']; ?>"
                                     class="card-img-top" alt="<?php echo htmlspecialchars($news['title']); ?>"
                                     style="height: 200px; object-fit: cover;">
                             <?php endif; ?>
