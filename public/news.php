@@ -186,7 +186,7 @@ include 'includes/header.php';
                     <div class="col-lg-8 mx-auto">
                         <?php if ($news_article['featured_image']): ?>
                             <div class="article-image mb-5">
-                                <img src="<?php echo SITE_URL; ?>/<?php echo $news['featured_image']; ?> ?>"
+                                <img src="<?php echo SITE_URL; ?>/<?php echo $news['featured_image']; ?>"
                                     alt="<?php echo htmlspecialchars($news_article['title']); ?>"
                                     class="img-fluid rounded shadow">
                             </div>
@@ -221,7 +221,7 @@ include 'includes/header.php';
                                 <div class="card border-0 shadow-sm h-100">
                                     <?php if ($related['featured_image']): ?>
                                         <img src="<?php echo SITE_URL; ?>/<?php echo $related['featured_image']; ?>"
-                                            class="card-img-top" alt="<?php echo htmlspecialchars($related['title']); ?>"
+                                            class="card-img-top" alt="<?php echo SITE_URL; ?>/<?php echo $news['featured_image']; ?>"
                                             style="height: 200px; object-fit: cover;">
                                     <?php endif; ?>
                                     <div class="card-body">
