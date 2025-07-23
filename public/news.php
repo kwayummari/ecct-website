@@ -286,7 +286,7 @@ include 'includes/header.php';
                         <div class="col-lg-<?php echo $index === 0 ? '6' : '3'; ?> col-md-6 mb-4">
                             <div class="featured-card card border-0 shadow h-100">
                                 <?php if ($featured['featured_image']): ?>
-                                    <img src="<?php echo UPLOADS_URL . '/news/' . $featured['featured_image']; ?>"
+                                    <img src="<?php echo SITE_URL; ?>/<?php echo $news['featured_image']; ?>"
                                         class="card-img-top" alt="<?php echo htmlspecialchars($featured['title']); ?>"
                                         style="height: <?php echo $index === 0 ? '300px' : '200px'; ?>; object-fit: cover;">
                                 <?php endif; ?>
@@ -406,7 +406,7 @@ include 'includes/header.php';
                                     <div class="row g-0">
                                         <?php if ($article['featured_image']): ?>
                                             <div class="col-md-4">
-                                                <img src="<?php echo UPLOADS_URL . '/news/' . $article['featured_image']; ?>"
+                                                <img src="<?php echo SITE_URL; ?>/<?php echo $news['featured_image']; ?>"
                                                     class="img-fluid h-100 w-100"
                                                     alt="<?php echo htmlspecialchars($article['title']); ?>"
                                                     style="object-fit: cover; min-height: 200px;">
