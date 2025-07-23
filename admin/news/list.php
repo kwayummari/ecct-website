@@ -1,9 +1,9 @@
 <?php
 define('ECCT_ROOT', dirname(__FILE__, 3));
-require_once ECCT_ROOT . '/includes/config.php';
-require_once ECCT_ROOT . '/includes/database.php';
-require_once ECCT_ROOT . '/includes/auth.php';
-require_once ECCT_ROOT . '/includes/helpers.php';
+require_once ECCT_ROOT . '/admin/includes/config.php';
+require_once ECCT_ROOT . '/admin/includes/database.php';
+require_once ECCT_ROOT . '/admin/includes/auth.php';
+require_once ECCT_ROOT . '/admin/includes/helpers.php';
 
 require_login();
 
