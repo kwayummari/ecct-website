@@ -13,32 +13,14 @@ require_once ECCT_ROOT . '/includes/functions.php';
 // Get database instance
 $db = new Database();
 
-// Helper function to get site settings
-function get_setting($key, $default = '')
-{
-    global $db;
-    $setting = $db->selectOne('site_settings', ['setting_key' => $key]);
-    return $setting ? $setting['setting_value'] : $default;
-}
-
-// Helper function to get featured content
-function get_featured_content($table, $limit = 3)
-{
-    global $db;
-    return $db->select($table, ['is_published' => 1], [
-        'order_by' => 'created_at DESC',
-        'limit' => $limit
-    ]);
-}
-
-// Helper function to get recent content
-function get_recent_content($table, $limit = 6)
-{
-    global $db;
-    return $db->select($table, [], [
-        'order_by' => 'created_at DESC',
-        'limit' => $limit
-    ]);
+// Helper function to get site settings (only if not already defined)
+if (!function_exists('get_setting')) {
+    function get_setting($key, $default = '')
+    {
+        global $db;
+        $setting = $db->selectOne('site_settings', ['setting_key' => $key]);
+        return $setting ? $setting['setting_value'] : $default;
+    }
 }
 
 // Page variables
@@ -56,7 +38,7 @@ $successful_campaigns = get_setting('successful_campaigns', '50');
 $volunteers_count = get_setting('volunteers_count', '1200');
 $communities_served = get_setting('communities_served', '75');
 
-// Get featured content
+// Get featured content (use existing functions from includes/functions.php)
 $featured_news = get_featured_content('news', 3);
 $featured_campaigns = get_featured_content('campaigns', 3);
 $recent_gallery = get_recent_content('gallery', 6);
