@@ -21,18 +21,19 @@ define('DB_USER', 'u750269652_ecctAdmin');
 define('DB_PASS', ']R6yP;OW58Z');
 define('DB_CHARSET', 'utf8mb4');
 
-// Site Configuration
+// Site Configuration - FIXED URLS
 define('SITE_NAME', 'ECCT - Environmental Conservation Community of Tanzania');
-define('SITE_URL', 'https://www.ecct.or.tz');
+define('SITE_URL', 'https://ecct.serengetibytes.com'); // Fixed to match your actual domain
 define('ADMIN_EMAIL', 'info@ecct.or.tz');
 
 // Paths
 define('UPLOADS_PATH', ECCT_ROOT . '/assets/uploads');
 define('UPLOADS_URL', SITE_URL . '/assets/uploads');
+define('ASSETS_PATH', SITE_URL . '/assets'); // Added missing ASSETS_PATH
 
 // Security
 define('CSRF_TOKEN_NAME', 'csrf_token');
-define('SESSION_TIMEOUT', 3600); // 1 hour
+define('SESSION_TIMEOUT', 7200); // 2 hours
 
 // File Upload Settings
 define('MAX_FILE_SIZE', 5 * 1024 * 1024); // 5MB
@@ -157,6 +158,24 @@ function format_filesize($bytes)
     return round($bytes, 2) . ' ' . $units[$pow];
 }
 
+// Current URL helper
+function current_url()
+{
+    $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https://' : 'http://';
+    return $protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+}
+
+// Redirect helper
+function redirect($url)
+{
+    if (headers_sent()) {
+        echo '<script>window.location.href="' . htmlspecialchars($url) . '";</script>';
+    } else {
+        header('Location: ' . $url);
+    }
+    exit();
+}
+
 // Email configuration (if needed)
 define('SMTP_HOST', '');
 define('SMTP_PORT', 587);
@@ -167,3 +186,12 @@ define('SMTP_ENCRYPTION', 'tls');
 // Cache settings
 define('CACHE_ENABLED', false);
 define('CACHE_LIFETIME', 3600); // 1 hour
+
+// Set global variables for templates
+$GLOBALS['site_config'] = [
+    'name' => SITE_NAME,
+    'url' => SITE_URL,
+    'email' => ADMIN_EMAIL,
+    'assets_url' => ASSETS_PATH,
+    'uploads_url' => UPLOADS_URL
+];

@@ -26,16 +26,15 @@ function is_logged_in()
 function require_login()
 {
     if (!is_logged_in()) {
-        echo "You must be logged in to access this page.";
-        // header('Location: ' . SITE_URL . '/admin/login.php');
+        // Use absolute URL to prevent redirect loops
+        header('Location: ' . SITE_URL . '/admin/login.php');
         exit;
     }
 
     // Check session timeout
     if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) > SESSION_TIMEOUT) {
         logout_user();
-        echo "Your session has expired. Please log in again.";
-        // header('Location: ' . SITE_URL . '/admin/login.php?error=session_expired');
+        header('Location: ' . SITE_URL . '/admin/login.php?error=session_expired');
         exit;
     }
 
@@ -97,296 +96,175 @@ function authenticate_user($username, $password)
         'login_count' => isset($user['login_count']) ? $user['login_count'] + 1 : 1
     ], ['id' => $user['id']]);
 
-    // Log activity (optional helper function)
-    if (function_exists('log_activity')) {
-        log_activity($user['id'], 'login', 'User logged in');
-    }
-
     return $user;
 }
-
 
 /**
  * Logout user
  */
 function logout_user()
 {
-    if (is_logged_in()) {
-        $user = get_logged_in_user();
-        if ($user) {
-            log_activity($user['id'], 'logout', 'User logged out');
-        }
+    // Clear all session variables
+    $_SESSION = array();
+
+    // Delete the session cookie if it exists
+    if (ini_get("session.use_cookies")) {
+        $params = session_get_cookie_params();
+        setcookie(
+            session_name(),
+            '',
+            time() - 42000,
+            $params["path"],
+            $params["domain"],
+            $params["secure"],
+            $params["httponly"]
+        );
     }
 
-    session_unset();
+    // Destroy the session
     session_destroy();
-    // Do NOT start a new session here
 }
-
 
 /**
  * Check if user has specific role
  */
 function has_role($role)
 {
-    $user = get_logged_in_user();
-    if (!$user) {
+    if (!is_logged_in()) {
         return false;
     }
 
-    return $user['role'] === $role || $user['role'] === 'super_admin';
+    $user_role = $_SESSION['admin_role'] ?? 'editor';
+
+    // Role hierarchy: super_admin > admin > editor
+    $role_hierarchy = [
+        'super_admin' => 3,
+        'admin' => 2,
+        'editor' => 1
+    ];
+
+    $user_level = $role_hierarchy[$user_role] ?? 0;
+    $required_level = $role_hierarchy[$role] ?? 0;
+
+    return $user_level >= $required_level;
 }
 
 /**
- * Check if user has permission
+ * Check if user can perform action
  */
-function has_permission($permission)
+function can_perform($action)
 {
-    $user = get_logged_in_user();
-    if (!$user) {
+    if (!is_logged_in()) {
         return false;
     }
 
-    // Super admin has all permissions
-    if ($user['role'] === 'super_admin') {
-        return true;
-    }
-
-    // Define role permissions
     $permissions = [
+        'super_admin' => ['*'], // All permissions
         'admin' => [
+            'view_dashboard',
+            'manage_content',
             'manage_news',
             'manage_campaigns',
-            'manage_volunteers',
-            'manage_messages',
             'manage_gallery',
-            'manage_pages',
-            'manage_settings'
+            'view_volunteers',
+            'manage_settings',
+            'view_analytics'
         ],
         'editor' => [
+            'view_dashboard',
+            'manage_content',
             'manage_news',
             'manage_campaigns',
             'manage_gallery',
-            'manage_pages'
-        ],
-        'moderator' => [
-            'manage_volunteers',
-            'manage_messages'
+            'view_volunteers'
         ]
     ];
 
-    $user_permissions = $permissions[$user['role']] ?? [];
-    return in_array($permission, $user_permissions);
+    $user_role = $_SESSION['admin_role'] ?? 'editor';
+    $user_permissions = $permissions[$user_role] ?? [];
+
+    // Super admin has all permissions
+    if (in_array('*', $user_permissions)) {
+        return true;
+    }
+
+    return in_array($action, $user_permissions);
+}
+
+/**
+ * Require specific role
+ */
+function require_role($role)
+{
+    require_login();
+
+    if (!has_role($role)) {
+        $_SESSION['error'] = 'Access denied. Insufficient permissions.';
+        header('Location: ' . SITE_URL . '/admin/');
+        exit;
+    }
 }
 
 /**
  * Require specific permission
  */
-function require_permission($permission)
+function require_permission($action)
 {
-    if (!has_permission($permission)) {
-        http_response_code(403);
-        die('Access denied. You do not have permission to access this resource.');
+    require_login();
+
+    if (!can_perform($action)) {
+        $_SESSION['error'] = 'Access denied. Insufficient permissions.';
+        header('Location: ' . SITE_URL . '/admin/');
+        exit;
     }
 }
 
 /**
- * Create new admin user
+ * Generate a secure hash for passwords
  */
-function create_admin_user($data)
+function hash_password($password)
 {
-    $db = new Database();
-
-    // Check if username exists
-    if ($db->exists('admin_users', ['username' => $data['username']])) {
-        return ['error' => 'Username already exists'];
-    }
-
-    // Check if email exists
-    if ($db->exists('admin_users', ['email' => $data['email']])) {
-        return ['error' => 'Email already exists'];
-    }
-
-    // Hash password
-    $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
-    $data['created_at'] = date('Y-m-d H:i:s');
-    $data['is_active'] = $data['is_active'] ?? 1;
-    $data['role'] = $data['role'] ?? 'editor';
-
-    $user_id = $db->insert('admin_users', $data);
-
-    if ($user_id) {
-        log_activity($user_id, 'user_created', 'Admin user created');
-        return ['success' => true, 'user_id' => $user_id];
-    }
-
-    return ['error' => 'Failed to create user'];
+    return password_hash($password, PASSWORD_DEFAULT);
 }
 
 /**
- * Update admin user
+ * Verify password against hash
  */
-function update_admin_user($user_id, $data)
+function verify_password($password, $hash)
 {
-    $db = new Database();
-
-    // Don't update password if empty
-    if (empty($data['password'])) {
-        unset($data['password']);
-    } else {
-        $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
-    }
-
-    $data['updated_at'] = date('Y-m-d H:i:s');
-
-    if ($db->update('admin_users', $data, ['id' => $user_id])) {
-        log_activity($user_id, 'user_updated', 'Admin user updated');
-        return ['success' => true];
-    }
-
-    return ['error' => 'Failed to update user'];
+    return password_verify($password, $hash);
 }
 
 /**
- * Delete admin user
+ * Generate secure token
  */
-function delete_admin_user($user_id)
+function generate_token($length = 32)
 {
-    $db = new Database();
-
-    // Don't allow deleting yourself
-    $current_user = get_logged_in_user();
-    if ($current_user && $current_user['id'] == $user_id) {
-        return ['error' => 'Cannot delete your own account'];
-    }
-
-    if ($db->delete('admin_users', ['id' => $user_id])) {
-        log_activity($current_user['id'], 'user_deleted', "Admin user {$user_id} deleted");
-        return ['success' => true];
-    }
-
-    return ['error' => 'Failed to delete user'];
+    return bin2hex(random_bytes($length));
 }
 
 /**
- * Log user activity
+ * Check if current user is the specified user
  */
-function log_activity($user_id, $action, $description = '', $ip_address = null)
+function is_current_user($user_id)
 {
-    $db = new Database();
+    return is_logged_in() && $_SESSION['admin_user_id'] == $user_id;
+}
 
-    $data = [
-        'user_id' => $user_id,
-        'action' => $action,
-        'description' => $description,
-        'ip_address' => $ip_address ?: get_user_ip(),
-        'user_agent' => $_SERVER['HTTP_USER_AGENT'] ?? '',
-        'created_at' => date('Y-m-d H:i:s')
+/**
+ * Get current user info safely
+ */
+function get_current_user()
+{
+    if (!is_logged_in()) {
+        return null;
+    }
+
+    return [
+        'id' => $_SESSION['admin_user_id'],
+        'username' => $_SESSION['admin_username'] ?? '',
+        'email' => $_SESSION['admin_email'] ?? '',
+        'name' => $_SESSION['admin_name'] ?? 'Admin User',
+        'role' => $_SESSION['admin_role'] ?? 'editor'
     ];
-
-    $db->insert('activity_log', $data);
-}
-
-/**
- * Get recent activity
- */
-function get_recent_activity($limit = 20)
-{
-    $db = new Database();
-
-    $sql = "
-        SELECT al.*, au.full_name, au.username
-        FROM activity_log al
-        LEFT JOIN admin_users au ON al.user_id = au.id
-        ORDER BY al.created_at DESC
-        LIMIT ?
-    ";
-
-    $stmt = $db->raw($sql, [$limit]);
-    return $stmt ? $stmt->fetchAll() : [];
-}
-
-/**
- * Generate secure password
- */
-function generate_password($length = 12)
-{
-    $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*';
-    return substr(str_shuffle($chars), 0, $length);
-}
-
-/**
- * Validate password strength
- */
-function validate_password($password)
-{
-    $errors = [];
-
-    if (strlen($password) < 8) {
-        $errors[] = 'Password must be at least 8 characters long';
-    }
-
-    if (!preg_match('/[A-Z]/', $password)) {
-        $errors[] = 'Password must contain at least one uppercase letter';
-    }
-
-    if (!preg_match('/[a-z]/', $password)) {
-        $errors[] = 'Password must contain at least one lowercase letter';
-    }
-
-    if (!preg_match('/[0-9]/', $password)) {
-        $errors[] = 'Password must contain at least one number';
-    }
-
-    return $errors;
-}
-
-/**
- * Check for brute force attempts
- */
-function check_login_attempts($username, $ip_address)
-{
-    $db = new Database();
-
-    // Check attempts in last 15 minutes
-    $sql = "
-        SELECT COUNT(*) as attempts
-        FROM login_attempts
-        WHERE (username = ? OR ip_address = ?)
-        AND created_at > DATE_SUB(NOW(), INTERVAL 15 MINUTE)
-    ";
-
-    $stmt = $db->raw($sql, [$username, $ip_address]);
-    $result = $stmt ? $stmt->fetch() : ['attempts' => 0];
-
-    return (int)$result['attempts'];
-}
-
-/**
- * Log failed login attempt
- */
-function log_failed_login($username, $ip_address)
-{
-    $db = new Database();
-
-    $data = [
-        'username' => $username,
-        'ip_address' => $ip_address,
-        'user_agent' => $_SERVER['HTTP_USER_AGENT'] ?? '',
-        'created_at' => date('Y-m-d H:i:s')
-    ];
-
-    $db->insert('login_attempts', $data);
-}
-
-/**
- * Clear old login attempts
- */
-function cleanup_login_attempts()
-{
-    $db = new Database();
-
-    // Delete attempts older than 24 hours
-    $sql = "DELETE FROM login_attempts WHERE created_at < DATE_SUB(NOW(), INTERVAL 24 HOUR)";
-    $db->raw($sql);
 }
