@@ -13,26 +13,14 @@ require_once ECCT_ROOT . '/includes/functions.php';
 // Get database instance
 $db = new Database();
 
-// Helper function to get settings
-function get_setting($key, $default = '')
-{
-    global $db;
-    $setting = $db->selectOne('site_settings', ['setting_key' => $key]);
-    return $setting ? $setting['setting_value'] : $default;
-}
-
-// Helper function to get featured content
-function get_featured_content($table, $limit = 3)
-{
-    global $db;
-    return $db->select($table, ['is_published' => 1], ['order_by' => 'created_at DESC', 'limit' => $limit]);
-}
-
-// Helper function to get recent content
-function get_recent_content($table, $limit = 6)
-{
-    global $db;
-    return $db->select($table, [], ['order_by' => 'created_at DESC', 'limit' => $limit]);
+// Helper function to get settings (only if not exists)
+if (!function_exists('get_setting')) {
+    function get_setting($key, $default = '')
+    {
+        global $db;
+        $setting = $db->selectOne('site_settings', ['setting_key' => $key]);
+        return $setting ? $setting['setting_value'] : $default;
+    }
 }
 
 // Page variables
