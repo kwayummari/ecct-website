@@ -173,7 +173,7 @@ include 'includes/header.php';
                         <div class="campaign-card card h-100 shadow-sm border-0">
                             <?php if ($campaign['featured_image']): ?>
                                 <img src="<?php echo  $campaign['featured_image']; ?>"
-                                    class="card-img-top" alt="<?php echo htmlspecialchars($campaign['title']); ?>"
+                                    class="card-img-top" alt="<?php echo htmlspecialchars($campaign['featured_image']); ?>"
                                     style="height: 200px; object-fit: cover;">
                             <?php endif; ?>
                             <div class="card-body d-flex flex-column">
