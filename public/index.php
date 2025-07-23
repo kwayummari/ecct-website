@@ -13,14 +13,29 @@ require_once ECCT_ROOT . '/includes/functions.php';
 // Get database instance
 $db = new Database();
 
-// Helper function to get settings (only if not exists)
-if (!function_exists('get_setting')) {
-    function get_setting($key, $default = '')
-    {
-        global $db;
-        $setting = $db->selectOne('site_settings', ['setting_key' => $key]);
-        return $setting ? $setting['setting_value'] : $default;
-    }
+// Helper function to get site settings
+function get_setting($key, $default = '') {
+    global $db;
+    $setting = $db->selectOne('site_settings', ['setting_key' => $key]);
+    return $setting ? $setting['setting_value'] : $default;
+}
+
+// Helper function to get featured content
+function get_featured_content($table, $limit = 3) {
+    global $db;
+    return $db->select($table, ['is_published' => 1], [
+        'order_by' => 'created_at DESC',
+        'limit' => $limit
+    ]);
+}
+
+// Helper function to get recent content
+function get_recent_content($table, $limit = 6) {
+    global $db;
+    return $db->select($table, [], [
+        'order_by' => 'created_at DESC',
+        'limit' => $limit
+    ]);
 }
 
 // Page variables
@@ -34,9 +49,9 @@ $hero_subtitle = get_setting('hero_subtitle', 'Join ECCT in creating a sustainab
 $hero_background = get_setting('hero_background', 'assets/images/hero-bg.jpg');
 
 // Get statistics
-$successful_campaigns = get_setting('successful_campaigns', '10');
-$volunteers_count = get_setting('volunteers_count', '500');
-$communities_served = get_setting('communities_served', '25');
+$successful_campaigns = get_setting('successful_campaigns', '50');
+$volunteers_count = get_setting('volunteers_count', '1200');
+$communities_served = get_setting('communities_served', '75');
 
 // Get featured content
 $featured_news = get_featured_content('news', 3);
@@ -44,7 +59,7 @@ $featured_campaigns = get_featured_content('campaigns', 3);
 $recent_gallery = get_recent_content('gallery', 6);
 
 // Include header
-include 'includes/header.php';
+include ECCT_ROOT . '/includes/header.php';
 ?>
 
 <!-- Hero Section -->
@@ -55,110 +70,148 @@ include 'includes/header.php';
             <source src="<?php echo SITE_URL; ?>/assets/videos/MAZINGIRA.mp4" type="video/mp4">
             <source src="<?php echo SITE_URL; ?>/assets/videos/MAZINGIRA.webm" type="video/webm">
             <!-- Fallback image if video doesn't load -->
-            <img src="<?php echo SITE_URL; ?>/<?php echo $hero_background; ?>" alt="ECCT Environmental Conservation">
         </video>
-
+        
         <!-- Video Controls -->
         <button class="video-toggle-btn" id="videoToggle" title="Pause video">
             <i class="fas fa-pause"></i>
         </button>
     </div>
 
-    <!-- Hero Content -->
+    <!-- Hero Content Overlay -->
     <div class="hero-content">
         <div class="container">
             <div class="row align-items-center min-vh-100">
                 <div class="col-lg-8 col-xl-7">
                     <div class="hero-text text-white">
-                        <h1 class="hero-title display-3 fw-bold mb-4" data-aos="fade-up">
+                        <h1 class="display-3 fw-bold mb-4 animate__animated animate__fadeInUp">
                             <?php echo htmlspecialchars($hero_title); ?>
                         </h1>
-                        <p class="hero-subtitle lead mb-4" data-aos="fade-up" data-aos-delay="200">
+                        <p class="lead mb-5 animate__animated animate__fadeInUp animate__delay-1s">
                             <?php echo htmlspecialchars($hero_subtitle); ?>
                         </p>
-                        <div class="hero-actions" data-aos="fade-up" data-aos-delay="400">
+                        
+                        <!-- Call to Action Buttons -->
+                        <div class="hero-actions animate__animated animate__fadeInUp animate__delay-2s">
                             <a href="<?php echo SITE_URL; ?>/volunteer" class="btn btn-success btn-lg me-3 mb-3">
-                                <i class="fas fa-hand-holding-heart me-2"></i>
-                                Join as Volunteer
+                                <i class="fas fa-hands-helping me-2"></i>
+                                Join Us Today
                             </a>
                             <a href="<?php echo SITE_URL; ?>/about" class="btn btn-outline-light btn-lg mb-3">
-                                <i class="fas fa-info-circle me-2"></i>
+                                <i class="fas fa-leaf me-2"></i>
                                 Learn More
                             </a>
                         </div>
                     </div>
                 </div>
+                
+                <!-- Statistics Cards -->
                 <div class="col-lg-4 col-xl-5">
-                    <div class="hero-stats" data-aos="fade-left" data-aos-delay="600">
-                        <div class="stat-card">
-                            <div class="stat-number"><?php echo htmlspecialchars($successful_campaigns); ?>+</div>
-                            <div class="stat-label">Successful Campaigns</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-number"><?php echo htmlspecialchars($volunteers_count); ?>+</div>
-                            <div class="stat-label">Active Volunteers</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-number"><?php echo htmlspecialchars($communities_served); ?>+</div>
-                            <div class="stat-label">Communities Served</div>
+                    <div class="hero-stats animate__animated animate__fadeInRight animate__delay-1s">
+                        <div class="row g-3">
+                            <div class="col-12">
+                                <div class="stat-card bg-white bg-opacity-90 rounded-3 p-4 text-center">
+                                    <div class="stat-icon text-success mb-2">
+                                        <i class="fas fa-bullhorn fa-2x"></i>
+                                    </div>
+                                    <h3 class="stat-number text-primary fw-bold mb-1"><?php echo htmlspecialchars($successful_campaigns); ?>+</h3>
+                                    <p class="stat-label text-muted mb-0">Successful Campaigns</p>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="stat-card bg-white bg-opacity-90 rounded-3 p-3 text-center">
+                                    <div class="stat-icon text-success mb-2">
+                                        <i class="fas fa-users fa-lg"></i>
+                                    </div>
+                                    <h4 class="stat-number text-primary fw-bold mb-1"><?php echo htmlspecialchars($volunteers_count); ?>+</h4>
+                                    <p class="stat-label text-muted mb-0 small">Volunteers</p>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="stat-card bg-white bg-opacity-90 rounded-3 p-3 text-center">
+                                    <div class="stat-icon text-success mb-2">
+                                        <i class="fas fa-map-marker-alt fa-lg"></i>
+                                    </div>
+                                    <h4 class="stat-number text-primary fw-bold mb-1"><?php echo htmlspecialchars($communities_served); ?>+</h4>
+                                    <p class="stat-label text-muted mb-0 small">Communities</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-
-    <!-- Scroll Indicator -->
-    <div class="scroll-indicator">
-        <div class="scroll-arrow">
-            <i class="fas fa-chevron-down"></i>
+        
+        <!-- Scroll Indicator -->
+        <div class="scroll-indicator position-absolute bottom-0 start-50 translate-middle-x mb-4">
+            <div class="scroll-down text-white text-center">
+                <p class="mb-2 small">Scroll to explore</p>
+                <i class="fas fa-chevron-down animate__animated animate__bounce animate__infinite"></i>
+            </div>
         </div>
-        <span>Scroll to explore</span>
     </div>
-
-    <!-- Hero Overlay -->
-    <div class="hero-overlay"></div>
 </section>
 
 <!-- About Section -->
 <section class="about-section py-5">
     <div class="container">
         <div class="row align-items-center">
-            <div class="col-lg-6" data-aos="fade-right">
+            <div class="col-lg-6 mb-4 mb-lg-0">
                 <div class="about-content">
-                    <h2 class="section-title mb-4">Who We Are</h2>
-                    <p class="lead mb-4">
-                        Environmental Conservation Community of Tanzania (ECCT) is dedicated to empowering local communities
+                    <h2 class="section-title mb-4">About ECCT</h2>
+                    <p class="lead text-muted mb-4">
+                        Environmental Conservation Community of Tanzania (ECCT) is dedicated to empowering local communities 
                         to create cleaner, greener, resilient and sustainable environments.
                     </p>
                     <p class="mb-4">
-                        We tackle global environmental pollution from plastic waste, climate change and loss of biodiversity
-                        in both marine and terrestrial environments through community-driven conservation activities.
+                        We tackle global environmental challenges through community-driven initiatives, focusing on plastic 
+                        waste reduction, climate change mitigation, and biodiversity conservation in both marine and terrestrial environments.
                     </p>
-                    <div class="about-features">
-                        <div class="feature-item">
-                            <i class="fas fa-leaf text-success me-3"></i>
-                            <span>Environmental Conservation</span>
+                    
+                    <!-- Mission Points -->
+                    <div class="mission-points">
+                        <div class="mission-point d-flex align-items-start mb-3">
+                            <div class="mission-icon text-success me-3">
+                                <i class="fas fa-recycle fa-lg"></i>
+                            </div>
+                            <div>
+                                <h6 class="mb-1">Plastic Waste Reduction</h6>
+                                <p class="text-muted mb-0 small">Innovative solutions to tackle plastic pollution in our communities.</p>
+                            </div>
                         </div>
-                        <div class="feature-item">
-                            <i class="fas fa-users text-primary me-3"></i>
-                            <span>Community Empowerment</span>
+                        <div class="mission-point d-flex align-items-start mb-3">
+                            <div class="mission-icon text-success me-3">
+                                <i class="fas fa-seedling fa-lg"></i>
+                            </div>
+                            <div>
+                                <h6 class="mb-1">Climate Action</h6>
+                                <p class="text-muted mb-0 small">Community-based climate change mitigation and adaptation strategies.</p>
+                            </div>
                         </div>
-                        <div class="feature-item">
-                            <i class="fas fa-recycle text-info me-3"></i>
-                            <span>Waste Management</span>
+                        <div class="mission-point d-flex align-items-start">
+                            <div class="mission-icon text-success me-3">
+                                <i class="fas fa-fish fa-lg"></i>
+                            </div>
+                            <div>
+                                <h6 class="mb-1">Biodiversity Conservation</h6>
+                                <p class="text-muted mb-0 small">Protecting marine and terrestrial ecosystems for future generations.</p>
+                            </div>
                         </div>
                     </div>
-                    <a href="<?php echo SITE_URL; ?>/about" class="btn btn-primary mt-4">
-                        <i class="fas fa-arrow-right me-2"></i>
-                        Learn More About Us
-                    </a>
+                    
+                    <div class="mt-4">
+                        <a href="<?php echo SITE_URL; ?>/about" class="btn btn-success">
+                            <i class="fas fa-arrow-right me-2"></i>
+                            Learn More About Us
+                        </a>
+                    </div>
                 </div>
             </div>
-            <div class="col-lg-6" data-aos="fade-left">
+            <div class="col-lg-6">
                 <div class="about-image">
-                    <img src="<?php echo SITE_URL; ?>/assets/images/about-image.jpg"
-                        alt="ECCT Team" class="img-fluid rounded shadow">
+                    <img src="<?php echo SITE_URL; ?>/assets/images/about-ecct.jpg" 
+                         alt="ECCT Team" 
+                         class="img-fluid rounded-3 shadow">
                 </div>
             </div>
         </div>
@@ -167,212 +220,250 @@ include 'includes/header.php';
 
 <!-- Featured News Section -->
 <?php if (!empty($featured_news)): ?>
-    <section class="news-section py-5 bg-light">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 text-center mb-5" data-aos="fade-up">
+<section class="news-section py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section-header text-center mb-5">
                     <h2 class="section-title">Latest News & Updates</h2>
-                    <p class="section-subtitle">Stay informed about our environmental conservation efforts</p>
-                </div>
-            </div>
-            <div class="row">
-                <?php foreach ($featured_news as $index => $news): ?>
-                    <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="<?php echo $index * 200; ?>">
-                        <article class="news-card">
-                            <div class="news-image">
-                                <?php if (!empty($news['featured_image'])): ?>
-                                    <img src="<?php echo SITE_URL; ?>/<?php echo $news['featured_image']; ?>"
-                                        alt="<?php echo htmlspecialchars($news['title']); ?>" class="img-fluid">
-                                <?php else: ?>
-                                    <img src="<?php echo SITE_URL; ?>/assets/images/news-placeholder.jpg"
-                                        alt="<?php echo htmlspecialchars($news['title']); ?>" class="img-fluid">
-                                <?php endif; ?>
-                                <div class="news-date">
-                                    <span><?php echo date('M j', strtotime($news['created_at'])); ?></span>
-                                </div>
-                            </div>
-                            <div class="news-content">
-                                <h3 class="news-title">
-                                    <a href="<?php echo SITE_URL; ?>/news/<?php echo $news['slug']; ?>">
-                                        <?php echo htmlspecialchars($news['title']); ?>
-                                    </a>
-                                </h3>
-                                <p class="news-excerpt">
-                                    <?php echo htmlspecialchars(substr(strip_tags($news['content']), 0, 120)) . '...'; ?>
-                                </p>
-                                <a href="<?php echo SITE_URL; ?>/news/<?php echo $news['slug']; ?>" class="read-more">
-                                    Read More <i class="fas fa-arrow-right"></i>
-                                </a>
-                            </div>
-                        </article>
-                    </div>
-                <?php endforeach; ?>
-            </div>
-            <div class="row">
-                <div class="col-12 text-center mt-4">
-                    <a href="<?php echo SITE_URL; ?>/news" class="btn btn-outline-primary">
-                        <i class="fas fa-newspaper me-2"></i>
-                        View All News
-                    </a>
+                    <p class="section-subtitle text-muted">Stay informed about our latest environmental initiatives and community impact</p>
                 </div>
             </div>
         </div>
-    </section>
+        
+        <div class="row g-4">
+            <?php foreach ($featured_news as $news): ?>
+                <div class="col-lg-4 col-md-6">
+                    <article class="news-card card h-100 border-0 shadow-sm">
+                        <?php if (!empty($news['featured_image'])): ?>
+                            <div class="news-image">
+                                <img src="<?php echo UPLOADS_URL; ?>/<?php echo $news['featured_image']; ?>" 
+                                     alt="<?php echo htmlspecialchars($news['title']); ?>"
+                                     class="card-img-top">
+                            </div>
+                        <?php endif; ?>
+                        
+                        <div class="card-body d-flex flex-column">
+                            <div class="news-meta mb-2">
+                                <span class="badge bg-success"><?php echo date('M j, Y', strtotime($news['created_at'])); ?></span>
+                            </div>
+                            
+                            <h5 class="news-title card-title">
+                                <a href="<?php echo SITE_URL; ?>/news/<?php echo $news['slug']; ?>" 
+                                   class="text-decoration-none text-dark">
+                                    <?php echo htmlspecialchars($news['title']); ?>
+                                </a>
+                            </h5>
+                            
+                            <p class="news-excerpt text-muted flex-grow-1">
+                                <?php echo htmlspecialchars(substr(strip_tags($news['content']), 0, 120)) . '...'; ?>
+                            </p>
+                            
+                            <div class="news-actions mt-auto">
+                                <a href="<?php echo SITE_URL; ?>/news/<?php echo $news['slug']; ?>" 
+                                   class="btn btn-outline-success btn-sm">
+                                    Read More <i class="fas fa-arrow-right ms-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            <?php endforeach; ?>
+        </div>
+        
+        <div class="text-center mt-5">
+            <a href="<?php echo SITE_URL; ?>/news" class="btn btn-success btn-lg">
+                <i class="fas fa-newspaper me-2"></i>
+                View All News
+            </a>
+        </div>
+    </div>
+</section>
 <?php endif; ?>
 
 <!-- Featured Campaigns Section -->
 <?php if (!empty($featured_campaigns)): ?>
-    <section class="campaigns-section py-5">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 text-center mb-5" data-aos="fade-up">
+<section class="campaigns-section py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section-header text-center mb-5">
                     <h2 class="section-title">Active Campaigns</h2>
-                    <p class="section-subtitle">Join our ongoing environmental conservation campaigns</p>
+                    <p class="section-subtitle text-muted">Join our ongoing environmental conservation campaigns</p>
                 </div>
             </div>
-            <div class="row">
-                <?php foreach ($featured_campaigns as $index => $campaign): ?>
-                    <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="<?php echo $index * 200; ?>">
-                        <div class="campaign-card">
-                            <div class="campaign-image">
-                                <?php if (!empty($campaign['featured_image'])): ?>
-                                    <img src="<?php echo SITE_URL; ?>/<?php echo $campaign['featured_image']; ?>"
-                                        alt="<?php echo htmlspecialchars($campaign['title']); ?>" class="img-fluid">
-                                <?php else: ?>
-                                    <img src="<?php echo SITE_URL; ?>/assets/images/campaign-placeholder.jpg"
-                                        alt="<?php echo htmlspecialchars($campaign['title']); ?>" class="img-fluid">
-                                <?php endif; ?>
-                                <div class="campaign-status">
+        </div>
+        
+        <div class="row g-4">
+            <?php foreach ($featured_campaigns as $campaign): ?>
+                <div class="col-lg-4 col-md-6">
+                    <div class="campaign-card card h-100 border-0 shadow-sm">
+                        <?php if (!empty($campaign['featured_image'])): ?>
+                            <div class="campaign-image position-relative">
+                                <img src="<?php echo UPLOADS_URL; ?>/<?php echo $campaign['featured_image']; ?>" 
+                                     alt="<?php echo htmlspecialchars($campaign['title']); ?>"
+                                     class="card-img-top">
+                                <div class="campaign-status position-absolute top-0 end-0 m-3">
                                     <span class="badge bg-<?php echo $campaign['status'] === 'active' ? 'success' : 'warning'; ?>">
-                                        <?php echo ucfirst($campaign['status']); ?>
+                                        <?php echo ucfirst($campaign['status'] ?? 'active'); ?>
                                     </span>
                                 </div>
                             </div>
-                            <div class="campaign-content">
-                                <h3 class="campaign-title">
-                                    <a href="<?php echo SITE_URL; ?>/campaigns/<?php echo $campaign['slug']; ?>">
-                                        <?php echo htmlspecialchars($campaign['title']); ?>
-                                    </a>
-                                </h3>
-                                <p class="campaign-description">
-                                    <?php echo htmlspecialchars(substr(strip_tags($campaign['description']), 0, 120)) . '...'; ?>
-                                </p>
-                                <?php if (!empty($campaign['goal_amount']) && !empty($campaign['raised_amount'])): ?>
-                                    <div class="campaign-progress">
-                                        <div class="progress-info">
-                                            <span>Raised: <?php echo number_format($campaign['raised_amount']); ?> TZS</span>
-                                            <span>Goal: <?php echo number_format($campaign['goal_amount']); ?> TZS</span>
-                                        </div>
-                                        <div class="progress">
-                                            <div class="progress-bar bg-success" style="width: <?php echo min(100, ($campaign['raised_amount'] / $campaign['goal_amount']) * 100); ?>%"></div>
-                                        </div>
+                        <?php endif; ?>
+                        
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="campaign-title card-title">
+                                <a href="<?php echo SITE_URL; ?>/campaigns/<?php echo $campaign['slug']; ?>" 
+                                   class="text-decoration-none text-dark">
+                                    <?php echo htmlspecialchars($campaign['title']); ?>
+                                </a>
+                            </h5>
+                            
+                            <p class="campaign-excerpt text-muted flex-grow-1">
+                                <?php echo htmlspecialchars(substr(strip_tags($campaign['description']), 0, 120)) . '...'; ?>
+                            </p>
+                            
+                            <!-- Campaign Progress (if applicable) -->
+                            <?php if (isset($campaign['goal_amount']) && $campaign['goal_amount'] > 0): ?>
+                                <div class="campaign-progress mb-3">
+                                    <?php 
+                                    $raised = $campaign['raised_amount'] ?? 0;
+                                    $goal = $campaign['goal_amount'];
+                                    $percentage = ($raised / $goal) * 100;
+                                    ?>
+                                    <div class="d-flex justify-content-between mb-1">
+                                        <small class="text-muted">Raised: $<?php echo number_format($raised); ?></small>
+                                        <small class="text-muted">Goal: $<?php echo number_format($goal); ?></small>
                                     </div>
-                                <?php endif; ?>
-                                <a href="<?php echo SITE_URL; ?>/campaigns/<?php echo $campaign['slug']; ?>" class="btn btn-primary">
-                                    <i class="fas fa-hand-holding-heart me-2"></i>
-                                    Support Campaign
+                                    <div class="progress" style="height: 6px;">
+                                        <div class="progress-bar bg-success" 
+                                             style="width: <?php echo min(100, $percentage); ?>%"></div>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+                            
+                            <div class="campaign-actions mt-auto">
+                                <a href="<?php echo SITE_URL; ?>/campaigns/<?php echo $campaign['slug']; ?>" 
+                                   class="btn btn-success btn-sm">
+                                    Join Campaign <i class="fas fa-arrow-right ms-1"></i>
                                 </a>
                             </div>
                         </div>
                     </div>
-                <?php endforeach; ?>
-            </div>
-            <div class="row">
-                <div class="col-12 text-center mt-4">
-                    <a href="<?php echo SITE_URL; ?>/campaigns" class="btn btn-outline-primary">
-                        <i class="fas fa-bullhorn me-2"></i>
-                        View All Campaigns
-                    </a>
                 </div>
-            </div>
+            <?php endforeach; ?>
         </div>
-    </section>
+        
+        <div class="text-center mt-5">
+            <a href="<?php echo SITE_URL; ?>/campaigns" class="btn btn-success btn-lg">
+                <i class="fas fa-bullhorn me-2"></i>
+                View All Campaigns
+            </a>
+        </div>
+    </div>
+</section>
 <?php endif; ?>
 
 <!-- Gallery Section -->
 <?php if (!empty($recent_gallery)): ?>
-    <section class="gallery-section py-5 bg-light">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 text-center mb-5" data-aos="fade-up">
-                    <h2 class="section-title">Our Work in Action</h2>
-                    <p class="section-subtitle">See the impact of our environmental conservation efforts</p>
-                </div>
-            </div>
-            <div class="row">
-                <?php foreach ($recent_gallery as $index => $image): ?>
-                    <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="<?php echo $index * 100; ?>">
-                        <div class="gallery-item">
-                            <img src="<?php echo SITE_URL; ?>/<?php echo $image['image_path']; ?>"
-                                alt="<?php echo htmlspecialchars($image['title'] ?? 'ECCT Gallery'); ?>"
-                                class="img-fluid gallery-image"
-                                data-bs-toggle="modal"
-                                data-bs-target="#galleryModal"
-                                data-image="<?php echo SITE_URL; ?>/<?php echo $image['image_path']; ?>"
-                                data-title="<?php echo htmlspecialchars($image['title'] ?? ''); ?>">
-                            <div class="gallery-overlay">
-                                <i class="fas fa-search-plus"></i>
-                            </div>
-                        </div>
-                    </div>
-                <?php endforeach; ?>
-            </div>
-            <div class="row">
-                <div class="col-12 text-center mt-4">
-                    <a href="<?php echo SITE_URL; ?>/gallery" class="btn btn-outline-primary">
-                        <i class="fas fa-images me-2"></i>
-                        View Full Gallery
-                    </a>
+<section class="gallery-section py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section-header text-center mb-5">
+                    <h2 class="section-title">Our Impact in Action</h2>
+                    <p class="section-subtitle text-muted">See our environmental conservation work through images</p>
                 </div>
             </div>
         </div>
-    </section>
-
-    <!-- Gallery Modal -->
-    <div class="modal fade" id="galleryModal" tabindex="-1">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="galleryModalLabel">Gallery Image</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        
+        <div class="row g-3">
+            <?php foreach (array_slice($recent_gallery, 0, 6) as $index => $image): ?>
+                <div class="col-lg-4 col-md-6">
+                    <div class="gallery-item">
+                        <a href="<?php echo UPLOADS_URL; ?>/<?php echo $image['image_path']; ?>" 
+                           data-bs-toggle="modal" 
+                           data-bs-target="#galleryModal"
+                           data-image="<?php echo UPLOADS_URL; ?>/<?php echo $image['image_path']; ?>"
+                           data-title="<?php echo htmlspecialchars($image['title'] ?? ''); ?>">
+                            <img src="<?php echo UPLOADS_URL; ?>/<?php echo $image['image_path']; ?>" 
+                                 alt="<?php echo htmlspecialchars($image['title'] ?? 'Gallery Image'); ?>"
+                                 class="img-fluid rounded-3 shadow-sm gallery-img">
+                            <div class="gallery-overlay">
+                                <i class="fas fa-search-plus text-white fa-2x"></i>
+                            </div>
+                        </a>
+                    </div>
                 </div>
-                <div class="modal-body text-center">
-                    <img src="" alt="" class="img-fluid" id="galleryModalImage">
-                </div>
-            </div>
+            <?php endforeach; ?>
+        </div>
+        
+        <div class="text-center mt-5">
+            <a href="<?php echo SITE_URL; ?>/gallery" class="btn btn-success btn-lg">
+                <i class="fas fa-images me-2"></i>
+                View Full Gallery
+            </a>
         </div>
     </div>
+</section>
 <?php endif; ?>
 
 <!-- Call to Action Section -->
 <section class="cta-section py-5 bg-success text-white">
     <div class="container">
         <div class="row align-items-center">
-            <div class="col-lg-8" data-aos="fade-right">
-                <h2 class="mb-4">Ready to Make a Difference?</h2>
-                <p class="lead mb-0">
-                    Join our community of environmental champions and help create a sustainable future for Tanzania.
+            <div class="col-lg-8">
+                <h2 class="cta-title mb-3">Ready to Make a Difference?</h2>
+                <p class="cta-subtitle mb-4 mb-lg-0">
+                    Join thousands of volunteers working together to create a sustainable future for Tanzania. 
+                    Every action counts, and your contribution can help preserve our environment for future generations.
                 </p>
             </div>
-            <div class="col-lg-4 text-lg-end" data-aos="fade-left">
-                <a href="<?php echo SITE_URL; ?>/volunteer" class="btn btn-light btn-lg">
-                    <i class="fas fa-hand-holding-heart me-2"></i>
-                    Become a Volunteer
-                </a>
+            <div class="col-lg-4 text-lg-end">
+                <div class="cta-actions">
+                    <a href="<?php echo SITE_URL; ?>/volunteer" class="btn btn-light btn-lg me-2 mb-2">
+                        <i class="fas fa-hands-helping me-2"></i>
+                        Become a Volunteer
+                    </a>
+                    <a href="<?php echo SITE_URL; ?>/contact" class="btn btn-outline-light btn-lg mb-2">
+                        <i class="fas fa-envelope me-2"></i>
+                        Contact Us
+                    </a>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
+<!-- Gallery Modal -->
+<div class="modal fade" id="galleryModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="galleryModalTitle">Gallery Image</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img id="galleryModalImage" src="" alt="" class="img-fluid">
+            </div>
+        </div>
+    </div>
+</div>
+
 <style>
-    /* Hero Video Styles */
+    /* Hero Section Styles */
+    .hero-section {
+        min-height: 100vh;
+        background: linear-gradient(135deg, rgba(40, 167, 69, 0.8), rgba(25, 135, 84, 0.9));
+    }
+
     .hero-video-background {
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        z-index: 1;
+        z-index: -1;
         overflow: hidden;
     }
 
@@ -380,57 +471,93 @@ include 'includes/header.php';
         width: 100%;
         height: 100%;
         object-fit: cover;
-        transition: opacity 0.3s ease;
+        opacity: 0.7;
     }
 
     .video-toggle-btn {
         position: absolute;
-        top: 20px;
+        bottom: 20px;
         right: 20px;
-        z-index: 10;
-        background: rgba(0, 0, 0, 0.5);
+        background: rgba(0,0,0,0.5);
         border: none;
         color: white;
-        width: 50px;
-        height: 50px;
+        padding: 10px 12px;
         border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
         cursor: pointer;
-        transition: all 0.3s ease;
-    }
-
-    .video-toggle-btn:hover {
-        background: rgba(0, 0, 0, 0.7);
-        transform: scale(1.1);
+        z-index: 10;
     }
 
     .hero-content {
         position: relative;
-        z-index: 5;
-    }
-
-    .hero-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.4);
         z-index: 2;
     }
 
-    /* Fallback for slow connections */
+    .stat-card {
+        transition: transform 0.3s ease;
+    }
+
+    .stat-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .stat-number {
+        font-size: 2rem;
+    }
+
+    /* Gallery Styles */
+    .gallery-item {
+        position: relative;
+        overflow: hidden;
+        border-radius: 0.5rem;
+    }
+
+    .gallery-img {
+        transition: transform 0.3s ease;
+        height: 250px;
+        object-fit: cover;
+        width: 100%;
+    }
+
+    .gallery-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(40, 167, 69, 0.8);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .gallery-item:hover .gallery-overlay {
+        opacity: 1;
+    }
+
+    .gallery-item:hover .gallery-img {
+        transform: scale(1.1);
+    }
+
+    /* Responsive adjustments */
     @media (max-width: 768px) {
         .hero-video {
             display: none !important;
         }
-
+        
         .hero-video-background {
-            background-image: url('<?php echo SITE_URL; ?>/<?php echo $hero_background; ?>');
+            background-image: url('<?php echo UPLOADS_URL; ?>/<?php echo $hero_background; ?>');
             background-size: cover;
             background-position: center;
+        }
+        
+        .display-3 {
+            font-size: 2.5rem;
+        }
+        
+        .hero-stats {
+            margin-top: 2rem;
         }
     }
 
@@ -441,7 +568,7 @@ include 'includes/header.php';
         }
 
         .hero-video-background {
-            background-image: url('<?php echo SITE_URL; ?>/<?php echo $hero_background; ?>');
+            background-image: url('<?php echo UPLOADS_URL; ?>/<?php echo $hero_background; ?>');
             background-size: cover;
             background-position: center;
         }
@@ -509,26 +636,45 @@ include 'includes/header.php';
             });
         }
 
-        // Gallery modal functionality
-        const galleryImages = document.querySelectorAll('.gallery-image');
-        const modalImage = document.getElementById('galleryModalImage');
-        const modalTitle = document.getElementById('galleryModalLabel');
-
-        galleryImages.forEach(function(img) {
-            img.addEventListener('click', function() {
-                const imageSrc = this.getAttribute('data-image');
-                const imageTitle = this.getAttribute('data-title');
-
+        // Gallery modal
+        const galleryModal = document.getElementById('galleryModal');
+        if (galleryModal) {
+            galleryModal.addEventListener('show.bs.modal', function (event) {
+                const button = event.relatedTarget;
+                const imageSrc = button.getAttribute('data-image');
+                const imageTitle = button.getAttribute('data-title');
+                
+                const modalImage = galleryModal.querySelector('#galleryModalImage');
+                const modalTitle = galleryModal.querySelector('#galleryModalTitle');
+                
                 modalImage.src = imageSrc;
                 modalImage.alt = imageTitle;
                 modalTitle.textContent = imageTitle || 'Gallery Image';
             });
+        }
+
+        // Add animation classes when elements come into view
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate__animated', 'animate__fadeInUp');
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for animation
+        document.querySelectorAll('.section-title, .news-card, .campaign-card, .gallery-item').forEach(function(el) {
+            observer.observe(el);
         });
     });
 </script>
 
 <?php
-// Additional JavaScript for homepage
-$additional_js = [SITE_URL . '/assets/js/homepage.js'];
-include 'includes/footer.php';
+// Include footer
+include ECCT_ROOT . '/includes/footer.php';
 ?>
