@@ -3,11 +3,12 @@ define('ECCT_ROOT', dirname(__FILE__, 3));
 require_once ECCT_ROOT . '/includes/config.php';
 require_once ECCT_ROOT . '/includes/database.php';
 require_once ECCT_ROOT . '/includes/auth.php';
+require_once ECCT_ROOT . '/includes/helpers.php';
 
 require_login();
 
 $db = new Database();
-$current_user = get_current_user();
+$current_user = get_admin_user();
 
 // Handle delete
 if (isset($_GET['delete']) && is_numeric($_GET['delete'])) {
