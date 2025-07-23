@@ -7,6 +7,7 @@ define('ECCT_ROOT', dirname(__FILE__, 2));
 require_once ECCT_ROOT . '/admin/includes/config.php';
 require_once ECCT_ROOT . '/admin/includes/database.php';
 require_once ECCT_ROOT . '/admin/includes/auth.php';
+require_once ECCT_ROOT . '/admin/includes/helpers.php';
 
 // Check if user is logged in - FIXED
 if (!is_logged_in()) {
@@ -15,19 +16,13 @@ if (!is_logged_in()) {
 }
 
 $db = new Database();
-$current_user = get_logged_in_user();
+$current_user = get_admin_user(); // Using helper function
 
-// If user data is not properly loaded, try to get it directly
-if (!$current_user || !is_array($current_user)) {
-    if (isset($_SESSION['admin_user_id'])) {
-        $current_user = $db->selectOne('admin_users', ['id' => $_SESSION['admin_user_id']]);
-    }
-    if (!$current_user) {
-        // Clear session and redirect to login
-        session_destroy();
-        header('Location: ' . SITE_URL . '/admin/login.php?error=session_invalid');
-        exit;
-    }
+// If user data is not properly loaded, redirect to login
+if (!$current_user) {
+    session_destroy();
+    header('Location: ' . SITE_URL . '/admin/login.php?error=session_invalid');
+    exit;
 }
 
 // Get dashboard statistics
@@ -69,8 +64,8 @@ include 'includes/header.php';
             <!-- Welcome Message -->
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 <i class="fas fa-user-check me-2"></i>
-                Welcome back, <strong><?php echo htmlspecialchars($current_user['full_name'] ?? $current_user['name'] ?? 'Admin'); ?></strong>!
-                Last login: <?php echo isset($current_user['last_login']) ? date('M j, Y \a\t g:i A', strtotime($current_user['last_login'])) : 'First time'; ?>
+                Welcome back, <strong><?php echo htmlspecialchars($current_user['session_name'] ?? $current_user['full_name'] ?? $current_user['name'] ?? 'Admin'); ?></strong>!
+                Last login: <?php echo isset($current_user['last_login']) ? admin_date($current_user['last_login']) : 'First time'; ?>
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
 

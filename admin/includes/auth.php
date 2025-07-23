@@ -252,9 +252,9 @@ function is_current_user($user_id)
 }
 
 /**
- * Get current user info safely
+ * Get current admin user info safely
  */
-function get_current_user()
+function get_current_admin_user()
 {
     if (!is_logged_in()) {
         return null;
