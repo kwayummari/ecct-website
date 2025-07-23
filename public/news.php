@@ -186,8 +186,8 @@ include 'includes/header.php';
                     <div class="col-lg-8 mx-auto">
                         <?php if ($news_article['featured_image']): ?>
                             <div class="article-image mb-5">
-                                <img src="<?php echo SITE_URL; ?>/<?php echo $news['featured_image']; ?>"
-                                    alt="<?php echo SITE_URL; ?>/<?php echo $news['featured_image']; ?>"
+                                <img src="<?php echo SITE_URL; ?>/<?php echo $news_article['featured_image']; ?>"
+                                    alt="<?php echo SITE_URL; ?>/<?php echo $news_article['featured_image']; ?>"
                                     class="img-fluid rounded shadow">
                             </div>
                         <?php endif; ?>
@@ -221,7 +221,7 @@ include 'includes/header.php';
                                 <div class="card border-0 shadow-sm h-100">
                                     <?php if ($related['featured_image']): ?>
                                         <img src="<?php echo SITE_URL; ?>/<?php echo $related['featured_image']; ?>"
-                                            class="card-img-top" alt="<?php echo SITE_URL; ?>/<?php echo $news['featured_image']; ?>"
+                                            class="card-img-top" alt="<?php echo SITE_URL; ?>/<?php echo $related['featured_image']; ?>"
                                             style="height: 200px; object-fit: cover;">
                                     <?php endif; ?>
                                     <div class="card-body">
@@ -286,7 +286,7 @@ include 'includes/header.php';
                         <div class="col-lg-<?php echo $index === 0 ? '6' : '3'; ?> col-md-6 mb-4">
                             <div class="featured-card card border-0 shadow h-100">
                                 <?php if ($featured['featured_image']): ?>
-                                    <img src="<?php echo SITE_URL; ?>/<?php echo $news['featured_image']; ?>"
+                                    <img src="<?php echo SITE_URL; ?>/<?php echo $featured['featured_image']; ?>"
                                         class="card-img-top" alt="<?php echo htmlspecialchars($featured['title']); ?>"
                                         style="height: <?php echo $index === 0 ? '300px' : '200px'; ?>; object-fit: cover;">
                                 <?php endif; ?>
@@ -406,7 +406,7 @@ include 'includes/header.php';
                                     <div class="row g-0">
                                         <?php if ($article['featured_image']): ?>
                                             <div class="col-md-4">
-                                                <img src="<?php echo SITE_URL; ?>/<?php echo $news['featured_image']; ?>"
+                                                <img src="<?php echo SITE_URL; ?>/<?php echo $article['featured_image']; ?>"
                                                     class="img-fluid h-100 w-100"
                                                     alt="<?php echo htmlspecialchars($article['title']); ?>"
                                                     style="object-fit: cover; min-height: 200px;">
