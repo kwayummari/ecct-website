@@ -225,7 +225,7 @@ include 'includes/header.php';
                                     <?php foreach ($recent_volunteers as $volunteer): ?>
                                         <div class="list-group-item d-flex justify-content-between align-items-start">
                                             <div class="ms-2 me-auto">
-                                                <div class="fw-bold"><?php echo htmlspecialchars($volunteer['full_name']); ?></div>
+                                                <div class="fw-bold"><?php echo htmlspecialchars($volunteer['first_name'] . ' ' . $volunteer['last_name']); ?></div>
                                                 <small class="text-muted"><?php echo htmlspecialchars($volunteer['email']); ?></small>
                                             </div>
                                             <small class="text-muted">
