@@ -172,8 +172,8 @@ include 'includes/header.php';
                     <div class="col-lg-4 col-md-6 mb-4">
                         <div class="campaign-card card h-100 shadow-sm border-0">
                             <?php if ($campaign['featured_image']): ?>
-                                <img src="<?php echo SITE_URL; ?>/<?php echo $news['featured_image']; ?>"
-                                    class="card-img-top" alt="<?php echo htmlspecialchars($campaign['featured_image']); ?>"
+                                <img src="<?php echo SITE_URL; ?>/<?php echo $campaign['featured_image']; ?>"
+                                    class="card-img-top" alt="<?php echo SITE_URL. htmlspecialchars($campaign['featured_image']); ?>"
                                     style="height: 200px; object-fit: cover;">
                             <?php endif; ?>
                             <div class="card-body d-flex flex-column">
