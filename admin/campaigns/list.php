@@ -25,7 +25,7 @@ $result = $db->paginate('campaigns', $page, $per_page, [], ['order_by' => 'creat
 $campaigns_list = $result['data'];
 $pagination = $result['pagination'];
 
-include '../includes/header.php';
+include 'includes/header.php';
 ?>
 
 <div class="container-fluid">
