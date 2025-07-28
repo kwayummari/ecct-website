@@ -1,8 +1,8 @@
 <?php
-define('ECCT_ROOT', dirname(__FILE__, 3));
-require_once ECCT_ROOT . '/includes/config.php';
-require_once ECCT_ROOT . '/includes/database.php';
-require_once ECCT_ROOT . '/includes/auth.php';
+define('ECCT_ROOT', __DIR__);
+require_once 'includes/config.php';
+require_once 'includes/database.php';
+require_once 'includes/functions.php';
 
 require_login();
 
