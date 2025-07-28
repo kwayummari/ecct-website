@@ -7,7 +7,6 @@ require_once 'includes/functions.php';
 require_login();
 
 $db = new Database();
-$current_user = get_current_user();
 
 // Handle delete
 if (isset($_GET['delete']) && is_numeric($_GET['delete'])) {
