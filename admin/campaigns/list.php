@@ -1,12 +1,14 @@
 <?php
-define('ECCT_ROOT', __DIR__);
-require_once 'includes/config.php';
-require_once 'includes/database.php';
-require_once 'includes/functions.php';
+define('ECCT_ROOT', dirname(__FILE__, 3));
+require_once ECCT_ROOT . '/admin/includes/config.php';
+require_once ECCT_ROOT . '/admin/includes/database.php';
+require_once ECCT_ROOT . '/admin/includes/auth.php';
+require_once ECCT_ROOT . '/admin/includes/helpers.php';
 
 require_login();
 
 $db = new Database();
+$current_user = get_admin_user();
 
 // Handle delete
 if (isset($_GET['delete']) && is_numeric($_GET['delete'])) {
@@ -25,7 +27,7 @@ $result = $db->paginate('campaigns', $page, $per_page, [], ['order_by' => 'creat
 $campaigns_list = $result['data'];
 $pagination = $result['pagination'];
 
-include 'includes/header.php';
+include '../includes/header.php';
 ?>
 
 <div class="container-fluid">
@@ -149,4 +151,4 @@ include 'includes/header.php';
     </div>
 </div>
 
-<?php include 'includes/footer.php'; ?>
+<?php require_once ECCT_ROOT . '/admin/includes/footer.php'; ?>
