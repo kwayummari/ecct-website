@@ -293,4 +293,4 @@ include '../includes/header.php';
     });
 </script>
 
-<?php include '../includes/footer.php'; ?>
+<?php require_once ECCT_ROOT . '/admin/includes/footer.php'; ?>
