@@ -139,7 +139,7 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
             <a class="navbar-brand" href="<?php echo SITE_URL; ?>">
                 <img src="<?php echo SITE_URL . '/' . $site_logo; ?>"
                     alt="<?php echo htmlspecialchars($site_name); ?>"
-                    height="50">
+                    height="100">
             </a>
 
             <!-- Mobile menu button -->
