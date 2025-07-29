@@ -69,10 +69,10 @@ if ($_POST && isset($_FILES['images'])) {
                     'description' => $description,
                     'image_path' => 'assets/uploads/gallery/' . $new_filename,
                     'category' => $category,
-                    'width' => $width,
-                    'height' => $height,
-                    'file_size' => $file_size,
-                    'is_active' => $is_active,
+                    // 'width' => $width,
+                    // 'height' => $height,
+                    // 'file_size' => $file_size,
+                    // 'is_active' => $is_active,
                     'uploaded_by' => $current_user['id'],
                     'uploaded_at' => date('Y-m-d H:i:s')
                 ];
