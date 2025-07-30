@@ -139,4 +139,4 @@ include '../includes/header.php';
     </div>
 </div>
 
-<?php include '../includes/header.php'; ?>
+<?php include '../includes/footer.php'; ?>

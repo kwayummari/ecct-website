@@ -103,7 +103,7 @@ $partners = $db->select('partners', $conditions, [
 ]);
 
 $page_title = "Partners Management";
-include '../includes/header.php';
+require_once ECCT_ROOT . '/admin/includes/header.php';
 ?>
 
 <div class="container-fluid px-4">
@@ -343,4 +343,4 @@ include '../includes/header.php';
     }
 </script>
 
-<?php include '../includes/header.php'; ?>
+<?php require_once ECCT_ROOT . '/admin/includes/footer.php'; ?>
