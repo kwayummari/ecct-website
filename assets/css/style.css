@@ -1941,16 +1941,14 @@ footer a:hover {
 
 /* ===== About Page Modern Styles ===== */
 
-/* About Hero Section */
-.about-hero-modern {
-  min-height: 90vh;
-  display: flex;
-  align-items: center;
+/* About Page Header */
+.about-page-header {
   position: relative;
+  padding: 120px 0 80px;
   overflow: hidden;
 }
 
-.about-hero-video-bg {
+.about-header-bg {
   position: absolute;
   top: 0;
   left: 0;
@@ -1959,26 +1957,14 @@ footer a:hover {
   z-index: -2;
 }
 
-.about-hero-video {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  min-width: 100%;
-  min-height: 100%;
-  width: auto;
-  height: auto;
-  transform: translate(-50%, -50%);
-  object-fit: cover;
-  filter: brightness(0.7);
-}
-
-.about-hero-fallback {
+.about-header-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  filter: brightness(0.4);
 }
 
-.about-hero-overlay {
+.about-header-overlay {
   position: absolute;
   top: 0;
   left: 0;
@@ -1987,110 +1973,53 @@ footer a:hover {
   background: linear-gradient(
     135deg,
     rgba(40, 167, 69, 0.8) 0%,
-    rgba(0, 0, 0, 0.6) 50%,
-    rgba(40, 167, 69, 0.7) 100%
+    rgba(0, 0, 0, 0.6) 100%
   );
   z-index: -1;
 }
 
-.breadcrumb-modern {
-  display: flex;
-  align-items: center;
-  list-style: none;
-  padding: 0;
-  margin: 0;
+.breadcrumb-custom {
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
   border-radius: 25px;
-  padding: 8px 20px;
+  padding: 10px 20px;
   border: 1px solid rgba(255, 255, 255, 0.2);
+  margin-bottom: 0;
 }
 
-.breadcrumb-item-modern {
+.breadcrumb-custom .breadcrumb-item {
   font-size: 0.9rem;
 }
 
-.breadcrumb-separator {
-  margin: 0 10px;
+.breadcrumb-custom .breadcrumb-item + .breadcrumb-item::before {
+  content: "›";
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0 8px;
 }
 
-.about-hero-title {
-  font-size: 4rem;
+.about-header-badge .badge {
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.about-page-title {
+  font-size: 3.5rem;
   font-weight: 800;
   line-height: 1.1;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  margin-bottom: 1.5rem;
 }
 
-.text-gradient {
-  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.about-hero-subtitle {
-  font-size: 1.35rem;
+.about-page-subtitle {
+  font-size: 1.2rem;
   font-weight: 400;
   line-height: 1.6;
   opacity: 0.95;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-}
-
-.min-vh-90 {
-  min-height: 90vh;
-}
-
-.stats-showcase {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 20px;
-  max-width: 300px;
-  margin-left: auto;
-}
-
-.stat-showcase-item {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(15px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 16px;
-  padding: 25px 20px;
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  transition: all 0.3s ease;
-}
-
-.stat-showcase-item:hover {
-  background: rgba(255, 255, 255, 0.15);
-  transform: translateY(-3px);
-}
-
-.stat-showcase-icon {
-  width: 50px;
-  height: 50px;
-  background: linear-gradient(135deg, var(--primary-color), #34ce57);
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-  color: white;
-  flex-shrink: 0;
-}
-
-.stat-showcase-number {
-  font-size: 1.8rem;
-  font-weight: 800;
-  color: white;
-  margin: 0;
-  line-height: 1;
-}
-
-.stat-showcase-label {
-  font-size: 0.85rem;
-  color: rgba(255, 255, 255, 0.8);
-  margin: 0;
-  line-height: 1.2;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 /* Mission Vision Modern */

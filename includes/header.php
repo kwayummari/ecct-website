@@ -154,6 +154,36 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
                         <a class="nav-link <?php echo ($current_page === 'index') ? 'active' : ''; ?>"
                             href="<?php echo SITE_URL; ?>">Home</a>
                     </li>
+                    
+                    <li class="nav-item">
+                        <a class="nav-link <?php echo ($current_page === 'about') ? 'active' : ''; ?>"
+                            href="<?php echo SITE_URL; ?>/about.php">About</a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a class="nav-link <?php echo ($current_page === 'programs') ? 'active' : ''; ?>"
+                            href="<?php echo SITE_URL; ?>/programs.php">Programs</a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a class="nav-link <?php echo ($current_page === 'campaigns') ? 'active' : ''; ?>"
+                            href="<?php echo SITE_URL; ?>/campaigns.php">Campaigns</a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a class="nav-link <?php echo ($current_page === 'news') ? 'active' : ''; ?>"
+                            href="<?php echo SITE_URL; ?>/news.php">News</a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a class="nav-link <?php echo ($current_page === 'gallery') ? 'active' : ''; ?>"
+                            href="<?php echo SITE_URL; ?>/gallery.php">Gallery</a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a class="nav-link <?php echo ($current_page === 'contact') ? 'active' : ''; ?>"
+                            href="<?php echo SITE_URL; ?>/contact.php">Contact</a>
+                    </li>
 
                     <?php if ($menu_items): ?>
                         <?php foreach ($menu_items as $item): ?>
@@ -165,6 +195,12 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
                             </li>
                         <?php endforeach; ?>
                     <?php endif; ?>
+                    
+                    <li class="nav-item">
+                        <a class="btn btn-primary ms-2" href="<?php echo SITE_URL; ?>/volunteer.php">
+                            <i class="fas fa-heart me-1"></i>Volunteer
+                        </a>
+                    </li>
 
                     <!-- <li class="nav-item">
                         <a class="nav-link <?php echo ($current_page === 'news') ? 'active' : ''; ?>"

@@ -53,99 +53,45 @@ $stats = [
 include 'includes/header.php';
 ?>
 
-<!-- Modern About Hero Section -->
-<section class="about-hero-modern position-relative overflow-hidden">
-    <!-- Video Background -->
-    <div class="about-hero-video-bg">
-        <video autoplay muted loop playsinline preload="auto" class="about-hero-video">
-            <source src="<?php echo SITE_URL; ?>/assets/videos/MAZINGIRA.mp4" type="video/mp4">
-            <source src="<?php echo SITE_URL; ?>/assets/videos/MAZINGIRA.webm" type="video/webm">
-            <!-- Fallback to image -->
-            <img src="<?php echo ASSETS_PATH; ?>/images/_X4A8064.jpg" alt="ECCT Background" class="about-hero-fallback">
-        </video>
-        <div class="about-hero-overlay"></div>
+<!-- About Page Header -->
+<section class="about-page-header">
+    <div class="about-header-bg">
+        <img src="<?php echo ASSETS_PATH; ?>/images/green-generation/IMG_3265.JPG"
+            alt="ECCT About" class="about-header-image">
+        <div class="about-header-overlay"></div>
     </div>
 
     <div class="container position-relative">
-        <div class="row align-items-center min-vh-90">
-            <div class="col-lg-8">
-                <div class="about-hero-content text-white">
-                    <!-- Breadcrumb with modern design -->
-                    <nav aria-label="breadcrumb" class="mb-4">
-                        <ol class="breadcrumb-modern">
-                            <li class="breadcrumb-item-modern">
-                                <a href="<?php echo SITE_URL; ?>" class="text-white-50">
-                                    <i class="fas fa-home me-2"></i>Home
-                                </a>
-                            </li>
-                            <li class="breadcrumb-separator">
-                                <i class="fas fa-chevron-right text-white-50"></i>
-                            </li>
-                            <li class="breadcrumb-item-modern active">
-                                <span class="text-white">About Us</span>
-                            </li>
-                        </ol>
-                    </nav>
+        <div class="row">
+            <div class="col-12">
+                <!-- Breadcrumb -->
+                <nav aria-label="breadcrumb" class="mb-4">
+                    <ol class="breadcrumb breadcrumb-custom">
+                        <li class="breadcrumb-item">
+                            <a href="<?php echo SITE_URL; ?>" class="text-white-50">
+                                <i class="fas fa-home me-1"></i> Home
+                            </a>
+                        </li>
+                        <li class="breadcrumb-item active text-white" aria-current="page">
+                            About Us
+                        </li>
+                    </ol>
+                </nav>
 
-                    <div class="about-badge mb-4 animate-fade-in">
-                        <span class="badge-pill bg-success-gradient text-white px-4 py-2 rounded-pill">
+                <!-- Header Content -->
+                <div class="about-header-content text-white text-center">
+                    <div class="about-header-badge mb-3">
+                        <span class="badge bg-primary-soft px-3 py-2 rounded-pill">
                             <i class="fas fa-users me-2"></i>Who We Are
                         </span>
                     </div>
 
-                    <h1 class="about-hero-title fw-bold mb-4 animate-fade-in">
-                        About <span class="text-gradient">ECCT</span>
-                    </h1>
-
-                    <p class="about-hero-subtitle mb-5 animate-fade-in-delay">
-                        Empowering communities for sustainable environmental conservation across Tanzania.
-                        Discover our journey, mission, and the passionate people making a difference.
+                    <h1 class="about-page-title mb-4">About ECCT</h1>
+                    <p class="about-page-subtitle mb-0">
+                        Environmental Conservation Community of Tanzania - Empowering communities
+                        for sustainable environmental conservation across Tanzania
                     </p>
-
-                    <div class="about-hero-actions animate-fade-in-delay-2">
-                        <a href="#mission-vision" class="btn btn-glass btn-lg me-3 smooth-scroll">
-                            <i class="fas fa-arrow-down me-2"></i>Learn More
-                        </a>
-                        <a href="<?php echo SITE_URL; ?>/contact.php" class="btn btn-success-modern btn-lg">
-                            <i class="fas fa-envelope me-2"></i>Get in Touch
-                        </a>
-                    </div>
                 </div>
-            </div>
-
-            <div class="col-lg-4">
-                <div class="about-hero-stats animate-slide-up">
-                    <div class="stats-showcase">
-                        <div class="stat-showcase-item">
-                            <div class="stat-showcase-icon">
-                                <i class="fas fa-calendar-alt"></i>
-                            </div>
-                            <div class="stat-showcase-content">
-                                <h3 class="stat-showcase-number"><?php echo $stats['years_active']; ?></h3>
-                                <p class="stat-showcase-label">Years of Impact</p>
-                            </div>
-                        </div>
-                        <div class="stat-showcase-item">
-                            <div class="stat-showcase-icon">
-                                <i class="fas fa-handshake"></i>
-                            </div>
-                            <div class="stat-showcase-content">
-                                <h3 class="stat-showcase-number"><?php echo $stats['communities']; ?>+</h3>
-                                <p class="stat-showcase-label">Communities Reached</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Enhanced Scroll Indicator -->
-        <div class="about-scroll-indicator position-absolute bottom-0 start-50 translate-middle-x pb-4">
-            <div class="scroll-arrow-modern text-white text-center">
-                <div class="scroll-mouse">
-                    <div class="scroll-wheel"></div>
-                </div>
-                <p class="small mt-3 mb-0 text-uppercase tracking-wide">Discover Our Story</p>
             </div>
         </div>
     </div>
