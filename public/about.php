@@ -50,48 +50,45 @@ $stats = [
     'communities' => $db->getSetting('communities_served', '25')
 ];
 
-// Add about page specific CSS
-$additional_css = [
-    ASSETS_PATH . '/css/about.css'
-];
-
 include 'includes/header.php';
 ?>
 
 <!-- About Page Header -->
 <section class="about-page-header">
     <div class="about-header-bg">
-        <img src="<?php echo ASSETS_PATH; ?>/images/green-generation/IMG_3265.JPG"
-            alt="ECCT About" class="about-header-image">
+        <img src="<?php echo ASSETS_PATH; ?>/images/green-generation/IMG_3265.JPG" 
+             alt="ECCT About" class="about-header-image">
         <div class="about-header-overlay"></div>
     </div>
-
+    
     <div class="container position-relative">
         <div class="row">
             <div class="col-12">
+                <!-- Breadcrumb -->
+                <nav aria-label="breadcrumb" class="mb-4">
+                    <ol class="breadcrumb breadcrumb-custom">
+                        <li class="breadcrumb-item">
+                            <a href="<?php echo SITE_URL; ?>" class="text-white-50">
+                                <i class="fas fa-home me-1"></i> Home
+                            </a>
+                        </li>
+                        <li class="breadcrumb-item active text-white" aria-current="page">
+                            About Us
+                        </li>
+                    </ol>
+                </nav>
+                
+                <!-- Header Content -->
                 <div class="about-header-content text-white text-center">
-                    <!-- Breadcrumb -->
-                    <nav aria-label="breadcrumb" class="mb-4">
-                        <ol class="breadcrumb breadcrumb-custom">
-                            <li class="breadcrumb-item">
-                                <a href="<?php echo SITE_URL; ?>">
-                                    <i class="fas fa-home me-1"></i> Home
-                                </a>
-                            </li>
-                            <li class="breadcrumb-item active" aria-current="page">
-                                About Us
-                            </li>
-                        </ol>
-                    </nav>
                     <div class="about-header-badge mb-3">
                         <span class="badge bg-primary-soft px-3 py-2 rounded-pill">
                             <i class="fas fa-users me-2"></i>Who We Are
                         </span>
                     </div>
-
+                    
                     <h1 class="about-page-title mb-4">About ECCT</h1>
                     <p class="about-page-subtitle mb-0">
-                        Environmental Conservation Community of Tanzania - Empowering communities
+                        Environmental Conservation Community of Tanzania - Empowering communities 
                         for sustainable environmental conservation across Tanzania
                     </p>
                 </div>
