@@ -8,7 +8,7 @@ require_once ECCT_ROOT . '/admin/includes/helpers.php';
 require_login();
 
 $db = new Database();
-$current_user = get_current_user();
+$current_user = get_admin_user();
 
 // Get message
 $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;

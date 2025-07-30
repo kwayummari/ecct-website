@@ -173,35 +173,279 @@ $volunteer_opportunities = [
 include 'includes/header.php';
 ?>
 
+<style>
+    /* Volunteer Page Styles */
+    .volunteer-hero {
+        position: relative;
+        min-height: 70vh;
+        display: flex;
+        align-items: center;
+        background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(32, 136, 54, 0.7)),
+            url('<?php echo SITE_URL; ?>/assets/images/youth-club/_RIS0386.jpg');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        color: #ffffff;
+    }
+
+    .volunteer-hero h1 {
+        font-size: 3.5rem;
+        font-weight: 800;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        color: #ffffff;
+        margin-bottom: 1.5rem;
+    }
+
+    .volunteer-hero p {
+        font-size: 1.2rem;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        margin-bottom: 2rem;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .hero-badge {
+        background: linear-gradient(135deg, #208836, rgba(255, 255, 255, 0.2));
+        color: white;
+        padding: 12px 24px;
+        border-radius: 50px;
+        display: inline-block;
+        font-weight: 600;
+        margin-bottom: 2rem;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .volunteer-btn {
+        background: linear-gradient(135deg, #208836, #155a24);
+        color: white;
+        padding: 15px 35px;
+        border: none;
+        border-radius: 50px;
+        font-weight: 600;
+        text-decoration: none;
+        display: inline-block;
+        margin: 0 10px;
+        transition: all 0.3s ease;
+        box-shadow: 0 5px 15px rgba(32, 136, 54, 0.3);
+    }
+
+    .volunteer-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(32, 136, 54, 0.4);
+        color: white;
+    }
+
+    .volunteer-btn-outline {
+        background: transparent;
+        color: white;
+        border: 2px solid white;
+    }
+
+    .volunteer-btn-outline:hover {
+        background: white;
+        color: #208836;
+    }
+
+    .impact-stats {
+        background: #f8f9fa;
+        padding: 80px 0;
+    }
+
+    .stat-card {
+        background: white;
+        border-radius: 15px;
+        padding: 40px 30px;
+        text-align: center;
+        height: 100%;
+        transition: all 0.3s ease;
+        border: 1px solid rgba(32, 136, 54, 0.1);
+    }
+
+    .stat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(32, 136, 54, 0.15);
+    }
+
+    .stat-icon {
+        font-size: 3rem;
+        color: #208836;
+        margin-bottom: 20px;
+    }
+
+    .stat-number {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: #208836;
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    .stat-label {
+        color: #6c757d;
+        font-weight: 500;
+    }
+
+    .opportunities-section {
+        padding: 80px 0;
+        background: white;
+    }
+
+    .opportunity-card {
+        background: white;
+        border-radius: 15px;
+        padding: 30px;
+        height: 100%;
+        transition: all 0.3s ease;
+        border: 1px solid #e9ecef;
+        margin-bottom: 30px;
+    }
+
+    .opportunity-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(32, 136, 54, 0.1);
+        border-color: #208836;
+    }
+
+    .opportunity-icon {
+        width: 70px;
+        height: 70px;
+        background: linear-gradient(135deg, #208836, #155a24);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+    }
+
+    .section-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #2c3e50;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .section-subtitle {
+        font-size: 1.1rem;
+        color: #6c757d;
+        margin-bottom: 50px;
+        text-align: center;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .form-section {
+        background: #f8f9fa;
+        padding: 80px 0;
+    }
+
+    .form-card {
+        background: white;
+        border-radius: 15px;
+        padding: 40px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group {
+        margin-bottom: 25px;
+    }
+
+    .form-label {
+        font-weight: 600;
+        color: #2c3e50;
+        margin-bottom: 8px;
+    }
+
+    .form-control {
+        border: 2px solid #e9ecef;
+        border-radius: 10px;
+        padding: 12px 15px;
+        transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+        border-color: #208836;
+        box-shadow: 0 0 0 0.2rem rgba(32, 136, 54, 0.25);
+    }
+
+    .btn-submit {
+        background: linear-gradient(135deg, #208836, #155a24);
+        color: white;
+        border: none;
+        padding: 15px 40px;
+        border-radius: 50px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        width: 100%;
+    }
+
+    .btn-submit:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(32, 136, 54, 0.3);
+    }
+
+    .alert {
+        border-radius: 10px;
+        border: none;
+        padding: 15px 20px;
+        margin-bottom: 20px;
+    }
+
+    .alert-success {
+        background: linear-gradient(135deg, #d4edda, #c3e6cb);
+        color: #155724;
+    }
+
+    .alert-danger {
+        background: linear-gradient(135deg, #f8d7da, #f5c6cb);
+        color: #721c24;
+    }
+
+    @media (max-width: 768px) {
+        .volunteer-hero h1 {
+            font-size: 2.5rem;
+        }
+        
+        .volunteer-hero p {
+            font-size: 1rem;
+        }
+        
+        .volunteer-btn {
+            padding: 12px 25px;
+            font-size: 0.9rem;
+            margin: 5px;
+            display: block;
+            text-align: center;
+        }
+        
+        .stat-card {
+            padding: 30px 20px;
+            margin-bottom: 20px;
+        }
+    }
+</style>
+
 <!-- Hero Section -->
-<section class="hero-section position-relative overflow-hidden bg-gradient-primary">
-    <div class="hero-background" style="background: linear-gradient(135deg, #2c5f2d 0%, #4a9c4f 100%);">
-        <div class="hero-overlay1" style="background: rgba(0,0,0,0.3);"></div>
-    </div>
-    <div class="container position-relative">
-        <div class="row align-items-center min-vh-50">
-            <div class="col-lg-8 mx-auto text-center">
-                <div class="hero-content text-white">
-                    <span class="badge bg-light text-dark px-3 py-2 mb-4 rounded-pill">
-                        <i class="fas fa-hands-helping me-2"></i>Join Our Mission
-                    </span>
-                    <h1 class="display-3 fw-bold mb-4 animate-fade-in">
-                        Become a Volunteer
-                    </h1>
-                    <p class="lead mb-5 animate-fade-in-delay">
-                        Join our community of passionate environmental champions and make a real difference in Tanzania.
-                        No matter how small your contribution, everything helps conserve our environment.
-                    </p>
-                    <div class="hero-buttons animate-fade-in-delay-2">
-                        <a href="#application-form" class="btn btn-light btn-lg me-3">
-                            <i class="fas fa-edit me-2"></i>
-                            Apply Now
-                        </a>
-                        <a href="#opportunities" class="btn btn-outline-light btn-lg">
-                            <i class="fas fa-search me-2"></i>
-                            View Opportunities
-                        </a>
-                    </div>
+<section class="volunteer-hero">
+    <div class="container">
+        <div class="row justify-content-center text-center">
+            <div class="col-lg-8">
+                <div class="hero-badge">
+                    <i class="fas fa-hands-helping me-2"></i>Join Our Mission
+                </div>
+                <h1>Become a Volunteer</h1>
+                <p>Join our community of passionate environmental champions and make a real difference in Tanzania. No matter how small your contribution, everything helps conserve our environment.</p>
+                <div class="hero-buttons">
+                    <a href="#application-form" class="volunteer-btn">
+                        <i class="fas fa-edit me-2"></i>Apply Now
+                    </a>
+                    <a href="#opportunities" class="volunteer-btn volunteer-btn-outline">
+                        <i class="fas fa-search me-2"></i>View Opportunities
+                    </a>
                 </div>
             </div>
         </div>
@@ -209,43 +453,43 @@ include 'includes/header.php';
 </section>
 
 <!-- Impact Statistics -->
-<section class="impact-stats py-5 bg-light">
+<section class="impact-stats">
     <div class="container">
         <div class="row text-center">
             <div class="col-lg-3 col-md-6 mb-4">
-                <div class="stat-card bg-white p-4 rounded-3 shadow-sm h-100">
-                    <div class="stat-icon text-primary mb-3">
-                        <i class="fas fa-users fa-3x"></i>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
                     </div>
-                    <h3 class="fw-bold text-primary display-6"><?php echo $volunteer_stats['total_volunteers']; ?>+</h3>
-                    <p class="text-muted mb-0">Active Volunteers</p>
+                    <span class="stat-number"><?php echo $volunteer_stats['total_volunteers']; ?>+</span>
+                    <div class="stat-label">Active Volunteers</div>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6 mb-4">
-                <div class="stat-card bg-white p-4 rounded-3 shadow-sm h-100">
-                    <div class="stat-icon text-success mb-3">
-                        <i class="fas fa-flag fa-3x"></i>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-flag"></i>
                     </div>
-                    <h3 class="fw-bold text-success display-6"><?php echo $volunteer_stats['successful_campaigns']; ?>+</h3>
-                    <p class="text-muted mb-0">Successful Campaigns</p>
+                    <span class="stat-number"><?php echo $volunteer_stats['successful_campaigns']; ?>+</span>
+                    <div class="stat-label">Successful Campaigns</div>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6 mb-4">
-                <div class="stat-card bg-white p-4 rounded-3 shadow-sm h-100">
-                    <div class="stat-icon text-warning mb-3">
-                        <i class="fas fa-map-marker-alt fa-3x"></i>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-map-marker-alt"></i>
                     </div>
-                    <h3 class="fw-bold text-warning display-6"><?php echo $volunteer_stats['communities_served']; ?>+</h3>
-                    <p class="text-muted mb-0">Communities Served</p>
+                    <span class="stat-number"><?php echo $volunteer_stats['communities_served']; ?>+</span>
+                    <div class="stat-label">Communities Served</div>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6 mb-4">
-                <div class="stat-card bg-white p-4 rounded-3 shadow-sm h-100">
-                    <div class="stat-icon text-info mb-3">
-                        <i class="fas fa-bullhorn fa-3x"></i>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-bullhorn"></i>
                     </div>
-                    <h3 class="fw-bold text-info display-6"><?php echo $volunteer_stats['active_campaigns']; ?>+</h3>
-                    <p class="text-muted mb-0">Active Campaigns</p>
+                    <span class="stat-number"><?php echo $volunteer_stats['active_campaigns']; ?>+</span>
+                    <div class="stat-label">Active Campaigns</div>
                 </div>
             </div>
         </div>
