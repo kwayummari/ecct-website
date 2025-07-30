@@ -53,6 +53,9 @@ $stats = [
 include 'includes/header.php';
 ?>
 
+<!-- About Page Specific Styles -->
+<link rel="stylesheet" href="<?php echo SITE_URL; ?>/assets/css/about.css">
+
 <!-- About Page Header -->
 <section class="about-page-header">
     <div class="about-header-bg">

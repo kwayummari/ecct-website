@@ -2988,6 +2988,59 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Navigation Modern Styles */
+.navbar {
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.95) !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.navbar-nav .nav-link {
+  font-weight: 500;
+  transition: all 0.3s ease;
+  position: relative;
+  margin: 0 5px;
+}
+
+.navbar-nav .nav-link.active {
+  color: var(--primary-color) !important;
+  font-weight: 600;
+}
+
+.navbar-nav .nav-link.active::after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 3px;
+  background: linear-gradient(135deg, var(--primary-color), #34ce57);
+  border-radius: 2px;
+}
+
+.navbar-nav .nav-link:hover {
+  color: var(--primary-color) !important;
+  transform: translateY(-2px);
+}
+
+.btn-modern {
+  background: linear-gradient(135deg, var(--primary-color), #34ce57);
+  border: none;
+  border-radius: 25px;
+  padding: 10px 20px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+}
+
+.btn-modern:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+}
+
 /* ===== Print Styles ===== */
 @media print {
   .navbar,
