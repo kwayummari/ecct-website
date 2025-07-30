@@ -195,7 +195,7 @@ include 'includes/header.php';
         position: absolute;
         top: 15px;
         right: 15px;
-        background: #007bff;
+        background: #28a745;
         color: white;
         padding: 5px 12px;
         border-radius: 15px;
