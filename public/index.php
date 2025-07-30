@@ -615,4 +615,3 @@ include 'includes/header.php';
 $additional_js = [ASSETS_PATH . '/js/homepage.js'];
 include 'includes/footer.php';
 ?>
-?>
