@@ -38,15 +38,17 @@ include 'includes/header.php';
 ?>
 
 <!-- Hero Section -->
-<section class="hero-section position-relative overflow-hidden" style="
-    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(32, 136, 54, 0.7)), 
-                url('<?php echo SITE_URL; ?>/assets/images/green-generation/IMG_3267.JPG');
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    min-height: 100vh;
-">
-    <div class="hero-overlay-modern" style="background: linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(32, 136, 54, 0.3) 100%);"></div>
+<section class="hero-section position-relative overflow-hidden">
+    <!-- Video Background -->
+    <div class="hero-video-background">
+        <video autoplay muted loop playsinline preload="auto" class="hero-video">
+            <source src="<?php echo SITE_URL; ?>/assets/videos/MAZINGIRA.mp4" type="video/mp4">
+            <source src="<?php echo SITE_URL; ?>/assets/videos/MAZINGIRA.webm" type="video/webm">
+            <!-- Fallback image if video doesn't load -->
+            <img src="<?php echo SITE_URL; ?>/assets/images/green-generation/IMG_3267.JPG" alt="ECCT Environmental Conservation" class="hero-fallback-image">
+        </video>
+        <div class="hero-overlay-modern" style="background: linear-gradient(135deg, rgba(0, 0, 0, 0.6) 0%, rgba(32, 136, 54, 0.4) 100%);"></div>
+    </div>
 
     <div class="container position-relative">
         <div class="row align-items-center min-vh-75">

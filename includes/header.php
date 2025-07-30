@@ -79,6 +79,28 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
         <?php endforeach; ?>
     <?php endif; ?>
 
+    <!-- Header Custom Styles -->
+    <style>
+        .navbar-brand {
+            margin-right: 2rem !important;
+        }
+
+        .navbar {
+            min-height: auto !important;
+        }
+
+        .navbar-nav .nav-link {
+            padding-top: 0.5rem !important;
+            padding-bottom: 0.5rem !important;
+        }
+
+        @media (max-width: 991px) {
+            .navbar-brand img {
+                height: 50px !important;
+            }
+        }
+    </style>
+
     <!-- Google Analytics -->
     <?php
     $google_analytics = $db->getSetting('google_analytics', '');
@@ -133,13 +155,13 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
     </div>
 
     <!-- Main Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top" style="padding-top: 0.5rem; padding-bottom: 0.5rem;">
         <div class="container">
             <!-- Logo -->
-            <a class="navbar-brand" href="<?php echo SITE_URL; ?>">
+            <a class="navbar-brand py-0" href="<?php echo SITE_URL; ?>">
                 <img src="<?php echo SITE_URL . '/' . $site_logo; ?>"
                     alt="<?php echo htmlspecialchars($site_name); ?>"
-                    height="100">
+                    style="height: 60px; width: auto; object-fit: contain;">
             </a>
 
             <!-- Mobile menu button -->
