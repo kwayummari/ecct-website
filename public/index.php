@@ -433,7 +433,7 @@ include 'includes/header.php';
                 ?>
                     <div class="gallery-item-modern <?php echo $gridClass; ?>" data-aos="fade-up" data-aos-delay="<?php echo $index * 100; ?>">
                         <div class="gallery-image-container">
-                            <img src="<?php echo UPLOADS_URL . '/gallery/' . $image['image_path']; ?>"
+                            <img src="<?php echo SITE_URL; ?>/<?php echo $image['image_path']; ?>"
                                 alt="<?php echo htmlspecialchars($image['title']); ?>"
                                 class="gallery-image-modern"
                                 data-bs-toggle="modal"
