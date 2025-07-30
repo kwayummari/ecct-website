@@ -1,10 +1,14 @@
 <?php
-require_once '../../includes/config.php';
-require_once '../../includes/database.php';
-require_once '../../includes/functions.php';
-require_once '../includes/auth_check.php';
+define('ECCT_ROOT', dirname(__FILE__, 3));
+require_once ECCT_ROOT . '/admin/includes/config.php';
+require_once ECCT_ROOT . '/admin/includes/database.php';
+require_once ECCT_ROOT . '/admin/includes/auth.php';
+require_once ECCT_ROOT . '/admin/includes/helpers.php';
+
+require_login();
 
 $db = new Database();
+$current_user = get_admin_user();
 
 // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'create') {
@@ -93,7 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 }
 
 $page_title = "Add New Partner";
-include '../includes/header.php';
+include ECCT_ROOT . '/admin/includes/header.php';
 ?>
 
 <div class="container-fluid px-4">
@@ -259,4 +263,4 @@ include '../includes/header.php';
     </div>
 </div>
 
-<?php include '../includes/footer.php'; ?>
+<?php include ECCT_ROOT . '/admin/includes/footer.php'; ?>
