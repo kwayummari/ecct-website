@@ -93,98 +93,531 @@ $contact_info = [
 include 'includes/header.php';
 ?>
 
-<!-- Page Header -->
-<section class="page-header bg-primary text-white py-5">
+<style>
+    /* Contact Page Styles */
+    .contact-hero {
+        position: relative;
+        min-height: 70vh;
+        display: flex;
+        align-items: center;
+        background: linear-gradient(135deg, rgba(40, 167, 69, 0.8), rgba(0, 0, 0, 0.6)), url('<?php echo ASSETS_PATH; ?>/images/tree-planting/LUC06450.JPG');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        color: white;
+    }
+
+    .contact-hero h1 {
+        font-size: 3.5rem;
+        font-weight: 800;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        margin-bottom: 1.5rem;
+    }
+
+    .contact-hero p {
+        font-size: 1.2rem;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        margin-bottom: 2rem;
+    }
+
+    .hero-badge {
+        background: rgba(40, 167, 69, 0.9);
+        border-radius: 25px;
+        padding: 8px 20px;
+        display: inline-block;
+        margin-bottom: 2rem;
+        font-weight: 500;
+    }
+
+    .contact-stats {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 15px;
+        padding: 30px;
+        margin-top: 3rem;
+    }
+
+    .contact-content {
+        padding: 80px 0;
+        background: white;
+    }
+
+    .contact-info-card {
+        background: white;
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        height: 100%;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .contact-info-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #28a745, #20c997);
+    }
+
+    .contact-item {
+        background: #f8f9fa;
+        border-radius: 15px;
+        padding: 25px;
+        margin-bottom: 25px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border-left: 4px solid transparent;
+    }
+
+    .contact-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .contact-item.address {
+        border-left-color: #28a745;
+    }
+
+    .contact-item.phone {
+        border-left-color: #17a2b8;
+    }
+
+    .contact-item.email {
+        border-left-color: #ffc107;
+    }
+
+    .contact-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+    }
+
+    .contact-icon.address {
+        background: linear-gradient(135deg, #28a745, #20c997);
+        color: white;
+    }
+
+    .contact-icon.phone {
+        background: linear-gradient(135deg, #17a2b8, #20c997);
+        color: white;
+    }
+
+    .contact-icon.email {
+        background: linear-gradient(135deg, #ffc107, #fd7e14);
+        color: white;
+    }
+
+    .contact-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #2c3e50;
+        margin-bottom: 8px;
+    }
+
+    .contact-detail {
+        color: #6c757d;
+        font-size: 1rem;
+        line-height: 1.5;
+    }
+
+    .contact-detail a {
+        color: inherit;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .contact-detail a:hover {
+        color: #28a745;
+    }
+
+    .social-links {
+        margin-top: 30px;
+    }
+
+    .social-btn {
+        width: 50px;
+        height: 50px;
+        border-radius: 15px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 10px;
+        text-decoration: none;
+        color: white;
+        transition: all 0.3s ease;
+        font-size: 1.2rem;
+    }
+
+    .social-btn:hover {
+        transform: translateY(-3px);
+        color: white;
+    }
+
+    .social-btn.facebook {
+        background: linear-gradient(135deg, #3b5998, #4267B2);
+    }
+
+    .social-btn.twitter {
+        background: linear-gradient(135deg, #1da1f2, #0d8bd9);
+    }
+
+    .social-btn.instagram {
+        background: linear-gradient(135deg, #E4405F, #F77737);
+    }
+
+    .contact-form-card {
+        background: white;
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .contact-form-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #28a745, #20c997);
+    }
+
+    .form-title {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #2c3e50;
+        margin-bottom: 10px;
+    }
+
+    .form-subtitle {
+        color: #6c757d;
+        margin-bottom: 30px;
+        font-size: 1.1rem;
+    }
+
+    .form-group {
+        margin-bottom: 25px;
+    }
+
+    .form-label {
+        font-weight: 600;
+        color: #2c3e50;
+        margin-bottom: 8px;
+        font-size: 0.95rem;
+    }
+
+    .form-control {
+        border: 2px solid #e9ecef;
+        border-radius: 10px;
+        padding: 12px 15px;
+        font-size: 1rem;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        background: #fafafa;
+    }
+
+    .form-control:focus {
+        border-color: #28a745;
+        box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+        background: white;
+    }
+
+    .form-control:valid {
+        border-color: #28a745;
+        background: white;
+    }
+
+    .btn-submit {
+        background: linear-gradient(135deg, #28a745, #20c997);
+        border: none;
+        border-radius: 10px;
+        padding: 12px 30px;
+        color: white;
+        font-weight: 600;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        width: 100%;
+    }
+
+    .btn-submit:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(40, 167, 69, 0.3);
+        color: white;
+    }
+
+    .alert {
+        border-radius: 10px;
+        border: none;
+        padding: 15px 20px;
+        margin-bottom: 25px;
+    }
+
+    .alert-success {
+        background: linear-gradient(135deg, #d4edda, #c3e6cb);
+        color: #155724;
+    }
+
+    .alert-danger {
+        background: linear-gradient(135deg, #f8d7da, #f5c6cb);
+        color: #721c24;
+    }
+
+    .faq-section {
+        padding: 80px 0;
+        background: #f8f9fa;
+    }
+
+    .faq-card {
+        background: white;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .accordion-item {
+        border: none;
+        margin-bottom: 15px;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .accordion-header button {
+        background: white;
+        border: none;
+        border-radius: 10px;
+        padding: 20px;
+        font-weight: 600;
+        color: #2c3e50;
+        font-size: 1.1rem;
+    }
+
+    .accordion-header button:not(.collapsed) {
+        background: linear-gradient(135deg, #28a745, #20c997);
+        color: white;
+    }
+
+    .accordion-body {
+        padding: 20px;
+        background: #f8f9fa;
+        color: #6c757d;
+        line-height: 1.6;
+    }
+
+    .map-section {
+        padding: 80px 0;
+        background: white;
+    }
+
+    .map-container {
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    .placeholder-map {
+        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        border-radius: 20px;
+        min-height: 400px;
+    }
+
+    .map-btn {
+        background: linear-gradient(135deg, #28a745, #20c997);
+        border: none;
+        border-radius: 25px;
+        padding: 12px 25px;
+        color: white;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .map-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(40, 167, 69, 0.3);
+        color: white;
+    }
+
+    .section-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #2c3e50;
+        margin-bottom: 20px;
+    }
+
+    .section-subtitle {
+        font-size: 1.1rem;
+        color: #6c757d;
+        margin-bottom: 50px;
+    }
+
+    .section-badge {
+        background: linear-gradient(135deg, #28a745, #20c997);
+        color: white;
+        padding: 8px 20px;
+        border-radius: 25px;
+        display: inline-block;
+        margin-bottom: 20px;
+        font-weight: 500;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .contact-hero h1 {
+            font-size: 2.5rem;
+        }
+
+        .contact-hero p {
+            font-size: 1.1rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+        }
+
+        .contact-info-card,
+        .contact-form-card {
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .contact-item {
+            padding: 20px;
+        }
+
+        .form-title {
+            font-size: 1.5rem;
+        }
+
+        .social-btn {
+            width: 45px;
+            height: 45px;
+            margin-right: 8px;
+        }
+
+        .faq-card {
+            padding: 20px;
+        }
+
+        .accordion-header button {
+            padding: 15px;
+            font-size: 1rem;
+        }
+    }
+</style>
+
+<!-- Contact Hero -->
+<section class="contact-hero">
     <div class="container">
-        <div class="row align-items-center">
+        <div class="row justify-content-center text-center">
             <div class="col-lg-8">
-                <h1 class="display-4 fw-bold mb-3">Contact Us</h1>
-                <p class="lead mb-0">
-                    Get in touch for partnerships, volunteer opportunities, or environmental conservation inquiries
-                </p>
+                <div class="hero-badge">
+                    <i class="fas fa-envelope me-2"></i>Contact Us
+                </div>
+                <h1>Get in Touch</h1>
+                <p>Ready to make a difference? Contact us for partnerships, volunteer opportunities, or environmental conservation inquiries.</p>
             </div>
-            <div class="col-lg-4 text-lg-end">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb justify-content-lg-end mb-0">
-                        <li class="breadcrumb-item"><a href="<?php echo SITE_URL; ?>" class="text-white-50">Home</a></li>
-                        <li class="breadcrumb-item active text-white" aria-current="page">Contact</li>
-                    </ol>
-                </nav>
+        </div>
+
+        <div class="contact-stats">
+            <div class="row text-center text-white">
+                <div class="col-md-4 col-6 mb-3">
+                    <div>
+                        <i class="fas fa-clock fa-2x mb-2"></i>
+                        <h4 class="mb-1">24/7</h4>
+                        <p class="mb-0 small">Response Time</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-6 mb-3">
+                    <div>
+                        <i class="fas fa-users fa-2x mb-2"></i>
+                        <h4 class="mb-1">100+</h4>
+                        <p class="mb-0 small">Partnerships</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-12 mb-3">
+                    <div>
+                        <i class="fas fa-handshake fa-2x mb-2"></i>
+                        <h4 class="mb-1">500+</h4>
+                        <p class="mb-0 small">Collaborations</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Contact Section -->
-<section class="contact-section py-5">
+<!-- Contact Content -->
+<section class="contact-content">
     <div class="container">
         <div class="row">
             <!-- Contact Information -->
-            <div class="col-lg-4 mb-5">
-                <div class="contact-info">
-                    <h3 class="h4 fw-bold mb-4">Get in Touch</h3>
-                    <p class="text-muted mb-4">
-                        Ready to make a difference? Contact us to learn more about our environmental conservation work
-                        or to get involved in our community initiatives.
-                    </p>
+            <div class="col-lg-5 mb-5">
+                <div class="contact-info-card">
+                    <div class="section-badge mb-3">
+                        <i class="fas fa-info-circle me-2"></i>Contact Information
+                    </div>
+                    <h3 class="form-title">Let's Connect</h3>
+                    <p class="form-subtitle">Ready to make a difference? Contact us to learn more about our environmental conservation work or to get involved in our community initiatives.</p>
 
-                    <div class="contact-item d-flex align-items-start mb-4">
-                        <div class="contact-icon bg-primary bg-opacity-10 text-primary rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px; min-width: 50px;">
+                    <div class="contact-item address">
+                        <div class="contact-icon address">
                             <i class="fas fa-map-marker-alt"></i>
                         </div>
-                        <div>
-                            <h6 class="fw-semibold mb-1">Address</h6>
-                            <p class="text-muted mb-0"><?php echo htmlspecialchars($contact_info['address']); ?></p>
+                        <div class="contact-title">Our Location</div>
+                        <div class="contact-detail">
+                            <?php echo htmlspecialchars($contact_info['address']); ?>
                         </div>
                     </div>
 
-                    <div class="contact-item d-flex align-items-start mb-4">
-                        <div class="contact-icon bg-success bg-opacity-10 text-success rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px; min-width: 50px;">
+                    <div class="contact-item phone">
+                        <div class="contact-icon phone">
                             <i class="fas fa-phone"></i>
                         </div>
-                        <div>
-                            <h6 class="fw-semibold mb-1">Phone</h6>
-                            <p class="text-muted mb-0">
-                                <a href="tel:<?php echo $contact_info['phone']; ?>" class="text-decoration-none">
-                                    <?php echo htmlspecialchars($contact_info['phone']); ?>
-                                </a>
-                            </p>
+                        <div class="contact-title">Call Us</div>
+                        <div class="contact-detail">
+                            <a href="tel:<?php echo $contact_info['phone']; ?>">
+                                <?php echo htmlspecialchars($contact_info['phone']); ?>
+                            </a>
                         </div>
                     </div>
 
-                    <div class="contact-item d-flex align-items-start mb-4">
-                        <div class="contact-icon bg-info bg-opacity-10 text-info rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px; min-width: 50px;">
+                    <div class="contact-item email">
+                        <div class="contact-icon email">
                             <i class="fas fa-envelope"></i>
                         </div>
-                        <div>
-                            <h6 class="fw-semibold mb-1">Email</h6>
-                            <p class="text-muted mb-0">
-                                <a href="mailto:<?php echo $contact_info['email']; ?>" class="text-decoration-none">
-                                    <?php echo htmlspecialchars($contact_info['email']); ?>
-                                </a>
-                            </p>
+                        <div class="contact-title">Email Us</div>
+                        <div class="contact-detail">
+                            <a href="mailto:<?php echo $contact_info['email']; ?>">
+                                <?php echo htmlspecialchars($contact_info['email']); ?>
+                            </a>
                         </div>
                     </div>
 
-                    <!-- Social Media -->
-                    <div class="social-links mt-4">
-                        <h6 class="fw-semibold mb-3">Follow Us</h6>
-                        <div class="d-flex">
+                    <div class="social-links">
+                        <h5 class="contact-title mb-3">Follow Our Journey</h5>
+                        <div>
                             <?php if (!empty($contact_info['facebook'])): ?>
-                                <a href="<?php echo $contact_info['facebook']; ?>" target="_blank"
-                                    class="btn btn-outline-primary btn-sm me-2">
+                                <a href="<?php echo $contact_info['facebook']; ?>" target="_blank" class="social-btn facebook">
                                     <i class="fab fa-facebook-f"></i>
                                 </a>
                             <?php endif; ?>
                             <?php if (!empty($contact_info['twitter'])): ?>
-                                <a href="<?php echo $contact_info['twitter']; ?>" target="_blank"
-                                    class="btn btn-outline-info btn-sm me-2">
+                                <a href="<?php echo $contact_info['twitter']; ?>" target="_blank" class="social-btn twitter">
                                     <i class="fab fa-twitter"></i>
                                 </a>
                             <?php endif; ?>
                             <?php if (!empty($contact_info['instagram'])): ?>
-                                <a href="<?php echo $contact_info['instagram']; ?>" target="_blank"
-                                    class="btn btn-outline-danger btn-sm">
+                                <a href="<?php echo $contact_info['instagram']; ?>" target="_blank" class="social-btn instagram">
                                     <i class="fab fa-instagram"></i>
                                 </a>
                             <?php endif; ?>
@@ -194,122 +627,94 @@ include 'includes/header.php';
             </div>
 
             <!-- Contact Form -->
-            <div class="col-lg-8">
-                <div class="contact-form">
-                    <div class="card border-0 shadow-sm">
-                        <div class="card-body p-5">
-                            <h4 class="fw-bold mb-4">Send us a Message</h4>
-
-                            <?php if ($success_message): ?>
-                                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                    <i class="fas fa-check-circle me-2"></i>
-                                    <?php echo htmlspecialchars($success_message); ?>
-                                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                                </div>
-                            <?php endif; ?>
-
-                            <?php if ($error_message): ?>
-                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                    <i class="fas fa-exclamation-triangle me-2"></i>
-                                    <?php echo htmlspecialchars($error_message); ?>
-                                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                                </div>
-                            <?php endif; ?>
-
-                            <form method="POST" action="" class="needs-validation" novalidate>
-                                <?php echo csrf_field(); ?>
-
-                                <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <label for="name" class="form-label">Full Name <span class="text-danger">*</span></label>
-                                        <input type="text"
-                                            class="form-control"
-                                            id="name"
-                                            name="name"
-                                            value="<?php echo htmlspecialchars($form_data['name'] ?? ''); ?>"
-                                            required>
-                                        <div class="invalid-feedback">
-                                            Please provide your full name.
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6 mb-3">
-                                        <label for="email" class="form-label">Email Address <span class="text-danger">*</span></label>
-                                        <input type="email"
-                                            class="form-control"
-                                            id="email"
-                                            name="email"
-                                            value="<?php echo htmlspecialchars($form_data['email'] ?? ''); ?>"
-                                            required>
-                                        <div class="invalid-feedback">
-                                            Please provide a valid email address.
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <label for="phone" class="form-label">Phone Number</label>
-                                        <input type="tel"
-                                            class="form-control"
-                                            id="phone"
-                                            name="phone"
-                                            value="<?php echo htmlspecialchars($form_data['phone'] ?? ''); ?>">
-                                    </div>
-
-                                    <div class="col-md-6 mb-3">
-                                        <label for="subject" class="form-label">Subject <span class="text-danger">*</span></label>
-                                        <select class="form-select" id="subject" name="subject" required>
-                                            <option value="">Choose a subject...</option>
-                                            <option value="General Inquiry" <?php echo (($form_data['subject'] ?? '') === 'General Inquiry') ? 'selected' : ''; ?>>General Inquiry</option>
-                                            <option value="Volunteer Opportunity" <?php echo (($form_data['subject'] ?? '') === 'Volunteer Opportunity') ? 'selected' : ''; ?>>Volunteer Opportunity</option>
-                                            <option value="Partnership" <?php echo (($form_data['subject'] ?? '') === 'Partnership') ? 'selected' : ''; ?>>Partnership</option>
-                                            <option value="Environmental Project" <?php echo (($form_data['subject'] ?? '') === 'Environmental Project') ? 'selected' : ''; ?>>Environmental Project</option>
-                                            <option value="Media Inquiry" <?php echo (($form_data['subject'] ?? '') === 'Media Inquiry') ? 'selected' : ''; ?>>Media Inquiry</option>
-                                            <option value="Other" <?php echo (($form_data['subject'] ?? '') === 'Other') ? 'selected' : ''; ?>>Other</option>
-                                        </select>
-                                        <div class="invalid-feedback">
-                                            Please select a subject.
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="mb-4">
-                                    <label for="message" class="form-label">Message <span class="text-danger">*</span></label>
-                                    <textarea class="form-control"
-                                        id="message"
-                                        name="message"
-                                        rows="6"
-                                        placeholder="Tell us about your inquiry, how you'd like to get involved, or any questions you have..."
-                                        required><?php echo htmlspecialchars($form_data['message'] ?? ''); ?></textarea>
-                                    <div class="invalid-feedback">
-                                        Please provide your message.
-                                    </div>
-                                    <div class="form-text">
-                                        Minimum 10 characters required.
-                                    </div>
-                                </div>
-
-                                <div class="mb-4">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="privacy" required>
-                                        <label class="form-check-label" for="privacy">
-                                            I agree to the <a href="<?php echo SITE_URL; ?>/privacy-policy.php" target="_blank">Privacy Policy</a>
-                                            and consent to the processing of my personal data.
-                                        </label>
-                                        <div class="invalid-feedback">
-                                            You must agree to our privacy policy.
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <button type="submit" class="btn btn-primary btn-lg">
-                                    <i class="fas fa-paper-plane me-2"></i>
-                                    Send Message
-                                </button>
-                            </form>
-                        </div>
+            <div class="col-lg-7">
+                <div class="contact-form-card">
+                    <div class="section-badge mb-3">
+                        <i class="fas fa-paper-plane me-2"></i>Send Message
                     </div>
+                    <h3 class="form-title">Start the Conversation</h3>
+                    <p class="form-subtitle">Have a question, want to volunteer, or interested in partnership? We'd love to hear from you!</p>
+
+                    <?php if ($success_message): ?>
+                        <div class="alert alert-success">
+                            <i class="fas fa-check-circle me-2"></i>
+                            <?php echo htmlspecialchars($success_message); ?>
+                        </div>
+                    <?php endif; ?>
+
+                    <?php if ($error_message): ?>
+                        <div class="alert alert-danger">
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+                            <?php echo htmlspecialchars($error_message); ?>
+                        </div>
+                    <?php endif; ?>
+
+                    <form method="POST" class="needs-validation" novalidate>
+                        <?php generate_csrf_field(); ?>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="name" class="form-label">
+                                        <i class="fas fa-user me-1"></i>Full Name *
+                                    </label>
+                                    <input type="text" class="form-control" id="name" name="name"
+                                        value="<?php echo htmlspecialchars($form_data['name'] ?? ''); ?>"
+                                        required minlength="2" maxlength="100">
+                                    <div class="invalid-feedback">Please provide your full name.</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="email" class="form-label">
+                                        <i class="fas fa-envelope me-1"></i>Email Address *
+                                    </label>
+                                    <input type="email" class="form-control" id="email" name="email"
+                                        value="<?php echo htmlspecialchars($form_data['email'] ?? ''); ?>"
+                                        required>
+                                    <div class="invalid-feedback">Please provide a valid email address.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="phone" class="form-label">
+                                        <i class="fas fa-phone me-1"></i>Phone Number
+                                    </label>
+                                    <input type="tel" class="form-control" id="phone" name="phone"
+                                        value="<?php echo htmlspecialchars($form_data['phone'] ?? ''); ?>">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="subject" class="form-label">
+                                        <i class="fas fa-tag me-1"></i>Subject *
+                                    </label>
+                                    <input type="text" class="form-control" id="subject" name="subject"
+                                        value="<?php echo htmlspecialchars($form_data['subject'] ?? ''); ?>"
+                                        required minlength="5" maxlength="200">
+                                    <div class="invalid-feedback">Please provide a subject (5-200 characters).</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message" class="form-label">
+                                <i class="fas fa-comment me-1"></i>Message *
+                            </label>
+                            <textarea class="form-control" id="message" name="message" rows="6"
+                                required minlength="10" maxlength="1000"
+                                placeholder="Tell us about your inquiry, how you'd like to help, or what partnership opportunities you're interested in..."><?php echo htmlspecialchars($form_data['message'] ?? ''); ?></textarea>
+                            <div class="invalid-feedback">Please provide a message (10-1000 characters).</div>
+                            <div class="form-text">Minimum 10 characters required</div>
+                        </div>
+
+                        <button type="submit" class="btn btn-submit">
+                            <i class="fas fa-paper-plane me-2"></i>Send Message
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -317,93 +722,94 @@ include 'includes/header.php';
 </section>
 
 <!-- FAQ Section -->
-<section class="faq-section py-5 bg-light">
+<section class="faq-section">
     <div class="container">
-        <div class="row">
-            <div class="col-12 text-center mb-5">
-                <h2 class="section-title">Frequently Asked Questions</h2>
-                <p class="text-muted">Quick answers to common questions about ECCT</p>
+        <div class="row text-center mb-5">
+            <div class="col-12">
+                <div class="section-badge">
+                    <i class="fas fa-question-circle me-2"></i>Frequently Asked Questions
+                </div>
+                <h2 class="section-title">Common Questions</h2>
+                <p class="section-subtitle">Find quick answers to frequently asked questions about our work and how to get involved</p>
             </div>
         </div>
+
         <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <div class="accordion" id="faqAccordion">
-                    <div class="accordion-item border-0 shadow-sm mb-3">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
-                                How can I volunteer with ECCT?
-                            </button>
-                        </h2>
-                        <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
-                            <div class="accordion-body">
-                                You can volunteer by filling out our volunteer application form on our website.
-                                We welcome individuals with diverse skills and backgrounds who are passionate about
-                                environmental conservation. Once you apply, our team will contact you about
-                                opportunities that match your interests and availability.
+            <div class="col-lg-10">
+                <div class="faq-card">
+                    <div class="accordion" id="faqAccordion">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                    How can I volunteer with ECCT?
+                                </button>
+                            </h2>
+                            <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    We welcome volunteers from all backgrounds! You can start by filling out our volunteer application form,
+                                    attending our orientation sessions, or joining one of our community events. We have opportunities
+                                    ranging from tree planting and environmental education to administrative support and fundraising.
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="accordion-item border-0 shadow-sm mb-3">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
-                                What types of environmental projects does ECCT work on?
-                            </button>
-                        </h2>
-                        <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                            <div class="accordion-body">
-                                ECCT focuses on plastic waste reduction, marine and coastal conservation,
-                                climate change mitigation, biodiversity preservation, and community education.
-                                Our projects include beach cleanups, waste management programs, environmental
-                                education in schools, and sustainable livelihood initiatives.
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                    What types of partnerships do you offer?
+                                </button>
+                            </h2>
+                            <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    We partner with corporations, NGOs, schools, government agencies, and community groups.
+                                    Partnership opportunities include sponsoring conservation projects, employee volunteer programs,
+                                    educational collaborations, research initiatives, and awareness campaigns.
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="accordion-item border-0 shadow-sm mb-3">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
-                                How can my organization partner with ECCT?
-                            </button>
-                        </h2>
-                        <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                            <div class="accordion-body">
-                                We welcome partnerships with organizations, businesses, schools, and government
-                                agencies that share our environmental mission. Contact us through this form or
-                                email us directly to discuss potential collaboration opportunities, joint projects,
-                                or sponsorship possibilities.
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                    How can I donate to support your work?
+                                </button>
+                            </h2>
+                            <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    You can support our work through monetary donations, equipment donations, or in-kind contributions.
+                                    Visit our donation page for secure online giving options, or contact us directly to discuss
+                                    other ways to contribute to our environmental conservation efforts.
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="accordion-item border-0 shadow-sm mb-3">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
-                                Where does ECCT operate in Tanzania?
-                            </button>
-                        </h2>
-                        <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                            <div class="accordion-body">
-                                ECCT primarily operates in coastal areas of Tanzania, with a focus on Dar es Salaam
-                                and surrounding regions. However, we also work with communities in other parts of
-                                the country and are always looking to expand our reach to areas where our
-                                environmental conservation efforts are needed most.
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                                    Where do you operate in Tanzania?
+                                </button>
+                            </h2>
+                            <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    While our headquarters are in Dar es Salaam, we operate conservation projects across Tanzania.
+                                    Our work includes coastal conservation, forest restoration, urban environmental projects,
+                                    and community-based conservation initiatives in both rural and urban areas.
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="accordion-item border-0 shadow-sm">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5">
-                                How can I stay updated on ECCT's activities?
-                            </button>
-                        </h2>
-                        <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                            <div class="accordion-body">
-                                You can stay updated by following us on social media, subscribing to our newsletter,
-                                visiting our website regularly for news and updates, or joining our volunteer network.
-                                We regularly share updates about our projects, upcoming events, and environmental
-                                conservation tips.
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5">
+                                    How can I stay updated on your activities?
+                                </button>
+                            </h2>
+                            <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    You can stay updated by following us on social media, subscribing to our newsletter,
+                                    visiting our website regularly for news and updates, or joining our volunteer network.
+                                    We regularly share updates about our projects, upcoming events, and environmental conservation tips.
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -414,25 +820,30 @@ include 'includes/header.php';
 </section>
 
 <!-- Map Section -->
-<section class="map-section py-5">
+<section class="map-section">
     <div class="container">
-        <div class="row">
-            <div class="col-12 text-center mb-4">
-                <h3 class="h4 fw-bold">Find Us</h3>
-                <p class="text-muted">Visit our office in Dar es Salaam</p>
+        <div class="row text-center mb-5">
+            <div class="col-12">
+                <div class="section-badge">
+                    <i class="fas fa-map-marker-alt me-2"></i>Our Location
+                </div>
+                <h2 class="section-title">Find Us</h2>
+                <p class="section-subtitle">Visit our office in Dar es Salaam or connect with us virtually</p>
             </div>
         </div>
+
         <div class="row">
             <div class="col-12">
-                <div class="map-container rounded shadow">
-                    <!-- Replace with actual Google Maps embed or OpenStreetMap -->
-                    <div class="placeholder-map bg-light d-flex align-items-center justify-content-center" style="height: 400px;">
+                <div class="map-container">
+                    <div class="placeholder-map d-flex align-items-center justify-content-center">
                         <div class="text-center">
-                            <i class="fas fa-map-marker-alt fa-3x text-muted mb-3"></i>
-                            <h5 class="text-muted">Interactive Map</h5>
-                            <p class="text-muted">Location: Dar es Salaam, Tanzania</p>
-                            <a href="https://maps.google.com/?q=Dar+es+Salaam+Tanzania"
-                                target="_blank" class="btn btn-primary">
+                            <i class="fas fa-map-marker-alt fa-4x text-muted mb-4"></i>
+                            <h4 class="text-muted mb-3">Interactive Map</h4>
+                            <p class="text-muted mb-4">
+                                <i class="fas fa-map-pin me-2"></i>
+                                Location: Dar es Salaam, Tanzania
+                            </p>
+                            <a href="https://maps.google.com/?q=Dar+es+Salaam+Tanzania" target="_blank" class="map-btn">
                                 <i class="fas fa-external-link-alt me-2"></i>
                                 View on Google Maps
                             </a>
@@ -481,6 +892,20 @@ include 'includes/header.php';
                 }
             });
         }
+
+        // Form animations
+        const formInputs = document.querySelectorAll('.form-control');
+        formInputs.forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.classList.add('focused');
+            });
+
+            input.addEventListener('blur', function() {
+                if (!this.value) {
+                    this.parentElement.classList.remove('focused');
+                }
+            });
+        });
     });
 </script>
 
