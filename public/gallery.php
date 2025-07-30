@@ -478,7 +478,7 @@ include 'includes/header.php';
     }
 
     .image-modal .modal-category {
-        background: rgba(220, 53, 69, 0.8);
+        background: #28a745;
         color: white;
         padding: 5px 12px;
         border-radius: 15px;
