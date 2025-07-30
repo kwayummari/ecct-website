@@ -1,7 +1,190 @@
 </main>
 
 <!-- Footer -->
-<footer class="bg-dark text-white mt-5">
+<style>
+    /* Footer Pattern Backgrounds */
+    .footer-main {
+        background: #2c3e50;
+        background-image:
+            radial-gradient(circle at 20% 50%, rgba(0, 123, 255, 0.1) 0%, transparent 50%),
+            radial-gradient(circle at 80% 20%, rgba(40, 167, 69, 0.1) 0%, transparent 50%),
+            radial-gradient(circle at 40% 80%, rgba(32, 201, 151, 0.1) 0%, transparent 50%),
+            linear-gradient(135deg, transparent 25%, rgba(0, 123, 255, 0.05) 25%, rgba(0, 123, 255, 0.05) 50%, transparent 50%, transparent 75%, rgba(40, 167, 69, 0.05) 75%);
+        background-size: 400px 400px, 350px 350px, 300px 300px, 60px 60px;
+        background-position: 0 0, 100px 100px, 200px 200px, 0 0;
+        position: relative;
+    }
+
+    .footer-main::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image:
+            url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23007bff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        opacity: 0.3;
+        pointer-events: none;
+    }
+
+    .footer-newsletter {
+        background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+        background-image:
+            url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.1' fill-rule='evenodd'%3E%3Cpath d='M20 20c0 11.046-8.954 20-20 20v20h40V20H20z'/%3E%3C/g%3E%3C/svg%3E"),
+            repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255, 255, 255, 0.05) 10px, rgba(255, 255, 255, 0.05) 20px);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .footer-newsletter::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background:
+            radial-gradient(circle, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+        background-size: 20px 20px;
+        animation: patternMove 20s linear infinite;
+        pointer-events: none;
+    }
+
+    @keyframes patternMove {
+        0% {
+            transform: translateX(0) translateY(0);
+        }
+
+        100% {
+            transform: translateX(20px) translateY(20px);
+        }
+    }
+
+    .footer-copyright {
+        background: #1a252f;
+        background-image:
+            linear-gradient(90deg, rgba(0, 123, 255, 0.1) 50%, transparent 50%),
+            linear-gradient(rgba(40, 167, 69, 0.05) 50%, transparent 50%);
+        background-size: 20px 20px, 20px 10px;
+        position: relative;
+    }
+
+    .footer-copyright::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image:
+            url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%2320c997' fill-opacity='0.05'%3E%3Ccircle cx='3' cy='3' r='1'/%3E%3Ccircle cx='13' cy='13' r='1'/%3E%3C/g%3E%3C/svg%3E");
+        pointer-events: none;
+    }
+
+    /* Enhanced footer content */
+    .footer-main .container {
+        position: relative;
+        z-index: 1;
+    }
+
+    .footer-newsletter .container {
+        position: relative;
+        z-index: 1;
+    }
+
+    .footer-copyright .container {
+        position: relative;
+        z-index: 1;
+    }
+
+    /* Decorative elements */
+    .footer-main h5 {
+        position: relative;
+    }
+
+    .footer-main h5::after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 40px;
+        height: 2px;
+        background: linear-gradient(90deg, #007bff, #20c997);
+        border-radius: 1px;
+    }
+
+    /* Enhanced social links */
+    .social-links a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        margin-right: 10px;
+        border-radius: 50%;
+        background: rgba(0, 123, 255, 0.1);
+        color: #007bff;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .social-links a::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        background: linear-gradient(135deg, #007bff, #20c997);
+        border-radius: 50%;
+        transition: all 0.3s ease;
+        transform: translate(-50%, -50%);
+    }
+
+    .social-links a:hover::before {
+        width: 100%;
+        height: 100%;
+    }
+
+    .social-links a:hover {
+        color: white;
+        transform: translateY(-2px);
+    }
+
+    .social-links a i {
+        position: relative;
+        z-index: 1;
+    }
+
+    /* Newsletter form enhancement */
+    .footer-newsletter .form-control {
+        background: rgba(255, 255, 255, 0.95);
+        border: none;
+        border-radius: 25px;
+        padding: 12px 20px;
+    }
+
+    .footer-newsletter .btn {
+        border-radius: 25px;
+        padding: 12px 25px;
+        font-weight: 600;
+        background: white;
+        color: #007bff;
+        border: none;
+        transition: all 0.3s ease;
+    }
+
+    .footer-newsletter .btn:hover {
+        background: rgba(255, 255, 255, 0.9);
+        transform: translateY(-1px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+</style>
+
+<footer class="footer-main text-white mt-5">
     <div class="container py-5">
         <div class="row">
             <!-- About Section -->
@@ -112,21 +295,21 @@
                     </div>
 
                     <!-- Social Media Links -->
-                    <div class="social-links mt-4">
+                    <div class="mt-4">
                         <h6 class="mb-3">Follow Us</h6>
-                        <div class="d-flex">
+                        <div class="social-links">
                             <?php if (!empty($facebook_url) && $facebook_url !== '#'): ?>
-                                <a href="<?php echo $facebook_url; ?>" target="_blank" class="btn btn-outline-primary btn-sm me-2">
+                                <a href="<?php echo $facebook_url; ?>" target="_blank">
                                     <i class="fab fa-facebook-f"></i>
                                 </a>
                             <?php endif; ?>
                             <?php if (!empty($twitter_url) && $twitter_url !== '#'): ?>
-                                <a href="<?php echo $twitter_url; ?>" target="_blank" class="btn btn-outline-primary btn-sm me-2">
+                                <a href="<?php echo $twitter_url; ?>" target="_blank">
                                     <i class="fab fa-twitter"></i>
                                 </a>
                             <?php endif; ?>
                             <?php if (!empty($instagram_url) && $instagram_url !== '#'): ?>
-                                <a href="<?php echo $instagram_url; ?>" target="_blank" class="btn btn-outline-primary btn-sm me-2">
+                                <a href="<?php echo $instagram_url; ?>" target="_blank">
                                     <i class="fab fa-instagram"></i>
                                 </a>
                             <?php endif; ?>
@@ -177,7 +360,7 @@
     </div>
 
     <!-- Newsletter Subscription -->
-    <div class="bg-primary py-4">
+    <div class="footer-newsletter py-4">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-md-6">
@@ -196,7 +379,7 @@
     </div>
 
     <!-- Copyright -->
-    <div class="bg-darker py-3">
+    <div class="footer-copyright py-3">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-md-6">
