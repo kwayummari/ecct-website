@@ -168,21 +168,20 @@
     }
 
     .social-links a {
-        display: inline-flex;
+        display: flex;
         align-items: center;
         justify-content: center;
         width: 50px;
         height: 50px;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.1);
+        border-radius: 15px;
+        background: rgba(255, 255, 255, 0.05);
         backdrop-filter: blur(10px);
-        border: 2px solid rgba(255, 255, 255, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.1);
         color: #ffffff;
         text-decoration: none;
         transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         position: relative;
         overflow: hidden;
-        line-height: 1;
     }
 
     .social-links a::before {
@@ -195,7 +194,7 @@
         background: linear-gradient(135deg, #208836, #2ea344);
         opacity: 0;
         transition: all 0.4s ease;
-        border-radius: 50%;
+        border-radius: 15px;
     }
 
     .social-links a:hover::before {
@@ -213,11 +212,6 @@
         position: relative;
         z-index: 1;
         transition: all 0.3s ease;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        height: 100%;
     }
 
     .social-links a:hover i {
@@ -363,18 +357,6 @@
             height: 45px;
         }
 
-        .social-links a i {
-            font-size: 1.1rem;
-        }
-
-        .impact-stat {
-            margin-bottom: 20px;
-        }
-
-        .impact-number {
-            font-size: 1.8rem;
-        }
-
         .newsletter-form {
             flex-direction: column;
         }
@@ -382,116 +364,6 @@
         .footer-newsletter .btn {
             width: 100%;
         }
-    }
-
-    /* Impact Statistics */
-    .impact-stat {
-        padding: 20px;
-        border-radius: 15px;
-        background: rgba(255, 255, 255, 0.05);
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        transition: all 0.3s ease;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .impact-stat:hover {
-        transform: translateY(-5px);
-        background: rgba(255, 255, 255, 0.08);
-        border-color: rgba(32, 136, 54, 0.3);
-        box-shadow: 0 10px 30px rgba(32, 136, 54, 0.2);
-    }
-
-    .impact-stat::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 3px;
-        background: linear-gradient(90deg, #208836, #2ea344);
-        opacity: 0;
-        transition: all 0.3s ease;
-    }
-
-    .impact-stat:hover::before {
-        opacity: 1;
-    }
-
-    .impact-icon {
-        width: 60px;
-        height: 60px;
-        margin: 0 auto;
-        background: linear-gradient(135deg, #208836, #2ea344);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.5rem;
-        color: white;
-        box-shadow: 0 8px 25px rgba(32, 136, 54, 0.3);
-    }
-
-    .impact-number {
-        font-size: 2.5rem;
-        font-weight: 700;
-        color: #2ea344;
-        margin-bottom: 5px;
-        background: linear-gradient(135deg, #208836, #2ea344);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-    }
-
-    .impact-label {
-        color: #ffffff;
-        font-weight: 500;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        font-size: 0.9rem;
-    }
-
-    /* Counter Animation */
-    @keyframes countUp {
-        from {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    .impact-stat {
-        animation: countUp 0.8s ease-out;
-    }
-
-    .impact-stat:nth-child(2) {
-        animation-delay: 0.1s;
-    }
-
-    .impact-stat:nth-child(3) {
-        animation-delay: 0.2s;
-    }
-
-    .impact-stat:nth-child(4) {
-        animation-delay: 0.3s;
-    }
-
-    .impact-stat:nth-child(5) {
-        animation-delay: 0.4s;
-    }
-
-    /* Impact stats hover glow effect */
-    .impact-stat:hover .impact-icon {
-        box-shadow:
-            0 8px 25px rgba(32, 136, 54, 0.4),
-            0 0 0 10px rgba(32, 136, 54, 0.1),
-            0 0 0 20px rgba(32, 136, 54, 0.05);
-        transform: scale(1.1);
     }
 </style>
 
@@ -630,89 +502,44 @@
             </div>
         </div>
 
-        <!-- Impact Statistics -->
-        <div class="row mt-5 pt-4">
-            <div class="col-12 text-center mb-4">
-                <h4 class="mb-2">Our Environmental Impact</h4>
-                <p class="text-light mb-4">Making a difference in Tanzania's environmental conservation</p>
-            </div>
-            <div class="col-lg-3 col-md-6 mb-4">
-                <div class="impact-stat text-center">
-                    <div class="impact-icon mb-3">
-                        <i class="fas fa-tree"></i>
-                    </div>
-                    <div class="impact-number" data-count="50000">50,000+</div>
-                    <div class="impact-label">Trees Planted</div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 mb-4">
-                <div class="impact-stat text-center">
-                    <div class="impact-icon mb-3">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <div class="impact-number" data-count="2500">2,500+</div>
-                    <div class="impact-label">Communities Reached</div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 mb-4">
-                <div class="impact-stat text-center">
-                    <div class="impact-icon mb-3">
-                        <i class="fas fa-leaf"></i>
-                    </div>
-                    <div class="impact-number" data-count="1200">1,200+</div>
-                    <div class="impact-label">Hectares Restored</div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 mb-4">
-                <div class="impact-stat text-center">
-                    <div class="impact-icon mb-3">
-                        <i class="fas fa-graduation-cap"></i>
-                    </div>
-                    <div class="impact-number" data-count="5000">5,000+</div>
-                    <div class="impact-label">People Trained</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Recent News -->
-    <div class="row mt-4 pt-4 border-top border-secondary">
-        <div class="col-12">
-            <h5 class="mb-3">Latest News</h5>
-            <div class="row">
-                <?php
-                $recent_news = get_recent_content('news', 3);
-                if ($recent_news):
-                ?>
-                    <?php foreach ($recent_news as $news): ?>
-                        <div class="col-md-4 mb-3">
-                            <div class="card bg-transparent border-secondary">
-                                <div class="card-body p-3">
-                                    <h6 class="card-title text-white">
-                                        <a href="<?php echo SITE_URL; ?>/news.php?id=<?php echo $news['id']; ?>"
-                                            class="text-white text-decoration-none">
-                                            <?php echo htmlspecialchars(truncate_text($news['title'], 60)); ?>
-                                        </a>
-                                    </h6>
-                                    <p class="card-text small text-white">
-                                        <?php echo htmlspecialchars(truncate_text(strip_tags($news['excerpt'] ?: $news['content']), 100)); ?>
-                                    </p>
-                                    <small class="text-white">
-                                        <i class="fas fa-calendar me-1"></i>
-                                        <?php echo format_date($news['publish_date']); ?>
-                                    </small>
+        <!-- Recent News -->
+        <div class="row mt-4 pt-4 border-top border-secondary">
+            <div class="col-12">
+                <h5 class="mb-3">Latest News</h5>
+                <div class="row">
+                    <?php
+                    $recent_news = get_recent_content('news', 3);
+                    if ($recent_news):
+                    ?>
+                        <?php foreach ($recent_news as $news): ?>
+                            <div class="col-md-4 mb-3">
+                                <div class="card bg-transparent border-secondary">
+                                    <div class="card-body p-3">
+                                        <h6 class="card-title text-white">
+                                            <a href="<?php echo SITE_URL; ?>/news.php?id=<?php echo $news['id']; ?>"
+                                                class="text-white text-decoration-none">
+                                                <?php echo htmlspecialchars(truncate_text($news['title'], 60)); ?>
+                                            </a>
+                                        </h6>
+                                        <p class="card-text small text-white">
+                                            <?php echo htmlspecialchars(truncate_text(strip_tags($news['excerpt'] ?: $news['content']), 100)); ?>
+                                        </p>
+                                        <small class="text-white">
+                                            <i class="fas fa-calendar me-1"></i>
+                                            <?php echo format_date($news['publish_date']); ?>
+                                        </small>
+                                    </div>
                                 </div>
                             </div>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <div class="col-12">
+                            <p class="text-muted">No recent news available.</p>
                         </div>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <div class="col-12">
-                        <p class="text-muted">No recent news available.</p>
-                    </div>
-                <?php endif; ?>
+                    <?php endif; ?>
+                </div>
             </div>
         </div>
-    </div>
     </div>
 
     <!-- Newsletter Subscription -->
