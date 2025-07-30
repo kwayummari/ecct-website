@@ -521,10 +521,10 @@
                                                 <?php echo htmlspecialchars(truncate_text($news['title'], 60)); ?>
                                             </a>
                                         </h6>
-                                        <p class="card-text small text-muted">
+                                        <p class="card-text small text-white">
                                             <?php echo htmlspecialchars(truncate_text(strip_tags($news['excerpt'] ?: $news['content']), 100)); ?>
                                         </p>
-                                        <small class="text-muted">
+                                        <small class="text-white">
                                             <i class="fas fa-calendar me-1"></i>
                                             <?php echo format_date($news['publish_date']); ?>
                                         </small>
