@@ -343,7 +343,7 @@ include 'includes/header.php';
             <div class="col-lg-8 mb-4 mb-lg-0">
                 <div class="cta-content">
                     <div class="cta-badge mb-3">
-                        <span class="badge bg-white bg-opacity-20 px-3 py-2 rounded-pill text-white">
+                        <span class="badge bg-white bg-opacity-20 px-3 py-2 rounded-pill text-success">
                             <i class="fas fa-rocket me-2"></i>Join the Movement
                         </span>
                     </div>
