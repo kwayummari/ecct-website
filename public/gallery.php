@@ -652,13 +652,13 @@ include 'includes/header.php';
                     <div class="gallery-item"
                         data-bs-toggle="modal"
                         data-bs-target="#imageModal"
-                        data-image="<?php echo SITE_URL; ?>/<?php echo $featured['image_path']; ?>"
+                        data-image="<?php echo SITE_URL; ?>/<?php echo $image['image_path']; ?>"
                         data-title="<?php echo htmlspecialchars($image['title']); ?>"
                         data-description="<?php echo htmlspecialchars($image['description'] ?? ''); ?>"
                         data-category="<?php echo htmlspecialchars($image['category'] ?? ''); ?>">
 
                         <div class="gallery-image">
-                            <img src="<?php echo SITE_URL; ?>/<?php echo $featured['image_path']; ?>"
+                            <img src="<?php echo SITE_URL; ?>/<?php echo $image['image_path']; ?>"
                                 alt="<?php echo htmlspecialchars($image['alt_text'] ?: $image['title']); ?>"
                                 loading="lazy">
                             <div class="gallery-overlay">
