@@ -4,7 +4,9 @@
 <style>
     /* Modern Footer Styling */
     .footer-main {
-        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+        background: 
+            url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='hexagons' x='0' y='0' width='40' height='40' patternUnits='userSpaceOnUse'%3E%3Cpolygon points='20,5 35,15 35,30 20,40 5,30 5,15' fill='none' stroke='%23208836' stroke-width='0.8' opacity='0.08'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='80' height='80' fill='url(%23hexagons)'/%3E%3C/svg%3E"),
+            linear-gradient(135deg, #1a2e1a 0%, #1e3e21 50%, #0f2f16 100%);
         position: relative;
         overflow: hidden;
     }
@@ -16,11 +18,12 @@
         left: 0;
         right: 0;
         bottom: 0;
-        background: 
-            radial-gradient(circle at 25% 25%, rgba(0, 123, 255, 0.1) 0%, transparent 40%),
-            radial-gradient(circle at 75% 75%, rgba(32, 201, 151, 0.08) 0%, transparent 40%),
-            radial-gradient(circle at 50% 50%, rgba(40, 167, 69, 0.06) 0%, transparent 60%);
-        background-size: 600px 600px, 800px 800px, 400px 400px;
+        background:
+            url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='dots' x='0' y='0' width='20' height='20' patternUnits='userSpaceOnUse'%3E%3Ccircle cx='10' cy='10' r='2' fill='%23208836' opacity='0.1'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='60' height='60' fill='url(%23dots)'/%3E%3C/svg%3E"),
+            radial-gradient(circle at 25% 25%, rgba(32, 136, 54, 0.15) 0%, transparent 40%),
+            radial-gradient(circle at 75% 75%, rgba(32, 136, 54, 0.12) 0%, transparent 40%),
+            radial-gradient(circle at 50% 50%, rgba(32, 136, 54, 0.08) 0%, transparent 60%);
+        background-size: 120px 120px, 600px 600px, 800px 800px, 400px 400px;
         animation: floatBg 20s ease-in-out infinite;
         pointer-events: none;
     }
@@ -32,21 +35,33 @@
         left: 0;
         right: 0;
         bottom: 0;
-        background-image: 
-            url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='grid' width='10' height='10' patternUnits='userSpaceOnUse'%3E%3Cpath d='M 10 0 L 0 0 0 10' fill='none' stroke='%23007bff' stroke-width='0.5' opacity='0.1'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100' height='100' fill='url(%23grid)'/%3E%3C/svg%3E");
-        opacity: 0.3;
+        background-image:
+            url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='triangles' x='0' y='0' width='20' height='20' patternUnits='userSpaceOnUse'%3E%3Cpolygon points='10,2 18,16 2,16' fill='none' stroke='%23208836' stroke-width='0.6' opacity='0.06'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100' height='100' fill='url(%23triangles)'/%3E%3C/svg%3E");
+        opacity: 0.4;
         pointer-events: none;
     }
 
     @keyframes floatBg {
-        0%, 100% { transform: translateY(0px) rotate(0deg); }
-        33% { transform: translateY(-20px) rotate(1deg); }
-        66% { transform: translateY(10px) rotate(-0.5deg); }
+
+        0%,
+        100% {
+            transform: translateY(0px) rotate(0deg);
+        }
+
+        33% {
+            transform: translateY(-20px) rotate(1deg);
+        }
+
+        66% {
+            transform: translateY(10px) rotate(-0.5deg);
+        }
     }
 
     /* Modern Newsletter Section */
     .footer-newsletter {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: 
+            url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='waves' x='0' y='0' width='50' height='50' patternUnits='userSpaceOnUse'%3E%3Cpath d='M0,25 Q12.5,10 25,25 Q37.5,40 50,25' fill='none' stroke='%23ffffff' stroke-width='1' opacity='0.1'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100' height='100' fill='url(%23waves)'/%3E%3C/svg%3E"),
+            linear-gradient(135deg, #208836 0%, #1a6b2d 100%);
         position: relative;
         overflow: hidden;
     }
@@ -58,22 +73,30 @@
         left: 0;
         right: 0;
         bottom: 0;
-        background: 
+        background:
+            url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='diamonds' x='0' y='0' width='20' height='20' patternUnits='userSpaceOnUse'%3E%3Cpolygon points='10,2 18,10 10,18 2,10' fill='none' stroke='%23ffffff' stroke-width='0.5' opacity='0.08'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='80' height='80' fill='url(%23diamonds)'/%3E%3C/svg%3E"),
             linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.05) 30%, rgba(255, 255, 255, 0.05) 70%, transparent 70%),
             linear-gradient(-45deg, transparent 30%, rgba(255, 255, 255, 0.03) 30%, rgba(255, 255, 255, 0.03) 70%, transparent 70%);
-        background-size: 60px 60px, 40px 40px;
+        background-size: 80px 80px, 60px 60px, 40px 40px;
         animation: slidePattern 15s linear infinite;
         pointer-events: none;
     }
 
     @keyframes slidePattern {
-        0% { transform: translateX(0); }
-        100% { transform: translateX(60px); }
+        0% {
+            transform: translateX(0);
+        }
+
+        100% {
+            transform: translateX(60px);
+        }
     }
 
     /* Modern Copyright Section */
     .footer-copyright {
-        background: linear-gradient(135deg, #0c0c0c 0%, #1a1a1a 100%);
+        background: 
+            url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='crosses' x='0' y='0' width='20' height='20' patternUnits='userSpaceOnUse'%3E%3Cpath d='M10,0 L10,20 M0,10 L20,10' stroke='%23208836' stroke-width='0.5' opacity='0.06'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='40' height='40' fill='url(%23crosses)'/%3E%3C/svg%3E"),
+            linear-gradient(135deg, #0c1a0c 0%, #1a1a1a 100%);
         position: relative;
     }
 
@@ -84,13 +107,20 @@
         left: 0;
         right: 0;
         height: 1px;
-        background: linear-gradient(90deg, transparent, #007bff, #20c997, #007bff, transparent);
+        background: linear-gradient(90deg, transparent, #208836, #2ea344, #208836, transparent);
         animation: shimmer 3s ease-in-out infinite;
     }
 
     @keyframes shimmer {
-        0%, 100% { opacity: 0.3; }
-        50% { opacity: 1; }
+
+        0%,
+        100% {
+            opacity: 0.3;
+        }
+
+        50% {
+            opacity: 1;
+        }
     }
 
     /* Modern Content Styling */
@@ -110,7 +140,8 @@
     }
 
     /* Modern Section Headers */
-    .footer-main h5, .footer-main h6 {
+    .footer-main h5,
+    .footer-main h6 {
         position: relative;
         font-weight: 600;
         margin-bottom: 1.5rem;
@@ -124,9 +155,9 @@
         left: 0;
         width: 50px;
         height: 3px;
-        background: linear-gradient(135deg, #007bff, #20c997);
+        background: linear-gradient(135deg, #208836, #2ea344);
         border-radius: 2px;
-        box-shadow: 0 2px 10px rgba(0, 123, 255, 0.3);
+        box-shadow: 0 2px 10px rgba(32, 136, 54, 0.3);
     }
 
     /* Modern Social Links */
@@ -160,7 +191,7 @@
         left: 0;
         right: 0;
         bottom: 0;
-        background: linear-gradient(135deg, #007bff, #20c997);
+        background: linear-gradient(135deg, #208836, #2ea344);
         opacity: 0;
         transition: all 0.4s ease;
         border-radius: 15px;
@@ -172,8 +203,8 @@
 
     .social-links a:hover {
         transform: translateY(-8px) scale(1.05);
-        box-shadow: 0 15px 35px rgba(0, 123, 255, 0.4);
-        border-color: #007bff;
+        box-shadow: 0 15px 35px rgba(32, 136, 54, 0.4);
+        border-color: #208836;
     }
 
     .social-links a i {
@@ -198,7 +229,7 @@
     }
 
     .footer-main a:hover {
-        color: #20c997;
+        color: #2ea344;
         transform: translateX(5px);
     }
 
@@ -209,7 +240,7 @@
         height: 2px;
         bottom: -2px;
         left: 0;
-        background: linear-gradient(90deg, #007bff, #20c997);
+        background: linear-gradient(90deg, #208836, #2ea344);
         transition: width 0.3s ease;
     }
 
@@ -249,7 +280,7 @@
         border: 2px solid rgba(255, 255, 255, 0.3);
         border-radius: 50px;
         padding: 15px 30px;
-        color: #667eea;
+        color: #208836;
         font-weight: 600;
         font-size: 1rem;
         transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -301,12 +332,12 @@
         width: 45px;
         height: 45px;
         border-radius: 12px;
-        background: linear-gradient(135deg, #007bff, #20c997);
+        background: linear-gradient(135deg, #208836, #2ea344);
         display: flex;
         align-items: center;
         justify-content: center;
         margin-bottom: 15px;
-        box-shadow: 0 8px 25px rgba(0, 123, 255, 0.3);
+        box-shadow: 0 8px 25px rgba(32, 136, 54, 0.3);
     }
 
     .contact-icon i {
@@ -320,16 +351,16 @@
             justify-content: center;
             gap: 10px;
         }
-        
+
         .social-links a {
             width: 45px;
             height: 45px;
         }
-        
+
         .newsletter-form {
             flex-direction: column;
         }
-        
+
         .footer-newsletter .btn {
             width: 100%;
         }
