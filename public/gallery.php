@@ -597,7 +597,7 @@ include 'includes/header.php';
                             data-description="<?php echo htmlspecialchars($featured['description'] ?? ''); ?>"
                             data-category="<?php echo htmlspecialchars($featured['category'] ?? ''); ?>">
                             <div class="featured-image">
-                                <img src="<?php echo UPLOADS_URL . '/gallery/' . $featured['image_path']; ?>"
+                                <img src="<?php echo SITE_URL; ?>/<?php echo $featured['image_path']; ?>"
                                     alt="<?php echo htmlspecialchars($featured['alt_text'] ?: $featured['title']); ?>">
                                 <div class="featured-overlay">
                                     <div class="featured-content">
@@ -652,13 +652,13 @@ include 'includes/header.php';
                     <div class="gallery-item"
                         data-bs-toggle="modal"
                         data-bs-target="#imageModal"
-                        data-image="<?php echo UPLOADS_URL . '/gallery/' . $image['image_path']; ?>"
+                        data-image="<?php echo SITE_URL; ?>/<?php echo $featured['image_path']; ?>"
                         data-title="<?php echo htmlspecialchars($image['title']); ?>"
                         data-description="<?php echo htmlspecialchars($image['description'] ?? ''); ?>"
                         data-category="<?php echo htmlspecialchars($image['category'] ?? ''); ?>">
 
                         <div class="gallery-image">
-                            <img src="<?php echo UPLOADS_URL . '/gallery/' . $image['image_path']; ?>"
+                            <img src="<?php echo SITE_URL; ?>/<?php echo $featured['image_path']; ?>"
                                 alt="<?php echo htmlspecialchars($image['alt_text'] ?: $image['title']); ?>"
                                 loading="lazy">
                             <div class="gallery-overlay">
