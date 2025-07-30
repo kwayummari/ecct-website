@@ -345,4 +345,4 @@ include '../includes/header.php';
     }
 </script>
 
-<?php include ECCT_ROOT . '/admin/includes/footer.php'; ?>
+<?php include '../includes/header.php'; ?>
