@@ -270,7 +270,7 @@ include 'includes/header.php';
     }
 
     .social-btn.instagram {
-        background: linear-gradient(135deg, #E4405F, #F77737);
+        background: linear-gradient(90deg, #28a745, #20c997);
     }
 
     .contact-form-card {
