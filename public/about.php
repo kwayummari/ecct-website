@@ -50,11 +50,13 @@ $stats = [
     'communities' => $db->getSetting('communities_served', '25')
 ];
 
+// Add about page specific CSS
+$additional_css = [
+    ASSETS_PATH . '/css/about.css'
+];
+
 include 'includes/header.php';
 ?>
-
-<!-- About Page Specific Styles -->
-<link rel="stylesheet" href="<?php echo SITE_URL; ?>/assets/css/about.css">
 
 <!-- About Page Header -->
 <section class="about-page-header">
@@ -67,22 +69,20 @@ include 'includes/header.php';
     <div class="container position-relative">
         <div class="row">
             <div class="col-12">
-                <!-- Breadcrumb -->
-                <nav aria-label="breadcrumb" class="mb-4">
-                    <ol class="breadcrumb breadcrumb-custom">
-                        <li class="breadcrumb-item">
-                            <a href="<?php echo SITE_URL; ?>" class="text-white-50">
-                                <i class="fas fa-home me-1"></i> Home
-                            </a>
-                        </li>
-                        <li class="breadcrumb-item active text-white" aria-current="page">
-                            About Us
-                        </li>
-                    </ol>
-                </nav>
-
-                <!-- Header Content -->
                 <div class="about-header-content text-white text-center">
+                    <!-- Breadcrumb -->
+                    <nav aria-label="breadcrumb" class="mb-4">
+                        <ol class="breadcrumb breadcrumb-custom">
+                            <li class="breadcrumb-item">
+                                <a href="<?php echo SITE_URL; ?>">
+                                    <i class="fas fa-home me-1"></i> Home
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">
+                                About Us
+                            </li>
+                        </ol>
+                    </nav>
                     <div class="about-header-badge mb-3">
                         <span class="badge bg-primary-soft px-3 py-2 rounded-pill">
                             <i class="fas fa-users me-2"></i>Who We Are
