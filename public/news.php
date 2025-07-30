@@ -113,7 +113,7 @@ include 'includes/header.php';
         min-height: 70vh;
         display: flex;
         align-items: center;
-        background: linear-gradient(135deg, rgba(0, 123, 255, 0.8), rgba(0, 0, 0, 0.6)), url('<?php echo ASSETS_PATH; ?>/images/she-lead/LUC06465.JPG');
+        background: linear-gradient(90deg, #28a745, #20c997), url('<?php echo ASSETS_PATH; ?>/images/she-lead/LUC06465.JPG');
         background-size: cover;
         background-position: center;
         background-attachment: fixed;
