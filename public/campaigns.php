@@ -102,365 +102,668 @@ if ($campaign_id) {
 include 'includes/header.php';
 ?>
 
+<style>
+    /* Campaigns Page Styles */
+    .campaigns-hero {
+        position: relative;
+        min-height: 70vh;
+        display: flex;
+        align-items: center;
+        background: linear-gradient(135deg, rgba(40, 167, 69, 0.8), rgba(0, 0, 0, 0.6)), url('<?php echo ASSETS_PATH; ?>/images/eco-wear/_DSC2674.jpg');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        color: white;
+    }
+
+    .campaigns-hero h1 {
+        font-size: 3.5rem;
+        font-weight: 800;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        margin-bottom: 1.5rem;
+    }
+
+    .campaigns-hero p {
+        font-size: 1.2rem;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        margin-bottom: 2rem;
+    }
+
+    .hero-badge {
+        background: rgba(40, 167, 69, 0.9);
+        border-radius: 25px;
+        padding: 8px 20px;
+        display: inline-block;
+        margin-bottom: 2rem;
+        font-weight: 500;
+    }
+
+    .campaign-stats {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 15px;
+        padding: 30px;
+        margin-top: 3rem;
+    }
+
+    .stat-item {
+        text-align: center;
+        padding: 15px;
+    }
+
+    .stat-number {
+        font-size: 2rem;
+        font-weight: 800;
+        color: white;
+        display: block;
+    }
+
+    .stat-label {
+        font-size: 0.9rem;
+        color: rgba(255, 255, 255, 0.8);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .campaigns-content {
+        padding: 80px 0;
+        background: #f8f9fa;
+    }
+
+    .filter-section {
+        background: white;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        margin-bottom: 40px;
+    }
+
+    .filter-title {
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: #2c3e50;
+        margin-bottom: 20px;
+    }
+
+    .campaign-card {
+        background: white;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+        height: 100%;
+        margin-bottom: 30px;
+    }
+
+    .campaign-card:hover {
+        transform: translateY(-10px);
+    }
+
+    .campaign-image {
+        position: relative;
+        height: 250px;
+        overflow: hidden;
+    }
+
+    .campaign-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+
+    .campaign-card:hover .campaign-image img {
+        transform: scale(1.05);
+    }
+
+    .campaign-status {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        padding: 5px 15px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+
+    .campaign-status.active {
+        background: rgba(40, 167, 69, 0.9);
+        color: white;
+    }
+
+    .campaign-status.completed {
+        background: rgba(0, 123, 255, 0.9);
+        color: white;
+    }
+
+    .campaign-status.planning {
+        background: rgba(255, 193, 7, 0.9);
+        color: #212529;
+    }
+
+    .campaign-progress-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(0, 0, 0, 0.7);
+        color: white;
+        padding: 10px 15px;
+        font-size: 0.9rem;
+    }
+
+    .progress-bar-mini {
+        height: 4px;
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 2px;
+        overflow: hidden;
+        margin-top: 5px;
+    }
+
+    .progress-fill {
+        height: 100%;
+        background: #28a745;
+        transition: width 0.3s ease;
+    }
+
+    .campaign-content {
+        padding: 25px;
+    }
+
+    .campaign-title {
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: #2c3e50;
+        margin-bottom: 10px;
+    }
+
+    .campaign-title a {
+        color: inherit;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .campaign-title a:hover {
+        color: #28a745;
+    }
+
+    .campaign-description {
+        color: #6c757d;
+        line-height: 1.6;
+        margin-bottom: 15px;
+        font-size: 0.95rem;
+    }
+
+    .campaign-meta {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 15px;
+        font-size: 0.85rem;
+        color: #6c757d;
+    }
+
+    .campaign-meta i {
+        color: #28a745;
+    }
+
+    .campaign-actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .featured-campaigns {
+        padding: 80px 0;
+        background: white;
+    }
+
+    .featured-card {
+        background: linear-gradient(135deg, rgba(40, 167, 69, 0.05), rgba(0, 123, 255, 0.05));
+        border: 2px solid #28a745;
+        border-radius: 15px;
+        padding: 30px;
+        height: 100%;
+        transition: transform 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .featured-card::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(45deg, transparent, rgba(40, 167, 69, 0.1), transparent);
+        transform: rotate(45deg);
+        transition: transform 0.6s ease;
+    }
+
+    .featured-card:hover::before {
+        transform: translateX(100%) rotate(45deg);
+    }
+
+    .featured-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .featured-badge {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: #28a745;
+        color: white;
+        padding: 5px 15px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+
+    .single-campaign-hero {
+        background: linear-gradient(135deg, rgba(40, 167, 69, 0.9), rgba(0, 0, 0, 0.7));
+        color: white;
+        padding: 80px 0;
+    }
+
+    .campaign-single-content {
+        background: white;
+        border-radius: 15px;
+        padding: 40px;
+        margin-top: -50px;
+        position: relative;
+        z-index: 2;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    .progress-section {
+        background: linear-gradient(135deg, #28a745, #20c997);
+        color: white;
+        border-radius: 15px;
+        padding: 30px;
+        margin: 30px 0;
+    }
+
+    .progress-bar-large {
+        height: 20px;
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 10px;
+        overflow: hidden;
+        margin: 15px 0;
+    }
+
+    .progress-fill-large {
+        height: 100%;
+        background: white;
+        border-radius: 10px;
+        transition: width 0.5s ease;
+    }
+
+    .cta-section {
+        background: linear-gradient(135deg, rgba(44, 62, 80, 0.9), rgba(0, 0, 0, 0.7)), url('<?php echo ASSETS_PATH; ?>/images/eco-wear/_DSC2829.jpg');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        color: white;
+        padding: 80px 0;
+        text-align: center;
+    }
+
+    .cta-section h3 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .cta-section .btn {
+        margin: 0 10px 10px 0;
+        padding: 12px 30px;
+        font-weight: 600;
+        border-radius: 25px;
+        transition: all 0.3s ease;
+    }
+
+    .cta-section .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .section-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #2c3e50;
+        margin-bottom: 20px;
+    }
+
+    .section-subtitle {
+        font-size: 1.1rem;
+        color: #6c757d;
+        margin-bottom: 50px;
+    }
+
+    .section-badge {
+        background: linear-gradient(135deg, #28a745, #20c997);
+        color: white;
+        padding: 8px 20px;
+        border-radius: 25px;
+        display: inline-block;
+        margin-bottom: 20px;
+        font-weight: 500;
+    }
+
+    .no-results {
+        background: white;
+        border-radius: 15px;
+        padding: 60px 30px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .pagination .page-link {
+        border-radius: 25px;
+        margin: 0 3px;
+        border: none;
+        padding: 8px 16px;
+        color: #28a745;
+    }
+
+    .pagination .page-item.active .page-link {
+        background: #28a745;
+        border-color: #28a745;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .campaigns-hero h1 {
+            font-size: 2.5rem;
+        }
+
+        .campaigns-hero p {
+            font-size: 1.1rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+        }
+
+        .campaign-image {
+            height: 200px;
+        }
+
+        .campaign-content {
+            padding: 20px;
+        }
+
+        .campaign-actions {
+            flex-direction: column;
+        }
+
+        .cta-section h3 {
+            font-size: 2rem;
+        }
+
+        .cta-section .btn {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+        }
+    }
+</style>
+
 <?php if ($campaign_id && $campaign): ?>
-    <!-- Single Campaign -->
-    <article class="campaign-single">
-        <!-- Campaign Header -->
-        <section class="campaign-header bg-light py-5">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 mx-auto">
-                        <!-- Breadcrumb -->
-                        <nav aria-label="breadcrumb" class="mb-4">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="<?php echo SITE_URL; ?>">Home</a></li>
-                                <li class="breadcrumb-item"><a href="<?php echo SITE_URL; ?>/campaigns.php">Campaigns</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">
-                                    <?php echo htmlspecialchars(truncate_text($campaign['title'], 50)); ?>
-                                </li>
-                            </ol>
-                        </nav>
+    <!-- Single Campaign View -->
+    <section class="single-campaign-hero">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center">
+                    <nav aria-label="breadcrumb" class="mb-4">
+                        <ol class="breadcrumb justify-content-center bg-transparent">
+                            <li class="breadcrumb-item">
+                                <a href="<?php echo SITE_URL; ?>" class="text-white-50">Home</a>
+                            </li>
+                            <li class="breadcrumb-item">
+                                <a href="<?php echo SITE_URL; ?>/campaigns.php" class="text-white-50">Campaigns</a>
+                            </li>
+                            <li class="breadcrumb-item active text-white" aria-current="page">
+                                <?php echo htmlspecialchars(truncate_text($campaign['title'], 30)); ?>
+                            </li>
+                        </ol>
+                    </nav>
 
-                        <h1 class="display-5 fw-bold mb-4"><?php echo htmlspecialchars($campaign['title']); ?></h1>
+                    <div class="hero-badge mb-3">
+                        <span class="badge bg-<?php echo match ($campaign['status']) {
+                                                    'active' => 'success',
+                                                    'completed' => 'primary',
+                                                    'planning' => 'warning',
+                                                    'cancelled' => 'danger',
+                                                    default => 'secondary'
+                                                }; ?>">
+                            <?php echo ucfirst($campaign['status']); ?>
+                        </span>
+                        <?php if ($campaign['is_featured']): ?>
+                            <span class="badge bg-warning text-dark ms-2">Featured</span>
+                        <?php endif; ?>
+                    </div>
 
-                        <div class="campaign-meta d-flex flex-wrap align-items-center mb-4">
-                            <span class="badge bg-<?php echo match ($campaign['status']) {
-                                                        'active' => 'success',
-                                                        'completed' => 'primary',
-                                                        'planning' => 'warning',
-                                                        'cancelled' => 'danger',
-                                                        default => 'secondary'
-                                                    }; ?> me-3">
-                                <?php echo ucfirst($campaign['status']); ?>
+                    <h1><?php echo htmlspecialchars($campaign['title']); ?></h1>
+                    <?php if ($campaign['description']): ?>
+                        <p><?php echo htmlspecialchars($campaign['description']); ?></p>
+                    <?php endif; ?>
+
+                    <div class="campaign-meta justify-content-center d-flex flex-wrap gap-4 mt-4">
+                        <?php if ($campaign['location']): ?>
+                            <span class="text-white-75">
+                                <i class="fas fa-map-marker-alt me-2"></i>
+                                <?php echo htmlspecialchars($campaign['location']); ?>
                             </span>
+                        <?php endif; ?>
 
-                            <?php if ($campaign['location']): ?>
-                                <span class="text-muted me-4">
-                                    <i class="fas fa-map-marker-alt me-2"></i>
-                                    <?php echo htmlspecialchars($campaign['location']); ?>
-                                </span>
-                            <?php endif; ?>
+                        <?php if ($campaign['start_date']): ?>
+                            <span class="text-white-75">
+                                <i class="fas fa-calendar me-2"></i>
+                                <?php echo format_date($campaign['start_date']); ?>
+                                <?php if ($campaign['end_date']): ?>
+                                    - <?php echo format_date($campaign['end_date']); ?>
+                                <?php endif; ?>
+                            </span>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-                            <?php if ($campaign['start_date']): ?>
-                                <span class="text-muted me-4">
-                                    <i class="fas fa-calendar me-2"></i>
-                                    <?php echo format_date($campaign['start_date']); ?>
-                                    <?php if ($campaign['end_date']): ?>
-                                        - <?php echo format_date($campaign['end_date']); ?>
-                                    <?php endif; ?>
-                                </span>
-                            <?php endif; ?>
+    <section class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="campaign-single-content">
+                        <?php if ($campaign['goal_amount'] > 0): ?>
+                            <div class="progress-section">
+                                <h4 class="mb-3">Campaign Progress</h4>
+                                <?php
+                                $progress_percentage = ($campaign['raised_amount'] / $campaign['goal_amount']) * 100;
+                                $progress_percentage = min(100, $progress_percentage);
+                                ?>
+                                <div class="progress-bar-large">
+                                    <div class="progress-fill-large" style="width: <?php echo $progress_percentage; ?>%"></div>
+                                </div>
+                                <div class="d-flex justify-content-between mt-3">
+                                    <span>Raised: $<?php echo number_format($campaign['raised_amount'], 2); ?></span>
+                                    <span>Goal: $<?php echo number_format($campaign['goal_amount'], 2); ?></span>
+                                </div>
+                                <div class="text-center mt-3">
+                                    <h3><?php echo round($progress_percentage); ?>% Complete</h3>
+                                </div>
+                            </div>
+                        <?php endif; ?>
 
-                            <?php if ($campaign['is_featured']): ?>
-                                <span class="badge bg-warning text-dark">Featured</span>
+                        <div class="campaign-content-full">
+                            <?php if ($campaign['content']): ?>
+                                <?php echo $campaign['content']; ?>
+                            <?php else: ?>
+                                <p class="text-muted">Full campaign details will be available soon.</p>
                             <?php endif; ?>
                         </div>
 
-                        <?php if ($campaign['description']): ?>
-                            <p class="lead text-muted mb-4"><?php echo htmlspecialchars($campaign['description']); ?></p>
-                        <?php endif; ?>
-
                         <?php if ($campaign_tags): ?>
-                            <div class="campaign-tags mb-4">
+                            <div class="campaign-tags mt-4">
+                                <h6>Tags:</h6>
                                 <?php foreach ($campaign_tags as $tag): ?>
-                                    <span class="badge rounded-pill me-2" style="background-color: <?php echo $tag['color']; ?>">
+                                    <span class="badge me-2" style="background-color: <?php echo $tag['color']; ?>">
                                         <?php echo htmlspecialchars($tag['name']); ?>
                                     </span>
                                 <?php endforeach; ?>
                             </div>
                         <?php endif; ?>
+                    </div>
+                </div>
 
-                        <!-- Campaign Progress -->
-                        <?php if ($campaign['goal_amount'] > 0): ?>
-                            <div class="campaign-progress card border-0 shadow-sm p-4 mb-4">
-                                <div class="row align-items-center">
-                                    <div class="col-md-8">
-                                        <h6 class="mb-2">Campaign Progress</h6>
-                                        <div class="progress mb-2" style="height: 10px;">
-                                            <?php
-                                            $progress_percentage = ($campaign['raised_amount'] / $campaign['goal_amount']) * 100;
-                                            $progress_percentage = min(100, $progress_percentage);
-                                            ?>
-                                            <div class="progress-bar bg-success" role="progressbar"
-                                                style="width: <?php echo $progress_percentage; ?>%"
-                                                aria-valuenow="<?php echo $progress_percentage; ?>"
-                                                aria-valuemin="0" aria-valuemax="100">
-                                            </div>
-                                        </div>
-                                        <div class="d-flex justify-content-between">
+                <div class="col-lg-4">
+                    <div class="campaign-sidebar">
+                        <div class="card border-0 shadow-sm mb-4">
+                            <div class="card-body">
+                                <h5 class="card-title">Take Action</h5>
+                                <p class="card-text">Join this campaign and make a difference in environmental conservation.</p>
+                                <a href="<?php echo SITE_URL; ?>/volunteer.php" class="btn btn-success btn-lg w-100 mb-2">
+                                    <i class="fas fa-hands-helping me-2"></i>Volunteer
+                                </a>
+                                <a href="<?php echo SITE_URL; ?>/contact.php" class="btn btn-outline-primary w-100">
+                                    <i class="fas fa-envelope me-2"></i>Learn More
+                                </a>
+                            </div>
+                        </div>
+
+                        <?php if ($related_campaigns): ?>
+                            <div class="card border-0 shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title">Related Campaigns</h5>
+                                    <?php foreach ($related_campaigns as $related): ?>
+                                        <div class="mb-3 pb-3 border-bottom">
+                                            <h6 class="mb-1">
+                                                <a href="<?php echo SITE_URL; ?>/campaigns.php?id=<?php echo $related['id']; ?>" class="text-decoration-none">
+                                                    <?php echo htmlspecialchars($related['title']); ?>
+                                                </a>
+                                            </h6>
                                             <small class="text-muted">
-                                                Raised: $<?php echo number_format($campaign['raised_amount'], 2); ?>
-                                            </small>
-                                            <small class="text-muted">
-                                                Goal: $<?php echo number_format($campaign['goal_amount'], 2); ?>
+                                                <?php echo htmlspecialchars(truncate_text($related['description'], 80)); ?>
                                             </small>
                                         </div>
-                                    </div>
-                                    <div class="col-md-4 text-md-center mt-3 mt-md-0">
-                                        <h4 class="text-success mb-1"><?php echo round($progress_percentage); ?>%</h4>
-                                        <small class="text-muted">Complete</small>
-                                    </div>
+                                    <?php endforeach; ?>
                                 </div>
                             </div>
                         <?php endif; ?>
-
-                        <!-- Action Buttons -->
-                        <div class="campaign-actions">
-                            <?php if ($campaign['status'] === 'active'): ?>
-                                <a href="<?php echo SITE_URL; ?>/volunteer.php" class="btn btn-primary btn-lg me-3">
-                                    <i class="fas fa-hands-helping me-2"></i>
-                                    Join This Campaign
-                                </a>
-                            <?php endif; ?>
-
-                            <a href="<?php echo SITE_URL; ?>/contact.php?subject=Campaign: <?php echo urlencode($campaign['title']); ?>"
-                                class="btn btn-outline-primary btn-lg">
-                                <i class="fas fa-envelope me-2"></i>
-                                Get Involved
-                            </a>
-                        </div>
                     </div>
                 </div>
             </div>
-        </section>
-
-        <!-- Campaign Content -->
-        <section class="campaign-content py-5">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 mx-auto">
-                        <?php if ($campaign['featured_image']): ?>
-                            <div class="campaign-image mb-5">
-                                <img src="<?php echo UPLOADS_URL . '/campaigns/' . $campaign['featured_image']; ?>"
-                                    alt="<?php echo htmlspecialchars($campaign['title']); ?>"
-                                    class="img-fluid rounded shadow">
-                            </div>
-                        <?php endif; ?>
-
-                        <div class="campaign-body">
-                            <?php echo $campaign['content']; ?>
-                        </div>
-
-                        <!-- Share Campaign -->
-                        <div class="share-campaign mt-5 pt-5 border-top">
-                            <h5 class="mb-3">Share This Campaign</h5>
-                            <?php
-                            $share_links = get_share_links(
-                                current_url(),
-                                $campaign['title'],
-                                $campaign['description'] ?: generate_meta_description($campaign['content'])
-                            );
-                            ?>
-                            <div class="d-flex flex-wrap">
-                                <a href="<?php echo $share_links['facebook']; ?>" target="_blank"
-                                    class="btn btn-outline-primary me-2 mb-2">
-                                    <i class="fab fa-facebook-f me-2"></i>Facebook
-                                </a>
-                                <a href="<?php echo $share_links['twitter']; ?>" target="_blank"
-                                    class="btn btn-outline-info me-2 mb-2">
-                                    <i class="fab fa-twitter me-2"></i>Twitter
-                                </a>
-                                <a href="<?php echo $share_links['whatsapp']; ?>" target="_blank"
-                                    class="btn btn-outline-success me-2 mb-2">
-                                    <i class="fab fa-whatsapp me-2"></i>WhatsApp
-                                </a>
-                                <a href="<?php echo $share_links['email']; ?>"
-                                    class="btn btn-outline-secondary mb-2">
-                                    <i class="fas fa-envelope me-2"></i>Email
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Related Campaigns -->
-        <?php if ($related_campaigns): ?>
-            <section class="related-campaigns py-5 bg-light">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-12">
-                            <h3 class="h4 fw-bold mb-4">Related Campaigns</h3>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <?php foreach ($related_campaigns as $related): ?>
-                            <div class="col-lg-4 mb-4">
-                                <div class="card border-0 shadow-sm h-100">
-                                    <?php if ($related['featured_image']): ?>
-                                        <img src="<?php echo UPLOADS_URL . '/campaigns/' . $related['featured_image']; ?>"
-                                            class="card-img-top" alt="<?php echo htmlspecialchars($related['title']); ?>"
-                                            style="height: 200px; object-fit: cover;">
-                                    <?php endif; ?>
-                                    <div class="card-body d-flex flex-column">
-                                        <div class="d-flex align-items-center mb-2">
-                                            <span class="badge bg-<?php echo match ($related['status']) {
-                                                                        'active' => 'success',
-                                                                        'completed' => 'primary',
-                                                                        'planning' => 'warning',
-                                                                        default => 'secondary'
-                                                                    }; ?> me-2">
-                                                <?php echo ucfirst($related['status']); ?>
-                                            </span>
-                                            <?php if ($related['location']): ?>
-                                                <small class="text-muted">
-                                                    <i class="fas fa-map-marker-alt me-1"></i>
-                                                    <?php echo htmlspecialchars($related['location']); ?>
-                                                </small>
-                                            <?php endif; ?>
-                                        </div>
-                                        <h6 class="card-title">
-                                            <a href="<?php echo SITE_URL; ?>/campaigns.php?id=<?php echo $related['id']; ?>"
-                                                class="text-decoration-none">
-                                                <?php echo htmlspecialchars($related['title']); ?>
-                                            </a>
-                                        </h6>
-                                        <p class="card-text text-muted flex-grow-1">
-                                            <?php echo htmlspecialchars(truncate_text($related['description'], 100)); ?>
-                                        </p>
-                                        <a href="<?php echo SITE_URL; ?>/campaigns.php?id=<?php echo $related['id']; ?>"
-                                            class="btn btn-outline-primary btn-sm mt-auto">
-                                            Learn More
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        <?php endforeach; ?>
-                    </div>
-                </div>
-            </section>
-        <?php endif; ?>
-    </article>
+        </div>
+    </section>
 
 <?php else: ?>
     <!-- Campaigns Listing -->
-
-    <!-- Page Header -->
-    <section class="page-header bg-primary text-white py-5">
+    <section class="campaigns-hero">
         <div class="container">
-            <div class="row align-items-center">
+            <div class="row justify-content-center text-center">
                 <div class="col-lg-8">
-                    <h1 class="display-4 fw-bold mb-3">Environmental Campaigns</h1>
-                    <p class="lead mb-0">
-                        Join our community-driven environmental conservation initiatives across Tanzania
-                    </p>
-                </div>
-                <div class="col-lg-4 text-lg-end">
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb justify-content-lg-end mb-0">
-                            <li class="breadcrumb-item"><a href="<?php echo SITE_URL; ?>" class="text-white-50">Home</a></li>
-                            <li class="breadcrumb-item active text-white" aria-current="page">Campaigns</li>
-                        </ol>
-                    </nav>
+                    <div class="hero-badge">
+                        <i class="fas fa-bullhorn me-2"></i>Our Campaigns
+                    </div>
+                    <h1>Environmental Conservation Campaigns</h1>
+                    <p>Join our community-driven initiatives to protect Tanzania's environment and build sustainable communities for future generations.</p>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <!-- Campaign Stats -->
-    <section class="campaign-stats py-5 bg-light">
-        <div class="container">
-            <div class="row text-center">
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <div class="stat-card">
-                        <div class="stat-icon text-primary mb-3">
-                            <i class="fas fa-bullhorn fa-3x"></i>
-                        </div>
-                        <h3 class="fw-bold text-primary"><?php echo $campaign_stats['total']; ?></h3>
-                        <p class="text-muted mb-0">Total Campaigns</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <div class="stat-card">
-                        <div class="stat-icon text-success mb-3">
-                            <i class="fas fa-play fa-3x"></i>
-                        </div>
-                        <h3 class="fw-bold text-success"><?php echo $campaign_stats['active']; ?></h3>
-                        <p class="text-muted mb-0">Active Now</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <div class="stat-card">
-                        <div class="stat-icon text-primary mb-3">
-                            <i class="fas fa-check-circle fa-3x"></i>
-                        </div>
-                        <h3 class="fw-bold text-primary"><?php echo $campaign_stats['completed']; ?></h3>
-                        <p class="text-muted mb-0">Completed</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <div class="stat-card">
-                        <div class="stat-icon text-warning mb-3">
-                            <i class="fas fa-clock fa-3x"></i>
-                        </div>
-                        <h3 class="fw-bold text-warning"><?php echo $campaign_stats['planning']; ?></h3>
-                        <p class="text-muted mb-0">In Planning</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Featured Campaigns -->
-    <?php if ($featured_campaigns && !$search && !$status_filter): ?>
-        <section class="featured-campaigns py-5">
-            <div class="container">
+            <div class="campaign-stats">
                 <div class="row">
-                    <div class="col-12 mb-4">
-                        <h2 class="h4 fw-bold">Featured Campaigns</h2>
+                    <div class="col-md-3 col-6">
+                        <div class="stat-item">
+                            <span class="stat-number"><?php echo $campaign_stats['total']; ?></span>
+                            <span class="stat-label">Total Campaigns</span>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="stat-item">
+                            <span class="stat-number"><?php echo $campaign_stats['active']; ?></span>
+                            <span class="stat-label">Active</span>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="stat-item">
+                            <span class="stat-number"><?php echo $campaign_stats['completed']; ?></span>
+                            <span class="stat-label">Completed</span>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="stat-item">
+                            <span class="stat-number"><?php echo $campaign_stats['planning']; ?></span>
+                            <span class="stat-label">In Planning</span>
+                        </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <?php if ($featured_campaigns): ?>
+        <section class="featured-campaigns">
+            <div class="container">
+                <div class="row text-center mb-5">
+                    <div class="col-12">
+                        <div class="section-badge">
+                            <i class="fas fa-star me-2"></i>Featured Campaigns
+                        </div>
+                        <h2 class="section-title">Spotlight Initiatives</h2>
+                        <p class="section-subtitle">Discover our most impactful environmental conservation campaigns making a difference across Tanzania</p>
+                    </div>
+                </div>
+
                 <div class="row">
                     <?php foreach ($featured_campaigns as $featured): ?>
                         <div class="col-lg-6 mb-4">
-                            <div class="featured-campaign card border-0 shadow h-100">
-                                <?php if ($featured['featured_image']): ?>
-                                    <img src="<?php echo UPLOADS_URL . '/campaigns/' . $featured['featured_image']; ?>"
-                                        class="card-img-top" alt="<?php echo htmlspecialchars($featured['title']); ?>"
-                                        style="height: 300px; object-fit: cover;">
+                            <div class="featured-card">
+                                <div class="featured-badge">Featured</div>
+                                <h4 class="mb-3">
+                                    <a href="<?php echo SITE_URL; ?>/campaigns.php?id=<?php echo $featured['id']; ?>" class="text-decoration-none">
+                                        <?php echo htmlspecialchars($featured['title']); ?>
+                                    </a>
+                                </h4>
+                                <p class="text-muted mb-3">
+                                    <?php echo htmlspecialchars(truncate_text($featured['description'], 120)); ?>
+                                </p>
+
+                                <?php if ($featured['goal_amount'] > 0): ?>
+                                    <?php
+                                    $progress = ($featured['raised_amount'] / $featured['goal_amount']) * 100;
+                                    $progress = min(100, $progress);
+                                    ?>
+                                    <div class="mb-3">
+                                        <div class="d-flex justify-content-between small text-muted mb-1">
+                                            <span>Progress: <?php echo round($progress); ?>%</span>
+                                            <span>$<?php echo number_format($featured['raised_amount']); ?> / $<?php echo number_format($featured['goal_amount']); ?></span>
+                                        </div>
+                                        <div class="progress-bar-mini">
+                                            <div class="progress-fill" style="width: <?php echo $progress; ?>%"></div>
+                                        </div>
+                                    </div>
                                 <?php endif; ?>
-                                <div class="card-body d-flex flex-column">
-                                    <div class="d-flex align-items-center mb-3">
-                                        <span class="badge bg-warning text-dark me-2">Featured</span>
-                                        <span class="badge bg-<?php echo match ($featured['status']) {
-                                                                    'active' => 'success',
-                                                                    'completed' => 'primary',
-                                                                    'planning' => 'warning',
-                                                                    default => 'secondary'
-                                                                }; ?>">
-                                            <?php echo ucfirst($featured['status']); ?>
-                                        </span>
-                                    </div>
 
-                                    <h4 class="card-title">
-                                        <a href="<?php echo SITE_URL; ?>/campaigns.php?id=<?php echo $featured['id']; ?>"
-                                            class="text-decoration-none">
-                                            <?php echo htmlspecialchars($featured['title']); ?>
-                                        </a>
-                                    </h4>
-
-                                    <p class="card-text text-muted flex-grow-1">
-                                        <?php echo htmlspecialchars(truncate_text($featured['description'], 150)); ?>
-                                    </p>
-
-                                    <div class="campaign-meta mb-3">
-                                        <?php if ($featured['location']): ?>
-                                            <small class="text-muted d-block">
-                                                <i class="fas fa-map-marker-alt me-1"></i>
-                                                <?php echo htmlspecialchars($featured['location']); ?>
-                                            </small>
-                                        <?php endif; ?>
-                                        <?php if ($featured['start_date']): ?>
-                                            <small class="text-muted">
-                                                <i class="fas fa-calendar me-1"></i>
-                                                <?php echo format_date($featured['start_date']); ?>
-                                            </small>
-                                        <?php endif; ?>
-                                    </div>
-
-                                    <a href="<?php echo SITE_URL; ?>/campaigns.php?id=<?php echo $featured['id']; ?>"
-                                        class="btn btn-primary">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="badge bg-<?php echo match ($featured['status']) {
+                                                                'active' => 'success',
+                                                                'completed' => 'primary',
+                                                                'planning' => 'warning',
+                                                                default => 'secondary'
+                                                            }; ?>">
+                                        <?php echo ucfirst($featured['status']); ?>
+                                    </span>
+                                    <a href="<?php echo SITE_URL; ?>/campaigns.php?id=<?php echo $featured['id']; ?>" class="btn btn-primary">
                                         Learn More <i class="fas fa-arrow-right ms-1"></i>
                                     </a>
                                 </div>
@@ -472,230 +775,126 @@ include 'includes/header.php';
         </section>
     <?php endif; ?>
 
-    <!-- Campaigns Listing -->
-    <section class="campaigns-listing py-5">
+    <section class="campaigns-content">
         <div class="container">
             <!-- Filters -->
-            <div class="campaigns-filters mb-5">
-                <div class="row align-items-center">
-                    <div class="col-md-6">
-                        <form action="" method="GET" class="d-flex">
-                            <input type="text"
-                                class="form-control me-2"
-                                name="search"
-                                value="<?php echo htmlspecialchars($search); ?>"
-                                placeholder="Search campaigns...">
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-search"></i>
-                            </button>
-                        </form>
+            <div class="filter-section">
+                <h3 class="filter-title">Find Campaigns</h3>
+                <form method="GET" class="row g-3">
+                    <div class="col-md-4">
+                        <label for="search" class="form-label">Search</label>
+                        <input type="text" class="form-control" id="search" name="search"
+                            value="<?php echo htmlspecialchars($search); ?>" placeholder="Search campaigns...">
                     </div>
-                    <div class="col-md-6">
-                        <div class="d-flex justify-content-md-end mt-3 mt-md-0">
-                            <div class="btn-group" role="group" aria-label="Campaign status filter">
-                                <a href="<?php echo SITE_URL; ?>/campaigns.php"
-                                    class="btn btn-outline-primary <?php echo empty($status_filter) ? 'active' : ''; ?>">
-                                    All
-                                </a>
-                                <a href="<?php echo SITE_URL; ?>/campaigns.php?status=active"
-                                    class="btn btn-outline-success <?php echo $status_filter === 'active' ? 'active' : ''; ?>">
-                                    Active
-                                </a>
-                                <a href="<?php echo SITE_URL; ?>/campaigns.php?status=completed"
-                                    class="btn btn-outline-primary <?php echo $status_filter === 'completed' ? 'active' : ''; ?>">
-                                    Completed
-                                </a>
-                                <a href="<?php echo SITE_URL; ?>/campaigns.php?status=planning"
-                                    class="btn btn-outline-warning <?php echo $status_filter === 'planning' ? 'active' : ''; ?>">
-                                    Planning
-                                </a>
-                            </div>
-                        </div>
+                    <div class="col-md-4">
+                        <label for="status" class="form-label">Status</label>
+                        <select class="form-select" id="status" name="status">
+                            <option value="">All Statuses</option>
+                            <option value="planning" <?php echo ($status_filter === 'planning') ? 'selected' : ''; ?>>Planning</option>
+                            <option value="active" <?php echo ($status_filter === 'active') ? 'selected' : ''; ?>>Active</option>
+                            <option value="completed" <?php echo ($status_filter === 'completed') ? 'selected' : ''; ?>>Completed</option>
+                        </select>
                     </div>
-                </div>
-
-                <?php if ($search || $status_filter): ?>
-                    <div class="active-filters mt-3">
-                        <div class="d-flex align-items-center flex-wrap">
-                            <span class="text-muted me-3">Active filters:</span>
-                            <?php if ($search): ?>
-                                <span class="badge bg-light text-dark me-2">
-                                    Search: "<?php echo htmlspecialchars($search); ?>"
-                                    <a href="<?php echo SITE_URL; ?>/campaigns.php<?php echo $status_filter ? '?status=' . $status_filter : ''; ?>"
-                                        class="text-decoration-none ms-1">×</a>
-                                </span>
-                            <?php endif; ?>
-                            <?php if ($status_filter): ?>
-                                <span class="badge bg-light text-dark me-2">
-                                    Status: <?php echo ucfirst($status_filter); ?>
-                                    <a href="<?php echo SITE_URL; ?>/campaigns.php<?php echo $search ? '?search=' . urlencode($search) : ''; ?>"
-                                        class="text-decoration-none ms-1">×</a>
-                                </span>
-                            <?php endif; ?>
-                            <a href="<?php echo SITE_URL; ?>/campaigns.php" class="btn btn-sm btn-outline-secondary">
-                                Clear All
-                            </a>
-                        </div>
+                    <div class="col-md-4 d-flex align-items-end">
+                        <button type="submit" class="btn btn-primary me-2">
+                            <i class="fas fa-search me-1"></i>Search
+                        </button>
+                        <a href="<?php echo SITE_URL; ?>/campaigns.php" class="btn btn-outline-secondary">
+                            <i class="fas fa-times me-1"></i>Clear
+                        </a>
                     </div>
-                <?php endif; ?>
+                </form>
             </div>
 
             <?php if ($campaigns): ?>
-                <div class="campaigns-grid">
-                    <div class="row">
-                        <?php foreach ($campaigns as $campaign): ?>
-                            <div class="col-lg-4 col-md-6 mb-4">
-                                <div class="campaign-card card border-0 shadow-sm h-100">
-                                    <?php if ($campaign['featured_image']): ?>
-                                        <img src="<?php echo UPLOADS_URL . '/campaigns/' . $campaign['featured_image']; ?>"
-                                            class="card-img-top" alt="<?php echo htmlspecialchars($campaign['title']); ?>"
-                                            style="height: 200px; object-fit: cover;">
+                <div class="row">
+                    <?php foreach ($campaigns as $campaign): ?>
+                        <div class="col-lg-4 col-md-6">
+                            <div class="campaign-card">
+                                <div class="campaign-image">
+                                    <?php if ($campaign['image']): ?>
+                                        <img src="<?php echo SITE_URL . '/' . $campaign['image']; ?>" alt="<?php echo htmlspecialchars($campaign['title']); ?>">
+                                    <?php else: ?>
+                                        <img src="<?php echo ASSETS_PATH; ?>/images/green-generation/IMG_3265.JPG" alt="Campaign">
                                     <?php endif; ?>
 
-                                    <div class="card-body d-flex flex-column">
-                                        <div class="campaign-badges mb-2">
-                                            <span class="badge bg-<?php echo match ($campaign['status']) {
-                                                                        'active' => 'success',
-                                                                        'completed' => 'primary',
-                                                                        'planning' => 'warning',
-                                                                        'cancelled' => 'danger',
-                                                                        default => 'secondary'
-                                                                    }; ?>">
-                                                <?php echo ucfirst($campaign['status']); ?>
-                                            </span>
-                                            <?php if ($campaign['is_featured']): ?>
-                                                <span class="badge bg-warning text-dark ms-1">Featured</span>
-                                            <?php endif; ?>
-                                        </div>
+                                    <div class="campaign-status <?php echo $campaign['status']; ?>">
+                                        <?php echo ucfirst($campaign['status']); ?>
+                                    </div>
 
-                                        <h5 class="card-title">
-                                            <a href="<?php echo SITE_URL; ?>/campaigns.php?id=<?php echo $campaign['id']; ?>"
-                                                class="text-decoration-none">
-                                                <?php echo htmlspecialchars($campaign['title']); ?>
-                                            </a>
-                                        </h5>
-
-                                        <p class="card-text text-muted flex-grow-1">
-                                            <?php echo htmlspecialchars(truncate_text($campaign['description'], 120)); ?>
-                                        </p>
-
-                                        <div class="campaign-meta mb-3">
-                                            <?php if ($campaign['location']): ?>
-                                                <small class="text-muted d-block mb-1">
-                                                    <i class="fas fa-map-marker-alt me-1"></i>
-                                                    <?php echo htmlspecialchars($campaign['location']); ?>
-                                                </small>
-                                            <?php endif; ?>
-
-                                            <?php if ($campaign['start_date']): ?>
-                                                <small class="text-muted">
-                                                    <i class="fas fa-calendar me-1"></i>
-                                                    <?php echo format_date($campaign['start_date']); ?>
-                                                    <?php if ($campaign['end_date']): ?>
-                                                        - <?php echo format_date($campaign['end_date']); ?>
-                                                    <?php endif; ?>
-                                                </small>
-                                            <?php endif; ?>
-                                        </div>
-
-                                        <!-- Progress Bar for campaigns with goals -->
-                                        <?php if ($campaign['goal_amount'] > 0): ?>
-                                            <div class="campaign-progress mb-3">
-                                                <?php
-                                                $progress = ($campaign['raised_amount'] / $campaign['goal_amount']) * 100;
-                                                $progress = min(100, $progress);
-                                                ?>
-                                                <div class="d-flex justify-content-between align-items-center mb-1">
-                                                    <small class="text-muted">Progress</small>
-                                                    <small class="fw-semibold"><?php echo round($progress); ?>%</small>
-                                                </div>
-                                                <div class="progress" style="height: 6px;">
-                                                    <div class="progress-bar bg-success" role="progressbar"
-                                                        style="width: <?php echo $progress; ?>%"></div>
-                                                </div>
-                                                <div class="d-flex justify-content-between mt-1">
-                                                    <small class="text-muted">
-                                                        $<?php echo number_format($campaign['raised_amount']); ?>
-                                                    </small>
-                                                    <small class="text-muted">
-                                                        $<?php echo number_format($campaign['goal_amount']); ?>
-                                                    </small>
-                                                </div>
+                                    <?php if ($campaign['goal_amount'] > 0): ?>
+                                        <div class="campaign-progress-overlay">
+                                            <?php
+                                            $progress = ($campaign['raised_amount'] / $campaign['goal_amount']) * 100;
+                                            $progress = min(100, $progress);
+                                            ?>
+                                            <span><?php echo round($progress); ?>% funded</span>
+                                            <div class="progress-bar-mini">
+                                                <div class="progress-fill" style="width: <?php echo $progress; ?>%"></div>
                                             </div>
+                                        </div>
+                                    <?php endif; ?>
+                                </div>
+
+                                <div class="campaign-content">
+                                    <h5 class="campaign-title">
+                                        <a href="<?php echo SITE_URL; ?>/campaigns.php?id=<?php echo $campaign['id']; ?>">
+                                            <?php echo htmlspecialchars($campaign['title']); ?>
+                                        </a>
+                                    </h5>
+
+                                    <p class="campaign-description">
+                                        <?php echo htmlspecialchars(truncate_text($campaign['description'], 100)); ?>
+                                    </p>
+
+                                    <div class="campaign-meta">
+                                        <?php if ($campaign['location']): ?>
+                                            <span><i class="fas fa-map-marker-alt"></i> <?php echo htmlspecialchars($campaign['location']); ?></span>
                                         <?php endif; ?>
 
-                                        <div class="d-flex justify-content-between align-items-center mt-auto">
-                                            <a href="<?php echo SITE_URL; ?>/campaigns.php?id=<?php echo $campaign['id']; ?>"
-                                                class="btn btn-outline-primary btn-sm">
-                                                Learn More
-                                            </a>
+                                        <?php if ($campaign['start_date']): ?>
+                                            <span><i class="fas fa-calendar"></i> <?php echo format_date($campaign['start_date']); ?></span>
+                                        <?php endif; ?>
+                                    </div>
 
-                                            <?php if ($campaign['status'] === 'active'): ?>
-                                                <a href="<?php echo SITE_URL; ?>/volunteer.php"
-                                                    class="btn btn-primary btn-sm">
-                                                    Join Campaign
-                                                </a>
-                                            <?php endif; ?>
-                                        </div>
+                                    <div class="campaign-actions">
+                                        <a href="<?php echo SITE_URL; ?>/campaigns.php?id=<?php echo $campaign['id']; ?>" class="btn btn-primary">
+                                            View Details
+                                        </a>
+                                        <a href="<?php echo SITE_URL; ?>/volunteer.php" class="btn btn-outline-success">
+                                            Join Campaign
+                                        </a>
                                     </div>
                                 </div>
                             </div>
-                        <?php endforeach; ?>
-                    </div>
+                        </div>
+                    <?php endforeach; ?>
                 </div>
 
                 <!-- Pagination -->
                 <?php if (isset($pagination) && $pagination['total_pages'] > 1): ?>
                     <nav aria-label="Campaigns pagination" class="mt-5">
                         <ul class="pagination justify-content-center">
-                            <?php if ($pagination['has_prev']): ?>
+                            <?php if ($pagination['current_page'] > 1): ?>
                                 <li class="page-item">
-                                    <a class="page-link" href="?page=<?php echo $pagination['current_page'] - 1; ?><?php echo $status_filter ? '&status=' . $status_filter : ''; ?><?php echo $search ? '&search=' . urlencode($search) : ''; ?>">
-                                        <i class="fas fa-chevron-left"></i> Previous
+                                    <a class="page-link" href="?page=<?php echo ($pagination['current_page'] - 1); ?><?php echo ($status_filter ? '&status=' . $status_filter : ''); ?><?php echo ($search ? '&search=' . urlencode($search) : ''); ?>">
+                                        <i class="fas fa-chevron-left"></i>
                                     </a>
                                 </li>
                             <?php endif; ?>
 
-                            <?php
-                            $start_page = max(1, $pagination['current_page'] - 2);
-                            $end_page = min($pagination['total_pages'], $pagination['current_page'] + 2);
-
-                            if ($start_page > 1): ?>
-                                <li class="page-item">
-                                    <a class="page-link" href="?page=1<?php echo $status_filter ? '&status=' . $status_filter : ''; ?><?php echo $search ? '&search=' . urlencode($search) : ''; ?>">1</a>
-                                </li>
-                                <?php if ($start_page > 2): ?>
-                                    <li class="page-item disabled">
-                                        <span class="page-link">...</span>
-                                    </li>
-                                <?php endif; ?>
-                            <?php endif; ?>
-
-                            <?php for ($i = $start_page; $i <= $end_page; $i++): ?>
-                                <li class="page-item <?php echo $i === $pagination['current_page'] ? 'active' : ''; ?>">
-                                    <a class="page-link" href="?page=<?php echo $i; ?><?php echo $status_filter ? '&status=' . $status_filter : ''; ?><?php echo $search ? '&search=' . urlencode($search) : ''; ?>">
+                            <?php for ($i = 1; $i <= $pagination['total_pages']; $i++): ?>
+                                <li class="page-item <?php echo ($i === $pagination['current_page']) ? 'active' : ''; ?>">
+                                    <a class="page-link" href="?page=<?php echo $i; ?><?php echo ($status_filter ? '&status=' . $status_filter : ''); ?><?php echo ($search ? '&search=' . urlencode($search) : ''); ?>">
                                         <?php echo $i; ?>
                                     </a>
                                 </li>
                             <?php endfor; ?>
 
-                            <?php if ($end_page < $pagination['total_pages']): ?>
-                                <?php if ($end_page < $pagination['total_pages'] - 1): ?>
-                                    <li class="page-item disabled">
-                                        <span class="page-link">...</span>
-                                    </li>
-                                <?php endif; ?>
+                            <?php if ($pagination['current_page'] < $pagination['total_pages']): ?>
                                 <li class="page-item">
-                                    <a class="page-link" href="?page=<?php echo $pagination['total_pages']; ?><?php echo $status_filter ? '&status=' . $status_filter : ''; ?><?php echo $search ? '&search=' . urlencode($search) : ''; ?>">
-                                        <?php echo $pagination['total_pages']; ?>
-                                    </a>
-                                </li>
-                            <?php endif; ?>
-
-                            <?php if ($pagination['has_next']): ?>
-                                <li class="page-item">
-                                    <a class="page-link" href="?page=<?php echo $pagination['current_page'] + 1; ?><?php echo $status_filter ? '&status=' . $status_filter : ''; ?><?php echo $search ? '&search=' . urlencode($search) : ''; ?>">
-                                        Next <i class="fas fa-chevron-right"></i>
+                                    <a class="page-link" href="?page=<?php echo ($pagination['current_page'] + 1); ?><?php echo ($status_filter ? '&status=' . $status_filter : ''); ?><?php echo ($search ? '&search=' . urlencode($search) : ''); ?>">
+                                        <i class="fas fa-chevron-right"></i>
                                     </a>
                                 </li>
                             <?php endif; ?>
@@ -704,8 +903,7 @@ include 'includes/header.php';
                 <?php endif; ?>
 
             <?php else: ?>
-                <!-- No Results -->
-                <div class="no-results text-center py-5">
+                <div class="no-results">
                     <i class="fas fa-bullhorn fa-4x text-muted mb-4"></i>
                     <h4 class="text-muted mb-3">
                         <?php echo ($search || $status_filter) ? 'No campaigns found' : 'No campaigns available'; ?>
@@ -728,17 +926,13 @@ include 'includes/header.php';
     </section>
 
     <!-- Call to Action -->
-    <section class="cta-section py-5 bg-primary text-white">
+    <section class="cta-section">
         <div class="container">
-            <div class="row align-items-center">
+            <div class="row justify-content-center">
                 <div class="col-lg-8">
-                    <h3 class="mb-3">Ready to Make an Impact?</h3>
-                    <p class="mb-0 lead">
-                        Join our environmental conservation efforts and help create positive change in Tanzania's communities.
-                    </p>
-                </div>
-                <div class="col-lg-4 text-lg-end mt-3 mt-lg-0">
-                    <a href="<?php echo SITE_URL; ?>/volunteer.php" class="btn btn-light btn-lg me-3">
+                    <h3>Ready to Make an Impact?</h3>
+                    <p>Join our environmental conservation efforts and help create positive change in Tanzania's communities.</p>
+                    <a href="<?php echo SITE_URL; ?>/volunteer.php" class="btn btn-light btn-lg">
                         <i class="fas fa-hands-helping me-2"></i>Volunteer Now
                     </a>
                     <a href="<?php echo SITE_URL; ?>/contact.php" class="btn btn-outline-light btn-lg">
