@@ -37,6 +37,378 @@ $recent_gallery = get_recent_content('gallery', 6);
 include 'includes/header.php';
 ?>
 
+<style>
+    /* Hero Animation Styles */
+    .floating-elements {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 1;
+    }
+
+    .floating-icon {
+        position: absolute;
+        color: rgba(255, 255, 255, 0.1);
+        font-size: 2rem;
+        animation: float 6s ease-in-out infinite;
+    }
+
+    .floating-icon-1 {
+        top: 20%;
+        left: 10%;
+        animation-delay: 0s;
+        animation-duration: 8s;
+    }
+
+    .floating-icon-2 {
+        top: 60%;
+        left: 15%;
+        animation-delay: 1s;
+        animation-duration: 7s;
+    }
+
+    .floating-icon-3 {
+        top: 30%;
+        right: 20%;
+        animation-delay: 2s;
+        animation-duration: 9s;
+    }
+
+    .floating-icon-4 {
+        bottom: 40%;
+        right: 10%;
+        animation-delay: 3s;
+        animation-duration: 6s;
+    }
+
+    .floating-icon-5 {
+        top: 70%;
+        left: 60%;
+        animation-delay: 4s;
+        animation-duration: 8s;
+    }
+
+    .floating-icon-6 {
+        top: 10%;
+        right: 40%;
+        animation-delay: 5s;
+        animation-duration: 7s;
+    }
+
+    @keyframes float {
+
+        0%,
+        100% {
+            transform: translateY(0px) rotate(0deg);
+            opacity: 0.1;
+        }
+
+        25% {
+            transform: translateY(-20px) rotate(5deg);
+            opacity: 0.2;
+        }
+
+        50% {
+            transform: translateY(-10px) rotate(-3deg);
+            opacity: 0.15;
+        }
+
+        75% {
+            transform: translateY(-30px) rotate(8deg);
+            opacity: 0.25;
+        }
+    }
+
+    /* Particle System */
+    .particles {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 1;
+    }
+
+    .particle {
+        position: absolute;
+        background: rgba(32, 136, 54, 0.3);
+        border-radius: 50%;
+        animation: particleFloat 15s linear infinite;
+    }
+
+    .particle-1 {
+        width: 4px;
+        height: 4px;
+        left: 20%;
+        animation-delay: 0s;
+    }
+
+    .particle-2 {
+        width: 6px;
+        height: 6px;
+        left: 40%;
+        animation-delay: 2s;
+    }
+
+    .particle-3 {
+        width: 3px;
+        height: 3px;
+        left: 60%;
+        animation-delay: 4s;
+    }
+
+    .particle-4 {
+        width: 5px;
+        height: 5px;
+        left: 80%;
+        animation-delay: 6s;
+    }
+
+    .particle-5 {
+        width: 4px;
+        height: 4px;
+        left: 30%;
+        animation-delay: 8s;
+    }
+
+    .particle-6 {
+        width: 6px;
+        height: 6px;
+        left: 70%;
+        animation-delay: 10s;
+    }
+
+    .particle-7 {
+        width: 3px;
+        height: 3px;
+        left: 50%;
+        animation-delay: 12s;
+    }
+
+    .particle-8 {
+        width: 5px;
+        height: 5px;
+        left: 10%;
+        animation-delay: 14s;
+    }
+
+    @keyframes particleFloat {
+        0% {
+            transform: translateY(100vh) scale(0);
+            opacity: 0;
+        }
+
+        10% {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        90% {
+            opacity: 1;
+        }
+
+        100% {
+            transform: translateY(-100px) scale(0);
+            opacity: 0;
+        }
+    }
+
+    /* Enhanced Text Animations */
+    .animate-fade-in {
+        animation: fadeInUp 1s ease-out;
+    }
+
+    .animate-fade-in-delay {
+        animation: fadeInUp 1s ease-out 0.3s both;
+    }
+
+    .animate-fade-in-delay-2 {
+        animation: fadeInUp 1s ease-out 0.6s both;
+    }
+
+    .animate-slide-up {
+        animation: slideUp 1s ease-out 0.9s both;
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes slideUp {
+        from {
+            opacity: 0;
+            transform: translateY(50px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Button Animations */
+    .btn-pulse {
+        animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+        0% {
+            box-shadow: 0 4px 15px rgba(32, 136, 54, 0.3);
+        }
+
+        50% {
+            box-shadow: 0 4px 25px rgba(32, 136, 54, 0.6);
+            transform: translateY(-2px);
+        }
+
+        100% {
+            box-shadow: 0 4px 15px rgba(32, 136, 54, 0.3);
+        }
+    }
+
+    .btn-shimmer {
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        animation: shimmer 3s infinite;
+    }
+
+    @keyframes shimmer {
+        0% {
+            left: -100%;
+        }
+
+        100% {
+            left: 100%;
+        }
+    }
+
+    .btn-hover-float:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(255, 255, 255, 0.2);
+    }
+
+    .icon-bounce {
+        animation: iconBounce 2s infinite;
+    }
+
+    @keyframes iconBounce {
+
+        0%,
+        100% {
+            transform: translateX(0);
+        }
+
+        50% {
+            transform: translateX(5px);
+        }
+    }
+
+    /* Stats Counter Animation */
+    .stat-card-modern {
+        animation: statCardFloat 3s ease-in-out infinite;
+    }
+
+    .stat-card-modern:nth-child(1) {
+        animation-delay: 0s;
+    }
+
+    .stat-card-modern:nth-child(2) {
+        animation-delay: 0.5s;
+    }
+
+    .stat-card-modern:nth-child(3) {
+        animation-delay: 1s;
+    }
+
+    @keyframes statCardFloat {
+
+        0%,
+        100% {
+            transform: translateY(0);
+        }
+
+        50% {
+            transform: translateY(-5px);
+        }
+    }
+
+    /* Enhanced Scroll Indicator */
+    .scroll-indicator-modern {
+        animation: scrollBounce 2s infinite;
+    }
+
+    @keyframes scrollBounce {
+
+        0%,
+        100% {
+            transform: translateY(0) translateX(-50%);
+        }
+
+        50% {
+            transform: translateY(-10px) translateX(-50%);
+        }
+    }
+
+    /* Video Loading Animation */
+    .hero-video-background::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(45deg, #208836, #000000);
+        background-size: 400% 400%;
+        animation: videoLoading 3s ease infinite;
+        z-index: -1;
+    }
+
+    @keyframes videoLoading {
+        0% {
+            background-position: 0% 50%;
+        }
+
+        50% {
+            background-position: 100% 50%;
+        }
+
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+
+    /* Mobile Responsive Animations */
+    @media (max-width: 768px) {
+        .floating-icon {
+            font-size: 1.5rem;
+        }
+
+        .particle {
+            display: none;
+        }
+
+        .btn-pulse {
+            animation: none;
+        }
+    }
+</style>
+
 <!-- Hero Section -->
 <section class="hero-section position-relative overflow-hidden">
     <!-- Video Background -->
@@ -48,6 +420,40 @@ include 'includes/header.php';
             <img src="<?php echo SITE_URL; ?>/assets/images/green-generation/IMG_3267.JPG" alt="ECCT Environmental Conservation" class="hero-fallback-image">
         </video>
         <div class="hero-overlay-modern" style="background: linear-gradient(135deg, rgba(0, 0, 0, 0.6) 0%, rgba(32, 136, 54, 0.4) 100%);"></div>
+    </div>
+
+    <!-- Floating Animation Elements -->
+    <div class="floating-elements">
+        <div class="floating-icon floating-icon-1">
+            <i class="fas fa-leaf"></i>
+        </div>
+        <div class="floating-icon floating-icon-2">
+            <i class="fas fa-tree"></i>
+        </div>
+        <div class="floating-icon floating-icon-3">
+            <i class="fas fa-globe-africa"></i>
+        </div>
+        <div class="floating-icon floating-icon-4">
+            <i class="fas fa-water"></i>
+        </div>
+        <div class="floating-icon floating-icon-5">
+            <i class="fas fa-seedling"></i>
+        </div>
+        <div class="floating-icon floating-icon-6">
+            <i class="fas fa-sun"></i>
+        </div>
+    </div>
+
+    <!-- Animated Particles -->
+    <div class="particles">
+        <div class="particle particle-1"></div>
+        <div class="particle particle-2"></div>
+        <div class="particle particle-3"></div>
+        <div class="particle particle-4"></div>
+        <div class="particle particle-5"></div>
+        <div class="particle particle-6"></div>
+        <div class="particle particle-7"></div>
+        <div class="particle particle-8"></div>
     </div>
 
     <div class="container position-relative">
@@ -66,11 +472,12 @@ include 'includes/header.php';
                         <?php echo htmlspecialchars($hero_subtitle); ?>
                     </p>
                     <div class="hero-buttons-modern animate-fade-in-delay-2">
-                        <a href="<?php echo SITE_URL; ?>/volunteer" class="btn btn-lg me-3" style="background: #208836; color: #ffffff; border: 2px solid #ffffff; padding: 12px 30px; border-radius: 50px; text-decoration: none; font-weight: 600; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(32, 136, 54, 0.3);">
+                        <a href="<?php echo SITE_URL; ?>/volunteer" class="btn btn-lg me-3 btn-pulse" style="background: #208836; color: #ffffff; border: 2px solid #ffffff; padding: 12px 30px; border-radius: 50px; text-decoration: none; font-weight: 600; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(32, 136, 54, 0.3); position: relative; overflow: hidden;">
+                            <span class="btn-shimmer"></span>
                             <i class="fas fa-heart me-2"></i>Join as Volunteer
                         </a>
-                        <a href="<?php echo SITE_URL; ?>/about" class="btn btn-lg" style="background: transparent; color: #ffffff; border: 2px solid #ffffff; padding: 12px 30px; border-radius: 50px; text-decoration: none; font-weight: 600; transition: all 0.3s ease;">
-                            <i class="fas fa-arrow-right me-2"></i>Learn More
+                        <a href="<?php echo SITE_URL; ?>/about" class="btn btn-lg btn-hover-float" style="background: transparent; color: #ffffff; border: 2px solid #ffffff; padding: 12px 30px; border-radius: 50px; text-decoration: none; font-weight: 600; transition: all 0.3s ease;">
+                            <i class="fas fa-arrow-right me-2 icon-bounce"></i>Learn More
                         </a>
                     </div>
                 </div>
@@ -85,7 +492,7 @@ include 'includes/header.php';
                                 <i class="fas fa-trophy"></i>
                             </div>
                             <div class="stat-content">
-                                <h3 class="stat-number"><?php echo $successful_campaigns; ?>+</h3>
+                                <h3 class="stat-number" data-count="<?php echo $successful_campaigns; ?>"><?php echo $successful_campaigns; ?>+</h3>
                                 <p class="stat-label">Successful Campaigns</p>
                             </div>
                         </div>
@@ -94,7 +501,7 @@ include 'includes/header.php';
                                 <i class="fas fa-users"></i>
                             </div>
                             <div class="stat-content">
-                                <h3 class="stat-number"><?php echo $volunteers_count; ?>+</h3>
+                                <h3 class="stat-number" data-count="<?php echo $volunteers_count; ?>"><?php echo $volunteers_count; ?>+</h3>
                                 <p class="stat-label">Active Volunteers</p>
                             </div>
                         </div>
@@ -103,7 +510,7 @@ include 'includes/header.php';
                                 <i class="fas fa-globe-africa"></i>
                             </div>
                             <div class="stat-content">
-                                <h3 class="stat-number"><?php echo $communities_served; ?>+</h3>
+                                <h3 class="stat-number" data-count="<?php echo $communities_served; ?>"><?php echo $communities_served; ?>+</h3>
                                 <p class="stat-label">Communities Served</p>
                             </div>
                         </div>
@@ -123,6 +530,171 @@ include 'includes/header.php';
         </div>
     </div>
 </section>
+
+<script>
+    // Counter Animation for Stats
+    function animateCounters() {
+        const counters = document.querySelectorAll('.stat-number[data-count]');
+
+        counters.forEach(counter => {
+            const target = parseInt(counter.getAttribute('data-count'));
+            const text = counter.textContent;
+            const suffix = text.includes('+') ? '+' : '';
+            let current = 0;
+            const increment = target / 50;
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    counter.textContent = target + suffix;
+                    clearInterval(timer);
+                } else {
+                    counter.textContent = Math.floor(current) + suffix;
+                }
+            }, 30);
+        });
+    }
+
+    // Intersection Observer for animations
+    const observerOptions = {
+        threshold: 0.3,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Trigger counter animation when stats come into view
+                if (entry.target.classList.contains('hero-stats-modern')) {
+                    setTimeout(animateCounters, 500);
+                }
+
+                // Add visible class for other animations
+                entry.target.classList.add('animated-visible');
+            }
+        });
+    }, observerOptions);
+
+    // Observe elements when DOM is loaded
+    document.addEventListener('DOMContentLoaded', function() {
+        const statsSection = document.querySelector('.hero-stats-modern');
+        if (statsSection) {
+            observer.observe(statsSection);
+        }
+
+        // Video loading handler
+        const video = document.querySelector('.hero-video');
+        const videoBackground = document.querySelector('.hero-video-background');
+
+        if (video) {
+            video.addEventListener('loadeddata', function() {
+                videoBackground.style.opacity = '1';
+            });
+
+            video.addEventListener('error', function() {
+                console.log('Video failed to load, showing fallback image');
+                // Fallback image is already in place
+            });
+        }
+
+        // Enhanced button interactions
+        const buttons = document.querySelectorAll('.btn-pulse, .btn-hover-float');
+        buttons.forEach(button => {
+            button.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-3px) scale(1.02)';
+            });
+
+            button.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Parallax effect for floating elements
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const rate = scrolled * -0.5;
+            const floatingElements = document.querySelector('.floating-elements');
+
+            if (floatingElements) {
+                floatingElements.style.transform = `translateY(${rate}px)`;
+            }
+        });
+
+        // Dynamic particle generation
+        function createParticle() {
+            const particlesContainer = document.querySelector('.particles');
+            if (!particlesContainer) return;
+
+            const particle = document.createElement('div');
+            particle.className = 'particle dynamic-particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.width = (Math.random() * 4 + 2) + 'px';
+            particle.style.height = particle.style.width;
+            particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+            particle.style.opacity = Math.random() * 0.5 + 0.1;
+
+            particlesContainer.appendChild(particle);
+
+            // Remove particle after animation
+            setTimeout(() => {
+                if (particle.parentNode) {
+                    particle.parentNode.removeChild(particle);
+                }
+            }, 15000);
+        }
+
+        // Generate new particles every 3 seconds
+        setInterval(createParticle, 3000);
+
+        // Initial particles burst
+        for (let i = 0; i < 5; i++) {
+            setTimeout(createParticle, i * 500);
+        }
+    });
+
+    // Performance optimization: Reduce animations on low-end devices
+    if (navigator.hardwareConcurrency && navigator.hardwareConcurrency < 4) {
+        document.body.classList.add('reduced-motion');
+    }
+</script>
+
+<style>
+    /* Additional dynamic styles */
+    .dynamic-particle {
+        animation: particleFloat 15s linear infinite;
+        background: rgba(32, 136, 54, 0.2);
+        border-radius: 50%;
+        position: absolute;
+    }
+
+    .animated-visible {
+        opacity: 1 !important;
+        transform: translateY(0) !important;
+    }
+
+    .reduced-motion .floating-icon,
+    .reduced-motion .particle,
+    .reduced-motion .btn-pulse {
+        animation: none !important;
+    }
+
+    /* Hover enhancements */
+    .stat-card-modern:hover {
+        transform: translateY(-10px) scale(1.05);
+        box-shadow: 0 15px 35px rgba(32, 136, 54, 0.2);
+        transition: all 0.3s ease;
+    }
+
+    .stat-card-modern:hover .stat-icon {
+        transform: scale(1.2) rotate(10deg);
+        transition: all 0.3s ease;
+    }
+
+    /* Enhanced glow effects */
+    .hero-badge:hover {
+        box-shadow: 0 0 20px rgba(32, 136, 54, 0.8);
+        transition: all 0.3s ease;
+    }
+</style>
 
 <!-- Mission Section -->
 <section class="mission-section-modern py-5">
