@@ -32,8 +32,8 @@ if (isset($_POST['toggle_status'])) {
     $current_status = (int)$_POST['current_status'];
     $new_status = $current_status ? 0 : 1;
 
-    if ($db->update('gallery', ['is_active' => $new_status], ['id' => $image_id])) {
-        $success = $new_status ? 'Image activated' : 'Image deactivated';
+    if ($db->update('gallery', ['is_published' => $new_status], ['id' => $image_id])) {
+        $success = $new_status ? 'Image published' : 'Image unpublished';
     } else {
         $error = 'Error updating image status';
     }
@@ -49,7 +49,7 @@ if ($category_filter) {
 // Get all gallery images
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $per_page = 12;
-$result = $db->paginate('gallery', $page, $per_page, $conditions, ['order_by' => 'uploaded_at DESC']);
+$result = $db->paginate('gallery', $page, $per_page, $conditions, ['order_by' => 'created_at DESC']);
 $gallery_list = $result['data'];
 $pagination = $result['pagination'];
 
@@ -60,8 +60,8 @@ $categories = $categories ? $categories->fetchAll(PDO::FETCH_COLUMN) : [];
 // Get gallery stats
 $gallery_stats = [
     'total' => $db->count('gallery'),
-    'active' => $db->count('gallery', ['is_active' => 1]),
-    'inactive' => $db->count('gallery', ['is_active' => 0])
+    'published' => $db->count('gallery', ['is_published' => 1]),
+    'unpublished' => $db->count('gallery', ['is_published' => 0])
 ];
 
 include '../includes/header.php';
@@ -108,16 +108,16 @@ include '../includes/header.php';
                         <div class="col-md-4">
                             <div class="card text-center">
                                 <div class="card-body">
-                                    <h5 class="text-success"><?php echo $gallery_stats['active']; ?></h5>
-                                    <small class="text-muted">Active Images</small>
+                                    <h5 class="text-success"><?php echo $gallery_stats['published']; ?></h5>
+                                    <small class="text-muted">Published Images</small>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="card text-center">
                                 <div class="card-body">
-                                    <h5 class="text-secondary"><?php echo $gallery_stats['inactive']; ?></h5>
-                                    <small class="text-muted">Inactive Images</small>
+                                    <h5 class="text-secondary"><?php echo $gallery_stats['unpublished']; ?></h5>
+                                    <small class="text-muted">Unpublished Images</small>
                                 </div>
                             </div>
                         </div>
@@ -152,8 +152,8 @@ include '../includes/header.php';
                                         alt="<?php echo htmlspecialchars($image['title']); ?>">
 
                                     <!-- Status Badge -->
-                                    <span class="position-absolute top-0 end-0 m-2 badge bg-<?php echo $image['is_active'] ? 'success' : 'secondary'; ?>">
-                                        <?php echo $image['is_active'] ? 'Active' : 'Inactive'; ?>
+                                    <span class="position-absolute top-0 end-0 m-2 badge bg-<?php echo $image['is_published'] ? 'success' : 'secondary'; ?>">
+                                        <?php echo $image['is_published'] ? 'Published' : 'Unpublished'; ?>
                                     </span>
                                 </div>
 
@@ -171,17 +171,17 @@ include '../includes/header.php';
                                     <?php endif; ?>
 
                                     <div class="d-flex justify-content-between align-items-center">
-                                        <small class="text-muted"><?php echo date('M j, Y', strtotime($image['uploaded_at'])); ?></small>
+                                        <small class="text-muted"><?php echo date('M j, Y', strtotime($image['created_at'])); ?></small>
 
                                         <div class="btn-group">
                                             <!-- Toggle Status -->
                                             <form method="POST" style="display: inline;">
                                                 <input type="hidden" name="image_id" value="<?php echo $image['id']; ?>">
-                                                <input type="hidden" name="current_status" value="<?php echo $image['is_active']; ?>">
+                                                <input type="hidden" name="current_status" value="<?php echo $image['is_published']; ?>">
                                                 <button type="submit" name="toggle_status"
-                                                    class="btn btn-sm btn-outline-<?php echo $image['is_active'] ? 'warning' : 'success'; ?>"
-                                                    title="<?php echo $image['is_active'] ? 'Deactivate' : 'Activate'; ?>">
-                                                    <i class="fas fa-<?php echo $image['is_active'] ? 'eye-slash' : 'eye'; ?>"></i>
+                                                    class="btn btn-sm btn-outline-<?php echo $image['is_published'] ? 'warning' : 'success'; ?>"
+                                                    title="<?php echo $image['is_published'] ? 'Unpublish' : 'Publish'; ?>">
+                                                    <i class="fas fa-<?php echo $image['is_published'] ? 'eye-slash' : 'eye'; ?>"></i>
                                                 </button>
                                             </form>
 

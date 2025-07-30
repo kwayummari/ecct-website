@@ -4,7 +4,7 @@
 <style>
     /* Modern Footer Styling */
     .footer-main {
-        background: 
+        background:
             url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='hexagons' x='0' y='0' width='40' height='40' patternUnits='userSpaceOnUse'%3E%3Cpolygon points='20,5 35,15 35,30 20,40 5,30 5,15' fill='none' stroke='%23208836' stroke-width='0.8' opacity='0.08'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='80' height='80' fill='url(%23hexagons)'/%3E%3C/svg%3E"),
             linear-gradient(135deg, #1a2e1a 0%, #1e3e21 50%, #0f2f16 100%);
         position: relative;
@@ -59,7 +59,7 @@
 
     /* Modern Newsletter Section */
     .footer-newsletter {
-        background: 
+        background:
             url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='waves' x='0' y='0' width='50' height='50' patternUnits='userSpaceOnUse'%3E%3Cpath d='M0,25 Q12.5,10 25,25 Q37.5,40 50,25' fill='none' stroke='%23ffffff' stroke-width='1' opacity='0.1'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100' height='100' fill='url(%23waves)'/%3E%3C/svg%3E"),
             linear-gradient(135deg, #208836 0%, #1a6b2d 100%);
         position: relative;
@@ -94,7 +94,7 @@
 
     /* Modern Copyright Section */
     .footer-copyright {
-        background: 
+        background:
             url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='crosses' x='0' y='0' width='20' height='20' patternUnits='userSpaceOnUse'%3E%3Cpath d='M10,0 L10,20 M0,10 L20,10' stroke='%23208836' stroke-width='0.5' opacity='0.06'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='40' height='40' fill='url(%23crosses)'/%3E%3C/svg%3E"),
             linear-gradient(135deg, #0c1a0c 0%, #1a1a1a 100%);
         position: relative;
