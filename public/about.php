@@ -53,84 +53,206 @@ $stats = [
 include 'includes/header.php';
 ?>
 
-<!-- Page Header -->
-<section class="page-header bg-primary text-white py-5">
-    <div class="container">
-        <div class="row align-items-center">
+<!-- Modern About Hero Section -->
+<section class="about-hero-modern position-relative overflow-hidden">
+    <!-- Video Background -->
+    <div class="about-hero-video-bg">
+        <video autoplay muted loop playsinline preload="auto" class="about-hero-video">
+            <source src="<?php echo SITE_URL; ?>/assets/videos/MAZINGIRA.mp4" type="video/mp4">
+            <source src="<?php echo SITE_URL; ?>/assets/videos/MAZINGIRA.webm" type="video/webm">
+            <!-- Fallback to image -->
+            <img src="<?php echo ASSETS_PATH; ?>/images/_X4A8064.jpg" alt="ECCT Background" class="about-hero-fallback">
+        </video>
+        <div class="about-hero-overlay"></div>
+    </div>
+
+    <div class="container position-relative">
+        <div class="row align-items-center min-vh-90">
             <div class="col-lg-8">
-                <h1 class="display-4 fw-bold mb-3">About ECCT</h1>
-                <p class="lead mb-0">
-                    Empowering communities for sustainable environmental conservation across Tanzania
-                </p>
+                <div class="about-hero-content text-white">
+                    <!-- Breadcrumb with modern design -->
+                    <nav aria-label="breadcrumb" class="mb-4">
+                        <ol class="breadcrumb-modern">
+                            <li class="breadcrumb-item-modern">
+                                <a href="<?php echo SITE_URL; ?>" class="text-white-50">
+                                    <i class="fas fa-home me-2"></i>Home
+                                </a>
+                            </li>
+                            <li class="breadcrumb-separator">
+                                <i class="fas fa-chevron-right text-white-50"></i>
+                            </li>
+                            <li class="breadcrumb-item-modern active">
+                                <span class="text-white">About Us</span>
+                            </li>
+                        </ol>
+                    </nav>
+
+                    <div class="about-badge mb-4 animate-fade-in">
+                        <span class="badge-pill bg-success-gradient text-white px-4 py-2 rounded-pill">
+                            <i class="fas fa-users me-2"></i>Who We Are
+                        </span>
+                    </div>
+
+                    <h1 class="about-hero-title fw-bold mb-4 animate-fade-in">
+                        About <span class="text-gradient">ECCT</span>
+                    </h1>
+
+                    <p class="about-hero-subtitle mb-5 animate-fade-in-delay">
+                        Empowering communities for sustainable environmental conservation across Tanzania.
+                        Discover our journey, mission, and the passionate people making a difference.
+                    </p>
+
+                    <div class="about-hero-actions animate-fade-in-delay-2">
+                        <a href="#mission-vision" class="btn btn-glass btn-lg me-3 smooth-scroll">
+                            <i class="fas fa-arrow-down me-2"></i>Learn More
+                        </a>
+                        <a href="<?php echo SITE_URL; ?>/contact.php" class="btn btn-success-modern btn-lg">
+                            <i class="fas fa-envelope me-2"></i>Get in Touch
+                        </a>
+                    </div>
+                </div>
             </div>
-            <div class="col-lg-4 text-lg-end">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb justify-content-lg-end mb-0">
-                        <li class="breadcrumb-item"><a href="<?php echo SITE_URL; ?>" class="text-white-50">Home</a></li>
-                        <li class="breadcrumb-item active text-white" aria-current="page">About</li>
-                    </ol>
-                </nav>
+
+            <div class="col-lg-4">
+                <div class="about-hero-stats animate-slide-up">
+                    <div class="stats-showcase">
+                        <div class="stat-showcase-item">
+                            <div class="stat-showcase-icon">
+                                <i class="fas fa-calendar-alt"></i>
+                            </div>
+                            <div class="stat-showcase-content">
+                                <h3 class="stat-showcase-number"><?php echo $stats['years_active']; ?></h3>
+                                <p class="stat-showcase-label">Years of Impact</p>
+                            </div>
+                        </div>
+                        <div class="stat-showcase-item">
+                            <div class="stat-showcase-icon">
+                                <i class="fas fa-handshake"></i>
+                            </div>
+                            <div class="stat-showcase-content">
+                                <h3 class="stat-showcase-number"><?php echo $stats['communities']; ?>+</h3>
+                                <p class="stat-showcase-label">Communities Reached</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Enhanced Scroll Indicator -->
+        <div class="about-scroll-indicator position-absolute bottom-0 start-50 translate-middle-x pb-4">
+            <div class="scroll-arrow-modern text-white text-center">
+                <div class="scroll-mouse">
+                    <div class="scroll-wheel"></div>
+                </div>
+                <p class="small mt-3 mb-0 text-uppercase tracking-wide">Discover Our Story</p>
             </div>
         </div>
     </div>
 </section>
 
 <!-- Mission & Vision Section -->
-<section class="mission-vision py-5">
+<section id="mission-vision" class="mission-vision-modern py-5">
     <div class="container">
         <div class="row">
+            <div class="col-12 text-center mb-5">
+                <div class="section-badge mb-4">
+                    <span class="badge bg-primary-soft px-3 py-2 rounded-pill">
+                        <i class="fas fa-compass me-2"></i>Our Purpose
+                    </span>
+                </div>
+                <h2 class="section-title-modern mb-4">Mission & Vision</h2>
+                <p class="section-subtitle">
+                    Guided by purpose, driven by passion - discover the principles that fuel our environmental mission
+                </p>
+            </div>
+        </div>
+
+        <div class="row align-items-stretch">
             <div class="col-lg-6 mb-5">
-                <div class="mission-card h-100">
-                    <div class="icon-wrapper bg-primary bg-opacity-10 text-primary rounded-circle d-inline-flex align-items-center justify-content-center mb-4" style="width: 80px; height: 80px;">
-                        <i class="fas fa-bullseye fa-2x"></i>
+                <div class="mission-vision-card mission-card-modern h-100">
+                    <div class="mission-vision-image">
+                        <img src="<?php echo ASSETS_PATH; ?>/images/green-generation/IMG_3265.JPG"
+                            alt="ECCT Mission" class="img-fluid">
+                        <div class="mission-vision-overlay">
+                            <div class="mission-vision-icon">
+                                <i class="fas fa-bullseye"></i>
+                            </div>
+                        </div>
                     </div>
-                    <h3 class="h4 fw-bold mb-3">Our Mission</h3>
-                    <p class="text-muted mb-4">
-                        To empower local communities to create cleaner, greener, resilient and sustainable environments
-                        through tackling global environmental pollution from plastic waste, climate change and loss of
-                        biodiversity in both marine and terrestrial environments.
-                    </p>
-                    <ul class="list-unstyled">
-                        <li class="d-flex align-items-start mb-2">
-                            <i class="fas fa-check text-success me-3 mt-1"></i>
-                            <span>Community-driven environmental solutions</span>
-                        </li>
-                        <li class="d-flex align-items-start mb-2">
-                            <i class="fas fa-check text-success me-3 mt-1"></i>
-                            <span>Sustainable waste management practices</span>
-                        </li>
-                        <li class="d-flex align-items-start">
-                            <i class="fas fa-check text-success me-3 mt-1"></i>
-                            <span>Biodiversity conservation initiatives</span>
-                        </li>
-                    </ul>
+
+                    <div class="mission-vision-content">
+                        <h3 class="mission-vision-title">Our Mission</h3>
+                        <p class="mission-vision-description">
+                            To empower local communities to create cleaner, greener, resilient and sustainable environments
+                            through tackling global environmental pollution from plastic waste, climate change and loss of
+                            biodiversity in both marine and terrestrial environments.
+                        </p>
+
+                        <div class="mission-vision-features">
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <span>Community-driven solutions</span>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <i class="fas fa-recycle"></i>
+                                </div>
+                                <span>Sustainable waste management</span>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <i class="fas fa-seedling"></i>
+                                </div>
+                                <span>Biodiversity conservation</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <div class="col-lg-6 mb-5">
-                <div class="vision-card h-100">
-                    <div class="icon-wrapper bg-success bg-opacity-10 text-success rounded-circle d-inline-flex align-items-center justify-content-center mb-4" style="width: 80px; height: 80px;">
-                        <i class="fas fa-eye fa-2x"></i>
+                <div class="mission-vision-card vision-card-modern h-100">
+                    <div class="mission-vision-image">
+                        <img src="<?php echo ASSETS_PATH; ?>/images/she-lead/LUC06465.JPG"
+                            alt="ECCT Vision" class="img-fluid">
+                        <div class="mission-vision-overlay">
+                            <div class="mission-vision-icon">
+                                <i class="fas fa-eye"></i>
+                            </div>
+                        </div>
                     </div>
-                    <h3 class="h4 fw-bold mb-3">Our Vision</h3>
-                    <p class="text-muted mb-4">
-                        Striving for a cleaner, greener, healthier environment and thriving communities across Tanzania
-                        and beyond, where environmental conservation is a way of life.
-                    </p>
-                    <ul class="list-unstyled">
-                        <li class="d-flex align-items-start mb-2">
-                            <i class="fas fa-leaf text-primary me-3 mt-1"></i>
-                            <span>Zero-waste communities</span>
-                        </li>
-                        <li class="d-flex align-items-start mb-2">
-                            <i class="fas fa-leaf text-primary me-3 mt-1"></i>
-                            <span>Restored marine and terrestrial ecosystems</span>
-                        </li>
-                        <li class="d-flex align-items-start">
-                            <i class="fas fa-leaf text-primary me-3 mt-1"></i>
-                            <span>Climate-resilient communities</span>
-                        </li>
-                    </ul>
+
+                    <div class="mission-vision-content">
+                        <h3 class="mission-vision-title">Our Vision</h3>
+                        <p class="mission-vision-description">
+                            Striving for a cleaner, greener, healthier environment and thriving communities across Tanzania
+                            and beyond, where environmental conservation is a way of life.
+                        </p>
+
+                        <div class="mission-vision-features">
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <i class="fas fa-leaf"></i>
+                                </div>
+                                <span>Zero-waste communities</span>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <i class="fas fa-globe-africa"></i>
+                                </div>
+                                <span>Restored ecosystems</span>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <i class="fas fa-shield-alt"></i>
+                                </div>
+                                <span>Climate-resilient communities</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -153,168 +275,295 @@ include 'includes/header.php';
 <?php endif; ?>
 
 <!-- Statistics Section -->
-<section class="stats-section py-5">
-    <div class="container">
+<section class="stats-section-modern">
+    <div class="stats-background">
+        <div class="stats-overlay"></div>
+        <img src="<?php echo ASSETS_PATH; ?>/images/eco-wear/_DSC2674.jpg"
+            alt="ECCT Impact" class="stats-bg-image">
+    </div>
+
+    <div class="container position-relative">
         <div class="row text-center">
             <div class="col-12 mb-5">
-                <h2 class="section-title">Our Impact</h2>
-                <p class="text-muted">Making a difference in environmental conservation</p>
+                <div class="section-badge mb-4">
+                    <span class="badge bg-white bg-opacity-20 px-3 py-2 rounded-pill text-white">
+                        <i class="fas fa-chart-line me-2"></i>Our Impact
+                    </span>
+                </div>
+                <h2 class="section-title-modern text-white mb-4">Making a Real Difference</h2>
+                <p class="section-subtitle text-white-50">
+                    Measurable impact across Tanzania through community-driven environmental conservation
+                </p>
             </div>
         </div>
-        <div class="row">
-            <div class="col-lg-3 col-md-6 mb-4">
-                <div class="stat-item text-center">
-                    <div class="stat-icon bg-primary bg-opacity-10 text-primary rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 100px; height: 100px;">
-                        <i class="fas fa-calendar-alt fa-3x"></i>
+
+        <div class="stats-grid">
+            <div class="stat-card-modern" data-aos="fade-up" data-aos-delay="100">
+                <div class="stat-card-inner">
+                    <div class="stat-card-icon">
+                        <i class="fas fa-calendar-alt"></i>
                     </div>
-                    <h3 class="display-6 fw-bold text-primary mb-2"><?php echo $stats['years_active']; ?></h3>
-                    <p class="text-muted mb-0">Years of Impact</p>
+                    <div class="stat-card-content">
+                        <h3 class="stat-card-number" data-count="<?php echo str_replace('+', '', $stats['years_active']); ?>"><?php echo $stats['years_active']; ?></h3>
+                        <p class="stat-card-label">Years of Impact</p>
+                        <div class="stat-card-description">
+                            Dedicated to environmental conservation since our founding
+                        </div>
+                    </div>
                 </div>
+                <div class="stat-card-glow"></div>
             </div>
 
-            <div class="col-lg-3 col-md-6 mb-4">
-                <div class="stat-item text-center">
-                    <div class="stat-icon bg-success bg-opacity-10 text-success rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 100px; height: 100px;">
-                        <i class="fas fa-bullhorn fa-3x"></i>
+            <div class="stat-card-modern" data-aos="fade-up" data-aos-delay="200">
+                <div class="stat-card-inner">
+                    <div class="stat-card-icon">
+                        <i class="fas fa-bullhorn"></i>
                     </div>
-                    <h3 class="display-6 fw-bold text-success mb-2"><?php echo $stats['campaigns_completed']; ?>+</h3>
-                    <p class="text-muted mb-0">Successful Campaigns</p>
+                    <div class="stat-card-content">
+                        <h3 class="stat-card-number" data-count="<?php echo $stats['campaigns_completed']; ?>"><?php echo $stats['campaigns_completed']; ?>+</h3>
+                        <p class="stat-card-label">Successful Campaigns</p>
+                        <div class="stat-card-description">
+                            Environmental initiatives completed successfully
+                        </div>
+                    </div>
                 </div>
+                <div class="stat-card-glow"></div>
             </div>
 
-            <div class="col-lg-3 col-md-6 mb-4">
-                <div class="stat-item text-center">
-                    <div class="stat-icon bg-info bg-opacity-10 text-info rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 100px; height: 100px;">
-                        <i class="fas fa-users fa-3x"></i>
+            <div class="stat-card-modern" data-aos="fade-up" data-aos-delay="300">
+                <div class="stat-card-inner">
+                    <div class="stat-card-icon">
+                        <i class="fas fa-users"></i>
                     </div>
-                    <h3 class="display-6 fw-bold text-info mb-2"><?php echo $stats['volunteers']; ?>+</h3>
-                    <p class="text-muted mb-0">Active Volunteers</p>
+                    <div class="stat-card-content">
+                        <h3 class="stat-card-number" data-count="<?php echo $stats['volunteers']; ?>"><?php echo $stats['volunteers']; ?>+</h3>
+                        <p class="stat-card-label">Active Volunteers</p>
+                        <div class="stat-card-description">
+                            Passionate individuals driving change
+                        </div>
+                    </div>
                 </div>
+                <div class="stat-card-glow"></div>
             </div>
 
-            <div class="col-lg-3 col-md-6 mb-4">
-                <div class="stat-item text-center">
-                    <div class="stat-icon bg-warning bg-opacity-10 text-warning rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 100px; height: 100px;">
-                        <i class="fas fa-map-marker-alt fa-3x"></i>
+            <div class="stat-card-modern" data-aos="fade-up" data-aos-delay="400">
+                <div class="stat-card-inner">
+                    <div class="stat-card-icon">
+                        <i class="fas fa-map-marker-alt"></i>
                     </div>
-                    <h3 class="display-6 fw-bold text-warning mb-2"><?php echo $stats['communities']; ?>+</h3>
-                    <p class="text-muted mb-0">Communities Served</p>
+                    <div class="stat-card-content">
+                        <h3 class="stat-card-number" data-count="<?php echo $stats['communities']; ?>"><?php echo $stats['communities']; ?>+</h3>
+                        <p class="stat-card-label">Communities Served</p>
+                        <div class="stat-card-description">
+                            Local communities empowered for sustainability
+                        </div>
+                    </div>
                 </div>
+                <div class="stat-card-glow"></div>
             </div>
         </div>
     </div>
 </section>
 
 <!-- Team Section -->
-<section class="team-section py-5 bg-light">
+<section class="team-section-modern py-5">
     <div class="container">
         <div class="row">
             <div class="col-12 text-center mb-5">
-                <h2 class="section-title">Our Team</h2>
-                <p class="text-muted">Meet the passionate individuals driving environmental change</p>
+                <div class="section-badge mb-4">
+                    <span class="badge bg-primary-soft px-3 py-2 rounded-pill">
+                        <i class="fas fa-users me-2"></i>Our Team
+                    </span>
+                </div>
+                <h2 class="section-title-modern mb-4">Meet Our Changemakers</h2>
+                <p class="section-subtitle">
+                    Passionate individuals dedicated to creating a sustainable future for Tanzania
+                </p>
             </div>
         </div>
-        <div class="row">
-            <?php foreach ($team_members as $member): ?>
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="team-card card border-0 shadow-sm h-100 text-center">
-                        <div class="card-body p-4">
-                            <div class="team-image mb-3">
-                                <img src="<?php echo ASSETS_PATH; ?>/images/team/<?php echo $member['image']; ?>"
-                                    alt="<?php echo htmlspecialchars($member['name']); ?>"
-                                    class="rounded-circle"
-                                    style="width: 120px; height: 120px; object-fit: cover;">
+
+        <div class="row justify-content-center">
+            <?php foreach ($team_members as $index => $member): ?>
+                <div class="col-lg-4 col-md-6 mb-5">
+                    <div class="team-card-modern" data-aos="fade-up" data-aos-delay="<?php echo ($index + 1) * 100; ?>">
+                        <div class="team-card-inner">
+                            <div class="team-image-container">
+                                <div class="team-image-wrapper">
+                                    <img src="<?php echo ASSETS_PATH; ?>/images/green-generation/IMG_<?php echo 3264 + $index; ?>.JPG"
+                                        alt="<?php echo htmlspecialchars($member['name']); ?>"
+                                        class="team-image">
+                                    <div class="team-image-overlay">
+                                        <div class="team-social">
+                                            <a href="#" class="team-social-link">
+                                                <i class="fab fa-linkedin"></i>
+                                            </a>
+                                            <a href="#" class="team-social-link">
+                                                <i class="fas fa-envelope"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="team-badge">
+                                    <i class="fas fa-leaf"></i>
+                                </div>
                             </div>
-                            <h5 class="card-title mb-1"><?php echo htmlspecialchars($member['name']); ?></h5>
-                            <p class="text-primary fw-medium mb-3"><?php echo htmlspecialchars($member['position']); ?></p>
-                            <p class="text-muted small"><?php echo htmlspecialchars($member['bio']); ?></p>
+
+                            <div class="team-content">
+                                <h5 class="team-name"><?php echo htmlspecialchars($member['name']); ?></h5>
+                                <p class="team-position"><?php echo htmlspecialchars($member['position']); ?></p>
+                                <p class="team-bio"><?php echo htmlspecialchars($member['bio']); ?></p>
+
+                                <div class="team-stats">
+                                    <div class="team-stat">
+                                        <span class="stat-number"><?php echo 3 + $index; ?>+</span>
+                                        <span class="stat-label">Years</span>
+                                    </div>
+                                    <div class="team-stat">
+                                        <span class="stat-number"><?php echo 15 + ($index * 5); ?>+</span>
+                                        <span class="stat-label">Projects</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+                        <div class="team-card-glow"></div>
                     </div>
                 </div>
             <?php endforeach; ?>
+        </div>
+
+        <div class="text-center mt-5">
+            <div class="join-team-cta">
+                <h4 class="mb-3">Want to Join Our Team?</h4>
+                <p class="text-muted mb-4">
+                    We're always looking for passionate environmental advocates to join our mission
+                </p>
+                <a href="<?php echo SITE_URL; ?>/volunteer.php" class="btn btn-primary-modern btn-lg">
+                    <i class="fas fa-handshake me-2"></i>
+                    Join Our Mission
+                    <i class="fas fa-arrow-right ms-2"></i>
+                </a>
+            </div>
         </div>
     </div>
 </section>
 
 <!-- Values Section -->
-<section class="values-section py-5">
+<section class="values-section-modern py-5">
     <div class="container">
         <div class="row">
             <div class="col-12 text-center mb-5">
-                <h2 class="section-title">Our Values</h2>
-                <p class="text-muted">The principles that guide our environmental conservation work</p>
+                <div class="section-badge mb-4">
+                    <span class="badge bg-primary-soft px-3 py-2 rounded-pill">
+                        <i class="fas fa-heart me-2"></i>Our Values
+                    </span>
+                </div>
+                <h2 class="section-title-modern mb-4">Principles That Guide Us</h2>
+                <p class="section-subtitle">
+                    The core values that drive our environmental conservation mission and community impact
+                </p>
             </div>
         </div>
-        <div class="row">
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="value-card text-center">
-                    <div class="value-icon bg-primary bg-opacity-10 text-primary rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
-                        <i class="fas fa-handshake fa-2x"></i>
+
+        <div class="values-grid">
+            <div class="value-card-modern" data-aos="fade-up" data-aos-delay="100">
+                <div class="value-card-inner">
+                    <div class="value-icon-container">
+                        <div class="value-icon-modern collaboration">
+                            <i class="fas fa-handshake"></i>
+                        </div>
                     </div>
-                    <h5 class="fw-bold mb-3">Collaboration</h5>
-                    <p class="text-muted">
-                        Working together with communities, government, and partners to achieve sustainable environmental solutions.
-                    </p>
+                    <div class="value-content">
+                        <h5 class="value-title">Collaboration</h5>
+                        <p class="value-description">
+                            Working together with communities, government, and partners to achieve sustainable environmental solutions.
+                        </p>
+                    </div>
+                    <div class="value-card-bg"></div>
                 </div>
             </div>
 
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="value-card text-center">
-                    <div class="value-icon bg-success bg-opacity-10 text-success rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
-                        <i class="fas fa-seedling fa-2x"></i>
+            <div class="value-card-modern" data-aos="fade-up" data-aos-delay="200">
+                <div class="value-card-inner">
+                    <div class="value-icon-container">
+                        <div class="value-icon-modern sustainability">
+                            <i class="fas fa-seedling"></i>
+                        </div>
                     </div>
-                    <h5 class="fw-bold mb-3">Sustainability</h5>
-                    <p class="text-muted">
-                        Promoting long-term environmental and social sustainability in all our conservation efforts.
-                    </p>
+                    <div class="value-content">
+                        <h5 class="value-title">Sustainability</h5>
+                        <p class="value-description">
+                            Promoting long-term environmental and social sustainability in all our conservation efforts.
+                        </p>
+                    </div>
+                    <div class="value-card-bg"></div>
                 </div>
             </div>
 
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="value-card text-center">
-                    <div class="value-icon bg-info bg-opacity-10 text-info rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
-                        <i class="fas fa-lightbulb fa-2x"></i>
+            <div class="value-card-modern" data-aos="fade-up" data-aos-delay="300">
+                <div class="value-card-inner">
+                    <div class="value-icon-container">
+                        <div class="value-icon-modern innovation">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
                     </div>
-                    <h5 class="fw-bold mb-3">Innovation</h5>
-                    <p class="text-muted">
-                        Developing creative and innovative approaches to address environmental challenges.
-                    </p>
+                    <div class="value-content">
+                        <h5 class="value-title">Innovation</h5>
+                        <p class="value-description">
+                            Developing creative and innovative approaches to address environmental challenges.
+                        </p>
+                    </div>
+                    <div class="value-card-bg"></div>
                 </div>
             </div>
 
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="value-card text-center">
-                    <div class="value-icon bg-warning bg-opacity-10 text-warning rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
-                        <i class="fas fa-heart fa-2x"></i>
+            <div class="value-card-modern" data-aos="fade-up" data-aos-delay="400">
+                <div class="value-card-inner">
+                    <div class="value-icon-container">
+                        <div class="value-icon-modern integrity">
+                            <i class="fas fa-heart"></i>
+                        </div>
                     </div>
-                    <h5 class="fw-bold mb-3">Integrity</h5>
-                    <p class="text-muted">
-                        Maintaining transparency, honesty, and accountability in all our conservation activities.
-                    </p>
+                    <div class="value-content">
+                        <h5 class="value-title">Integrity</h5>
+                        <p class="value-description">
+                            Maintaining transparency, honesty, and accountability in all our conservation activities.
+                        </p>
+                    </div>
+                    <div class="value-card-bg"></div>
                 </div>
             </div>
 
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="value-card text-center">
-                    <div class="value-icon bg-danger bg-opacity-10 text-danger rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
-                        <i class="fas fa-fist-raised fa-2x"></i>
+            <div class="value-card-modern" data-aos="fade-up" data-aos-delay="500">
+                <div class="value-card-inner">
+                    <div class="value-icon-container">
+                        <div class="value-icon-modern empowerment">
+                            <i class="fas fa-fist-raised"></i>
+                        </div>
                     </div>
-                    <h5 class="fw-bold mb-3">Empowerment</h5>
-                    <p class="text-muted">
-                        Building local capacity and empowering communities to lead their own environmental initiatives.
-                    </p>
+                    <div class="value-content">
+                        <h5 class="value-title">Empowerment</h5>
+                        <p class="value-description">
+                            Building local capacity and empowering communities to lead their own environmental initiatives.
+                        </p>
+                    </div>
+                    <div class="value-card-bg"></div>
                 </div>
             </div>
 
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="value-card text-center">
-                    <div class="value-icon bg-secondary bg-opacity-10 text-secondary rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
-                        <i class="fas fa-balance-scale fa-2x"></i>
+            <div class="value-card-modern" data-aos="fade-up" data-aos-delay="600">
+                <div class="value-card-inner">
+                    <div class="value-icon-container">
+                        <div class="value-icon-modern equity">
+                            <i class="fas fa-balance-scale"></i>
+                        </div>
                     </div>
-                    <h5 class="fw-bold mb-3">Equity</h5>
-                    <p class="text-muted">
-                        Ensuring fair and equitable access to environmental resources and conservation benefits.
-                    </p>
+                    <div class="value-content">
+                        <h5 class="value-title">Equity</h5>
+                        <p class="value-description">
+                            Ensuring fair and equitable access to environmental resources and conservation benefits.
+                        </p>
+                    </div>
+                    <div class="value-card-bg"></div>
                 </div>
             </div>
         </div>
@@ -322,24 +571,72 @@ include 'includes/header.php';
 </section>
 
 <!-- Call to Action -->
-<section class="cta-section py-5 bg-primary text-white">
-    <div class="container">
+<section class="about-cta-section-modern py-5 position-relative overflow-hidden">
+    <div class="cta-background-about">
+        <img src="<?php echo ASSETS_PATH; ?>/images/eco-wear/_DSC2829.jpg"
+            alt="Join ECCT" class="cta-bg-image-about">
+        <div class="cta-overlay-about"></div>
+    </div>
+
+    <div class="container position-relative">
         <div class="row align-items-center">
-            <div class="col-lg-8">
-                <h3 class="mb-3">Join Our Environmental Mission</h3>
-                <p class="mb-0 lead">
-                    Be part of the change you want to see. Together, we can create a sustainable future for Tanzania.
-                </p>
+            <div class="col-lg-8 mb-4 mb-lg-0">
+                <div class="cta-content-about">
+                    <div class="cta-badge-about mb-3">
+                        <span class="badge bg-white bg-opacity-20 px-3 py-2 rounded-pill text-white">
+                            <i class="fas fa-hands-helping me-2"></i>Join the Movement
+                        </span>
+                    </div>
+                    <h3 class="cta-title-about mb-4">Ready to Make an Impact?</h3>
+                    <p class="cta-description-about mb-4">
+                        Be part of the change you want to see. Together, we can create a sustainable,
+                        greener future for Tanzania. Your contribution matters, your voice counts.
+                    </p>
+
+                    <div class="cta-features-about">
+                        <div class="cta-feature-item">
+                            <i class="fas fa-check-circle me-2"></i>
+                            <span>Make a real environmental impact</span>
+                        </div>
+                        <div class="cta-feature-item">
+                            <i class="fas fa-check-circle me-2"></i>
+                            <span>Connect with like-minded individuals</span>
+                        </div>
+                        <div class="cta-feature-item">
+                            <i class="fas fa-check-circle me-2"></i>
+                            <span>Develop new skills and experience</span>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="col-lg-4 text-lg-end mt-3 mt-lg-0">
-                <a href="<?php echo SITE_URL; ?>/volunteer.php" class="btn btn-light btn-lg me-3">
-                    <i class="fas fa-heart me-2"></i>Volunteer Now
-                </a>
-                <a href="<?php echo SITE_URL; ?>/contact.php" class="btn btn-outline-light btn-lg">
-                    <i class="fas fa-envelope me-2"></i>Contact Us
-                </a>
+
+            <div class="col-lg-4 text-center text-lg-end">
+                <div class="cta-actions-about">
+                    <a href="<?php echo SITE_URL; ?>/volunteer.php" class="btn btn-cta-modern-about btn-lg mb-3 d-block d-lg-inline-block">
+                        <i class="fas fa-heart me-2"></i>
+                        <span>Volunteer Now</span>
+                        <i class="fas fa-arrow-right ms-2"></i>
+                    </a>
+                    <a href="<?php echo SITE_URL; ?>/contact.php" class="btn btn-glass-about btn-lg d-block d-lg-inline-block">
+                        <i class="fas fa-envelope me-2"></i>
+                        <span>Contact Us</span>
+                    </a>
+
+                    <div class="cta-note-about mt-3">
+                        <small class="text-white-50">
+                            <i class="fas fa-users me-1"></i>
+                            Join 500+ volunteers making a difference
+                        </small>
+                    </div>
+                </div>
             </div>
         </div>
+    </div>
+
+    <div class="cta-floating-elements-about">
+        <div class="floating-element-about element-1">🌱</div>
+        <div class="floating-element-about element-2">🌍</div>
+        <div class="floating-element-about element-3">♻️</div>
     </div>
 </section>
 
