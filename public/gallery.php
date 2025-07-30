@@ -204,7 +204,7 @@ include 'includes/header.php';
     }
 
     .featured-category {
-        background: rgba(220, 53, 69, 0.9);
+        background: #28a745;
         color: white;
         padding: 3px 8px;
         border-radius: 12px;
