@@ -359,7 +359,12 @@ include 'includes/header.php';
     }
 
     .single-news-hero {
-        background: linear-gradient(135deg, rgba(0, 123, 255, 0.9), rgba(0, 0, 0, 0.7));
+        position: relative;
+        background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(32, 136, 54, 0.7)),
+            url('<?php echo SITE_URL; ?>/assets/images/eco-wear/_DSC2674.jpg');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
         color: white;
         padding: 80px 0;
     }
