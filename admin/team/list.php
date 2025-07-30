@@ -108,7 +108,7 @@ $team_members = $db->select('team_members', $conditions, [
 ]);
 
 $page_title = "Team Management";
-include ECCT_ROOT . '/admin/includes/header.php';
+include '../includes/header.php';
 ?>
 
 <div class="container-fluid px-4">
