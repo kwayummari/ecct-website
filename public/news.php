@@ -38,14 +38,19 @@ if ($news_id) {
 
     // Get related news
     $related_news = $db->select('news', [
-        'is_published' => 1,
-        'id' => array_filter([$news_id], function ($id) {
-            return false;
-        }) // Exclude current article
+        'is_published' => 1
     ], [
         'order_by' => 'publish_date DESC',
-        'limit' => 3
+        'limit' => 4
     ]);
+
+    // Remove current article from related news
+    $related_news = array_filter($related_news, function ($article) use ($news_id) {
+        return $article['id'] != $news_id;
+    });
+
+    // Limit to 3 articles
+    $related_news = array_slice($related_news, 0, 3);
 
     // Get news tags if they exist
     $news_tags = $db->raw(

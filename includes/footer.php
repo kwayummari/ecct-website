@@ -168,20 +168,21 @@
     }
 
     .social-links a {
-        display: flex;
+        display: inline-flex;
         align-items: center;
         justify-content: center;
         width: 50px;
         height: 50px;
-        border-radius: 15px;
-        background: rgba(255, 255, 255, 0.05);
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.1);
         backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        border: 2px solid rgba(255, 255, 255, 0.2);
         color: #ffffff;
         text-decoration: none;
         transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         position: relative;
         overflow: hidden;
+        line-height: 1;
     }
 
     .social-links a::before {
@@ -194,7 +195,7 @@
         background: linear-gradient(135deg, #208836, #2ea344);
         opacity: 0;
         transition: all 0.4s ease;
-        border-radius: 15px;
+        border-radius: 50%;
     }
 
     .social-links a:hover::before {
@@ -212,6 +213,11 @@
         position: relative;
         z-index: 1;
         transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
     }
 
     .social-links a:hover i {
@@ -315,10 +321,13 @@
         background: rgba(255, 255, 255, 0.05);
         backdrop-filter: blur(10px);
         border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 20px;
-        padding: 25px;
-        margin-bottom: 20px;
+        border-radius: 12px;
+        padding: 15px;
+        margin-bottom: 15px;
         transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 15px;
     }
 
     .footer-card:hover {
@@ -332,17 +341,39 @@
         width: 45px;
         height: 45px;
         border-radius: 12px;
+        flex-shrink: 0;
         background: linear-gradient(135deg, #208836, #2ea344);
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-bottom: 15px;
-        box-shadow: 0 8px 25px rgba(32, 136, 54, 0.3);
+        box-shadow: 0 6px 20px rgba(32, 136, 54, 0.3);
     }
 
     .contact-icon i {
         color: white;
-        font-size: 1.2rem;
+        font-size: 1.1rem;
+    }
+
+    .contact-info-text {
+        flex: 1;
+    }
+
+    .contact-info-text strong {
+        display: block;
+        color: #ffffff;
+        font-size: 0.95rem;
+        margin-bottom: 5px;
+    }
+
+    .contact-info-text span,
+    .contact-info-text a {
+        color: #e0e0e0;
+        font-size: 0.9rem;
+        text-decoration: none;
+    }
+
+    .contact-info-text a:hover {
+        color: #2ea344;
     }
 
     /* Responsive Design */
@@ -355,6 +386,34 @@
         .social-links a {
             width: 45px;
             height: 45px;
+        }
+
+        .social-links a i {
+            font-size: 1.1rem;
+        }
+
+        .footer-card {
+            padding: 12px;
+            margin-bottom: 12px;
+            gap: 12px;
+        }
+
+        .contact-icon {
+            width: 40px;
+            height: 40px;
+        }
+
+        .contact-icon i {
+            font-size: 1rem;
+        }
+
+        .contact-info-text strong {
+            font-size: 0.9rem;
+        }
+
+        .contact-info-text span,
+        .contact-info-text a {
+            font-size: 0.85rem;
         }
 
         .newsletter-form {
@@ -451,30 +510,36 @@
                         <div class="contact-icon">
                             <i class="fas fa-map-marker-alt"></i>
                         </div>
-                        <strong class="text-white">Address</strong><br>
-                        <span class="text-light">
-                            <?php echo htmlspecialchars($db->getSetting('contact_address', 'Dar es Salaam, Tanzania')); ?>
-                        </span>
+                        <div class="contact-info-text">
+                            <strong>Address</strong>
+                            <span>
+                                <?php echo htmlspecialchars($db->getSetting('contact_address', 'Dar es Salaam, Tanzania')); ?>
+                            </span>
+                        </div>
                     </div>
 
                     <div class="footer-card">
                         <div class="contact-icon">
                             <i class="fas fa-phone"></i>
                         </div>
-                        <strong class="text-white">Phone</strong><br>
-                        <a href="tel:<?php echo $db->getSetting('contact_phone', ''); ?>" class="text-light text-decoration-none">
-                            <?php echo htmlspecialchars($db->getSetting('contact_phone', '+255 123 456 789')); ?>
-                        </a>
+                        <div class="contact-info-text">
+                            <strong>Phone</strong>
+                            <a href="tel:<?php echo $db->getSetting('contact_phone', ''); ?>">
+                                <?php echo htmlspecialchars($db->getSetting('contact_phone', '+255 123 456 789')); ?>
+                            </a>
+                        </div>
                     </div>
 
                     <div class="footer-card">
                         <div class="contact-icon">
                             <i class="fas fa-envelope"></i>
                         </div>
-                        <strong class="text-white">Email</strong><br>
-                        <a href="mailto:<?php echo $db->getSetting('contact_email', SITE_EMAIL); ?>">
-                            <?php echo htmlspecialchars($db->getSetting('contact_email', SITE_EMAIL)); ?>
-                        </a>
+                        <div class="contact-info-text">
+                            <strong>Email</strong>
+                            <a href="mailto:<?php echo $db->getSetting('contact_email', SITE_EMAIL); ?>">
+                                <?php echo htmlspecialchars($db->getSetting('contact_email', SITE_EMAIL)); ?>
+                            </a>
+                        </div>
                     </div>
 
                     <!-- Social Media Links -->

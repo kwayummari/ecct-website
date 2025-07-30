@@ -92,6 +92,10 @@ class Database
             $where_clauses = [];
             foreach ($conditions as $key => $value) {
                 if (is_array($value)) {
+                    if (empty($value)) {
+                        // Skip empty arrays to avoid str_repeat error
+                        continue;
+                    }
                     $placeholders = str_repeat('?,', count($value) - 1) . '?';
                     $where_clauses[] = "{$key} IN ({$placeholders})";
                     $params = array_merge($params, $value);
