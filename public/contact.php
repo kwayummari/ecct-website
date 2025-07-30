@@ -650,7 +650,7 @@ include 'includes/header.php';
                     <?php endif; ?>
 
                     <form method="POST" class="needs-validation" novalidate>
-                        <?php generate_csrf_field(); ?>
+                        <?php echo csrf_field(); ?>
 
                         <div class="row">
                             <div class="col-md-6">
