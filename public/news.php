@@ -598,7 +598,7 @@ include 'includes/header.php';
                         <span class="badge bg-primary">News Article</span>
                     </div>
 
-                    <h1><?php echo htmlspecialchars($news_article['title']); ?></h1>
+                    <h1 class="text-white"><?php echo htmlspecialchars($news_article['title']); ?></h1>
 
                     <div class="article-meta d-flex justify-content-center flex-wrap gap-4 mt-4">
                         <span class="text-white-75">
