@@ -379,7 +379,7 @@
                 <p class="text-light">
                     <?php echo htmlspecialchars($site_tagline); ?>
                 </p>
-                <p class="small text-muted">
+                <p class="small text-white">
                     ECCT empowers local communities to create cleaner, greener, resilient and sustainable environments through tackling global environmental pollution.
                 </p>
             </div>
