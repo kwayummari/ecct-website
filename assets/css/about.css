@@ -1,5 +1,16 @@
 /* About Page Specific Styles - Bootstrap Friendly */
 
+/* Global overflow prevention */
+html,
+body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+body {
+  position: relative;
+}
+
 /* About Page Header */
 .about-page-header {
   position: relative;
@@ -193,6 +204,147 @@
 .mission-vision-description {
   color: #6c757d;
   line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+/* Mission Vision Features */
+.mission-vision-features {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.feature-item:last-child {
+  border-bottom: none;
+}
+
+.feature-icon {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #28a745, #20c997);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.feature-item span {
+  color: #6c757d;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+/* Prevent horizontal overflow and fix layout */
+* {
+  box-sizing: border-box;
+}
+
+.container-fluid,
+.container {
+  max-width: 100%;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+.row {
+  margin-left: 0;
+  margin-right: 0;
+  width: 100%;
+}
+
+.col-lg-6,
+.col-12,
+[class*="col-"] {
+  padding-left: 15px;
+  padding-right: 15px;
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Ensure images don't overflow */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Ensure all sections stay within bounds */
+section {
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Fix any potential grid issues */
+.stats-section-modern,
+.team-section-modern,
+.values-section-modern,
+.about-cta-section-modern {
+  overflow-x: hidden;
+  width: 100%;
+}
+
+/* Basic section styles to prevent layout issues */
+.stats-section-modern {
+  background: #f8f9fa;
+  padding: 80px 0;
+}
+
+.team-section-modern {
+  background: white;
+  padding: 80px 0;
+}
+
+.values-section-modern {
+  background: #f8f9fa;
+  padding: 80px 0;
+}
+
+.about-cta-section-modern {
+  background: #2c3e50;
+  padding: 80px 0;
+  color: white;
+}
+
+/* Ensure cards and grids don't overflow */
+.stat-card-modern,
+.team-card-modern,
+.value-card-modern {
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.stats-grid,
+.team-grid,
+.values-grid {
+  display: grid;
+  gap: 20px;
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Basic grid layouts */
+.stats-grid {
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.team-grid {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.values-grid {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
 
 /* Responsive Styles */
@@ -241,5 +393,24 @@
 
   .mission-vision-content {
     padding: 20px;
+  }
+
+  .mission-vision-features {
+    gap: 10px;
+  }
+
+  .feature-item {
+    gap: 8px;
+    padding: 8px 0;
+  }
+
+  .feature-icon {
+    width: 35px;
+    height: 35px;
+    font-size: 0.9rem;
+  }
+
+  .feature-item span {
+    font-size: 0.9rem;
   }
 }
