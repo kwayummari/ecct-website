@@ -139,4 +139,4 @@ include '../includes/header.php';
     </div>
 </div>
 
-<?php require_once ECCT_ROOT . '/admin/includes/footer.php'; ?>
+<?php include '../includes/header.php'; ?>
