@@ -2,17 +2,11 @@
 
 <!-- Footer -->
 <style>
-    /* Footer Pattern Backgrounds */
+    /* Modern Footer Styling */
     .footer-main {
-        background: #2c3e50;
-        background-image:
-            radial-gradient(circle at 20% 50%, rgba(0, 123, 255, 0.1) 0%, transparent 50%),
-            radial-gradient(circle at 80% 20%, rgba(40, 167, 69, 0.1) 0%, transparent 50%),
-            radial-gradient(circle at 40% 80%, rgba(32, 201, 151, 0.1) 0%, transparent 50%),
-            linear-gradient(135deg, transparent 25%, rgba(0, 123, 255, 0.05) 25%, rgba(0, 123, 255, 0.05) 50%, transparent 50%, transparent 75%, rgba(40, 167, 69, 0.05) 75%);
-        background-size: 400px 400px, 350px 350px, 300px 300px, 60px 60px;
-        background-position: 0 0, 100px 100px, 200px 200px, 0 0;
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
         position: relative;
+        overflow: hidden;
     }
 
     .footer-main::before {
@@ -22,17 +16,37 @@
         left: 0;
         right: 0;
         bottom: 0;
-        background-image:
-            url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23007bff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        background: 
+            radial-gradient(circle at 25% 25%, rgba(0, 123, 255, 0.1) 0%, transparent 40%),
+            radial-gradient(circle at 75% 75%, rgba(32, 201, 151, 0.08) 0%, transparent 40%),
+            radial-gradient(circle at 50% 50%, rgba(40, 167, 69, 0.06) 0%, transparent 60%);
+        background-size: 600px 600px, 800px 800px, 400px 400px;
+        animation: floatBg 20s ease-in-out infinite;
+        pointer-events: none;
+    }
+
+    .footer-main::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: 
+            url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='grid' width='10' height='10' patternUnits='userSpaceOnUse'%3E%3Cpath d='M 10 0 L 0 0 0 10' fill='none' stroke='%23007bff' stroke-width='0.5' opacity='0.1'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100' height='100' fill='url(%23grid)'/%3E%3C/svg%3E");
         opacity: 0.3;
         pointer-events: none;
     }
 
+    @keyframes floatBg {
+        0%, 100% { transform: translateY(0px) rotate(0deg); }
+        33% { transform: translateY(-20px) rotate(1deg); }
+        66% { transform: translateY(10px) rotate(-0.5deg); }
+    }
+
+    /* Modern Newsletter Section */
     .footer-newsletter {
-        background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
-        background-image:
-            url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.1' fill-rule='evenodd'%3E%3Cpath d='M20 20c0 11.046-8.954 20-20 20v20h40V20H20z'/%3E%3C/g%3E%3C/svg%3E"),
-            repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255, 255, 255, 0.05) 10px, rgba(255, 255, 255, 0.05) 20px);
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         position: relative;
         overflow: hidden;
     }
@@ -40,93 +54,101 @@
     .footer-newsletter::before {
         content: '';
         position: absolute;
-        top: -50%;
-        left: -50%;
-        width: 200%;
-        height: 200%;
-        background:
-            radial-gradient(circle, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
-        background-size: 20px 20px;
-        animation: patternMove 20s linear infinite;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: 
+            linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.05) 30%, rgba(255, 255, 255, 0.05) 70%, transparent 70%),
+            linear-gradient(-45deg, transparent 30%, rgba(255, 255, 255, 0.03) 30%, rgba(255, 255, 255, 0.03) 70%, transparent 70%);
+        background-size: 60px 60px, 40px 40px;
+        animation: slidePattern 15s linear infinite;
         pointer-events: none;
     }
 
-    @keyframes patternMove {
-        0% {
-            transform: translateX(0) translateY(0);
-        }
-
-        100% {
-            transform: translateX(20px) translateY(20px);
-        }
+    @keyframes slidePattern {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(60px); }
     }
 
+    /* Modern Copyright Section */
     .footer-copyright {
-        background: #1a252f;
-        background-image:
-            linear-gradient(90deg, rgba(0, 123, 255, 0.1) 50%, transparent 50%),
-            linear-gradient(rgba(40, 167, 69, 0.05) 50%, transparent 50%);
-        background-size: 20px 20px, 20px 10px;
+        background: linear-gradient(135deg, #0c0c0c 0%, #1a1a1a 100%);
         position: relative;
     }
 
-    .footer-copyright::after {
+    .footer-copyright::before {
         content: '';
         position: absolute;
         top: 0;
         left: 0;
         right: 0;
-        bottom: 0;
-        background-image:
-            url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%2320c997' fill-opacity='0.05'%3E%3Ccircle cx='3' cy='3' r='1'/%3E%3Ccircle cx='13' cy='13' r='1'/%3E%3C/g%3E%3C/svg%3E");
-        pointer-events: none;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, #007bff, #20c997, #007bff, transparent);
+        animation: shimmer 3s ease-in-out infinite;
     }
 
-    /* Enhanced footer content */
+    @keyframes shimmer {
+        0%, 100% { opacity: 0.3; }
+        50% { opacity: 1; }
+    }
+
+    /* Modern Content Styling */
     .footer-main .container {
         position: relative;
-        z-index: 1;
+        z-index: 2;
     }
 
     .footer-newsletter .container {
         position: relative;
-        z-index: 1;
+        z-index: 2;
     }
 
     .footer-copyright .container {
         position: relative;
-        z-index: 1;
+        z-index: 2;
     }
 
-    /* Decorative elements */
-    .footer-main h5 {
+    /* Modern Section Headers */
+    .footer-main h5, .footer-main h6 {
         position: relative;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        color: #ffffff;
     }
 
     .footer-main h5::after {
         content: '';
         position: absolute;
-        bottom: -5px;
+        bottom: -8px;
         left: 0;
-        width: 40px;
-        height: 2px;
-        background: linear-gradient(90deg, #007bff, #20c997);
-        border-radius: 1px;
+        width: 50px;
+        height: 3px;
+        background: linear-gradient(135deg, #007bff, #20c997);
+        border-radius: 2px;
+        box-shadow: 0 2px 10px rgba(0, 123, 255, 0.3);
     }
 
-    /* Enhanced social links */
+    /* Modern Social Links */
+    .social-links {
+        display: flex;
+        gap: 15px;
+        margin-top: 20px;
+    }
+
     .social-links a {
-        display: inline-flex;
+        display: flex;
         align-items: center;
         justify-content: center;
-        width: 40px;
-        height: 40px;
-        margin-right: 10px;
-        border-radius: 50%;
-        background: rgba(0, 123, 255, 0.1);
-        color: #007bff;
+        width: 50px;
+        height: 50px;
+        border-radius: 15px;
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: #ffffff;
         text-decoration: none;
-        transition: all 0.3s ease;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         position: relative;
         overflow: hidden;
     }
@@ -134,53 +156,183 @@
     .social-links a::before {
         content: '';
         position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 0;
-        height: 0;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
         background: linear-gradient(135deg, #007bff, #20c997);
-        border-radius: 50%;
-        transition: all 0.3s ease;
-        transform: translate(-50%, -50%);
+        opacity: 0;
+        transition: all 0.4s ease;
+        border-radius: 15px;
     }
 
     .social-links a:hover::before {
-        width: 100%;
-        height: 100%;
+        opacity: 1;
     }
 
     .social-links a:hover {
-        color: white;
-        transform: translateY(-2px);
+        transform: translateY(-8px) scale(1.05);
+        box-shadow: 0 15px 35px rgba(0, 123, 255, 0.4);
+        border-color: #007bff;
     }
 
     .social-links a i {
+        font-size: 1.2rem;
         position: relative;
         z-index: 1;
-    }
-
-    /* Newsletter form enhancement */
-    .footer-newsletter .form-control {
-        background: rgba(255, 255, 255, 0.95);
-        border: none;
-        border-radius: 25px;
-        padding: 12px 20px;
-    }
-
-    .footer-newsletter .btn {
-        border-radius: 25px;
-        padding: 12px 25px;
-        font-weight: 600;
-        background: white;
-        color: #007bff;
-        border: none;
         transition: all 0.3s ease;
     }
 
-    .footer-newsletter .btn:hover {
+    .social-links a:hover i {
+        color: white;
+        transform: scale(1.1);
+    }
+
+    /* Modern Links */
+    .footer-main a {
+        color: rgba(255, 255, 255, 0.8);
+        text-decoration: none;
+        transition: all 0.3s ease;
+        position: relative;
+        display: inline-block;
+    }
+
+    .footer-main a:hover {
+        color: #20c997;
+        transform: translateX(5px);
+    }
+
+    .footer-main a::before {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -2px;
+        left: 0;
+        background: linear-gradient(90deg, #007bff, #20c997);
+        transition: width 0.3s ease;
+    }
+
+    .footer-main a:hover::before {
+        width: 100%;
+    }
+
+    /* Modern Newsletter Form */
+    .newsletter-form {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .footer-newsletter .form-control {
+        flex: 1;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        border-radius: 50px;
+        padding: 15px 25px;
+        color: #333;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+
+    .footer-newsletter .form-control:focus {
+        outline: none;
+        border-color: rgba(255, 255, 255, 0.8);
+        box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.25);
+        background: rgba(255, 255, 255, 1);
+    }
+
+    .footer-newsletter .btn {
         background: rgba(255, 255, 255, 0.9);
-        transform: translateY(-1px);
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(10px);
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50px;
+        padding: 15px 30px;
+        color: #667eea;
+        font-weight: 600;
+        font-size: 1rem;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .footer-newsletter .btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+        transition: left 0.6s ease;
+    }
+
+    .footer-newsletter .btn:hover::before {
+        left: 100%;
+    }
+
+    .footer-newsletter .btn:hover {
+        background: rgba(255, 255, 255, 1);
+        transform: translateY(-3px);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        border-color: rgba(255, 255, 255, 0.8);
+    }
+
+    /* Modern Cards */
+    .footer-card {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 20px;
+        padding: 25px;
+        margin-bottom: 20px;
+        transition: all 0.3s ease;
+    }
+
+    .footer-card:hover {
+        background: rgba(255, 255, 255, 0.08);
+        transform: translateY(-5px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Contact Icons */
+    .contact-icon {
+        width: 45px;
+        height: 45px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #007bff, #20c997);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 15px;
+        box-shadow: 0 8px 25px rgba(0, 123, 255, 0.3);
+    }
+
+    .contact-icon i {
+        color: white;
+        font-size: 1.2rem;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .social-links {
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .social-links a {
+            width: 45px;
+            height: 45px;
+        }
+        
+        .newsletter-form {
+            flex-direction: column;
+        }
+        
+        .footer-newsletter .btn {
+            width: 100%;
+        }
     }
 </style>
 
@@ -264,34 +416,34 @@
             <div class="col-lg-4 col-md-6 mb-4">
                 <h5 class="mb-3">Contact Information</h5>
                 <div class="contact-info">
-                    <div class="d-flex align-items-start mb-3">
-                        <i class="fas fa-map-marker-alt me-3 mt-1 text-primary"></i>
-                        <div>
-                            <strong>Address:</strong><br>
-                            <span class="text-light">
-                                <?php echo htmlspecialchars($db->getSetting('contact_address', 'Dar es Salaam, Tanzania')); ?>
-                            </span>
+                    <div class="footer-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
                         </div>
+                        <strong class="text-white">Address</strong><br>
+                        <span class="text-light">
+                            <?php echo htmlspecialchars($db->getSetting('contact_address', 'Dar es Salaam, Tanzania')); ?>
+                        </span>
                     </div>
 
-                    <div class="d-flex align-items-center mb-3">
-                        <i class="fas fa-phone me-3 text-primary"></i>
-                        <div>
-                            <strong>Phone:</strong><br>
-                            <a href="tel:<?php echo $db->getSetting('contact_phone', ''); ?>" class="text-light text-decoration-none">
-                                <?php echo htmlspecialchars($db->getSetting('contact_phone', '+255 123 456 789')); ?>
-                            </a>
+                    <div class="footer-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
                         </div>
+                        <strong class="text-white">Phone</strong><br>
+                        <a href="tel:<?php echo $db->getSetting('contact_phone', ''); ?>" class="text-light text-decoration-none">
+                            <?php echo htmlspecialchars($db->getSetting('contact_phone', '+255 123 456 789')); ?>
+                        </a>
                     </div>
 
-                    <div class="d-flex align-items-center mb-3">
-                        <i class="fas fa-envelope me-3 text-primary"></i>
-                        <div>
-                            <strong>Email:</strong><br>
-                            <a href="mailto:<?php echo $db->getSetting('contact_email', SITE_EMAIL); ?>" class="text-light text-decoration-none">
-                                <?php echo htmlspecialchars($db->getSetting('contact_email', SITE_EMAIL)); ?>
-                            </a>
+                    <div class="footer-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
                         </div>
+                        <strong class="text-white">Email</strong><br>
+                        <a href="mailto:<?php echo $db->getSetting('contact_email', SITE_EMAIL); ?>">
+                            <?php echo htmlspecialchars($db->getSetting('contact_email', SITE_EMAIL)); ?>
+                        </a>
                     </div>
 
                     <!-- Social Media Links -->
@@ -368,10 +520,12 @@
                     <p class="mb-0 small">Subscribe to our newsletter for environmental updates and news.</p>
                 </div>
                 <div class="col-md-6">
-                    <form action="<?php echo SITE_URL; ?>/includes/newsletter-subscribe.php" method="POST" class="d-flex">
+                    <form action="<?php echo SITE_URL; ?>/includes/newsletter-subscribe.php" method="POST" class="newsletter-form">
                         <?php echo csrf_field(); ?>
-                        <input type="email" name="email" class="form-control me-2" placeholder="Enter your email" required>
-                        <button type="submit" class="btn btn-light">Subscribe</button>
+                        <input type="email" name="email" class="form-control" placeholder="Enter your email address" required>
+                        <button type="submit" class="btn">
+                            <i class="fas fa-paper-plane me-2"></i>Subscribe
+                        </button>
                     </form>
                 </div>
             </div>
