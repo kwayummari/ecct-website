@@ -135,7 +135,7 @@ include 'includes/header.php';
     }
 
     .hero-badge {
-        background: rgba(0, 123, 255, 0.9);
+        background: #28a745;
         border-radius: 25px;
         padding: 8px 20px;
         display: inline-block;
