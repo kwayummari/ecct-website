@@ -7,6 +7,10 @@ require_once 'includes/functions.php';
 // Get database instance
 $db = new Database();
 
+// Fetch team members
+$leadership_team = get_leadership_team();
+$all_team_members = get_team_members();
+
 // Page variables
 $page_title = "About Us - " . $db->getSetting('site_name', SITE_NAME);
 $meta_description = "Learn about the Environmental Conservation Community of Tanzania (ECCT), our mission, vision, and the dedicated team working towards sustainable environmental conservation.";
@@ -605,66 +609,109 @@ include 'includes/header.php';
         </div>
 
         <div class="row g-4">
-            <div class="col-lg-4 col-md-6">
-                <div class="team-card">
-                    <div class="team-image">
-                        <img src="<?php echo ASSETS_PATH; ?>/images/team/IMG_3264.JPG" alt="Team Member">
-                        <div class="team-overlay">
-                            <div class="social-links">
-                                <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
-                                <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                                <a href="#" class="social-link"><i class="fas fa-envelope"></i></a>
+            <?php if (!empty($leadership_team)): ?>
+                <?php foreach ($leadership_team as $member): ?>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="team-card">
+                            <div class="team-image">
+                                <?php if (!empty($member['image_path']) && file_exists($member['image_path'])): ?>
+                                    <img src="<?php echo SITE_URL . '/' . htmlspecialchars($member['image_path']); ?>"
+                                        alt="<?php echo htmlspecialchars($member['name']); ?>">
+                                <?php else: ?>
+                                    <div class="team-image-placeholder">
+                                        <i class="fas fa-user" style="font-size: 3rem; color: #208836;"></i>
+                                    </div>
+                                <?php endif; ?>
+                                <div class="team-overlay">
+                                    <div class="social-links">
+                                        <?php if (!empty($member['linkedin_url'])): ?>
+                                            <a href="<?php echo htmlspecialchars($member['linkedin_url']); ?>"
+                                                target="_blank" rel="noopener noreferrer" class="social-link">
+                                                <i class="fab fa-linkedin"></i>
+                                            </a>
+                                        <?php endif; ?>
+                                        <?php if (!empty($member['twitter_url'])): ?>
+                                            <a href="<?php echo htmlspecialchars($member['twitter_url']); ?>"
+                                                target="_blank" rel="noopener noreferrer" class="social-link">
+                                                <i class="fab fa-twitter"></i>
+                                            </a>
+                                        <?php endif; ?>
+                                        <?php if (!empty($member['facebook_url'])): ?>
+                                            <a href="<?php echo htmlspecialchars($member['facebook_url']); ?>"
+                                                target="_blank" rel="noopener noreferrer" class="social-link">
+                                                <i class="fab fa-facebook"></i>
+                                            </a>
+                                        <?php endif; ?>
+                                        <?php if (!empty($member['email'])): ?>
+                                            <a href="mailto:<?php echo htmlspecialchars($member['email']); ?>" class="social-link">
+                                                <i class="fas fa-envelope"></i>
+                                            </a>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="team-content">
+                                <h4 class="team-name"><?php echo htmlspecialchars($member['name']); ?></h4>
+                                <p class="team-role"><?php echo htmlspecialchars($member['position']); ?></p>
+                                <?php if (!empty($member['bio'])): ?>
+                                    <p class="team-bio"><?php echo htmlspecialchars($member['bio']); ?></p>
+                                <?php endif; ?>
+                                <div class="team-department">
+                                    <span class="department-badge"><?php echo ucfirst(htmlspecialchars($member['department'])); ?></span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="team-content">
-                        <h4 class="team-name">John Doe</h4>
-                        <p class="team-role">Executive Director</p>
-                        <p class="team-bio">Leading ECCT's mission with over 10 years of experience in environmental conservation and community development.</p>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <div class="col-12 text-center">
+                    <div class="no-team-message py-5">
+                        <i class="fas fa-users mb-3" style="font-size: 3rem; color: #208836; opacity: 0.5;"></i>
+                        <h4 style="color: #666;">Building Our Team</h4>
+                        <p class="text-muted">We're assembling a dedicated team of environmental conservation professionals. Check back soon!</p>
                     </div>
                 </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6">
-                <div class="team-card">
-                    <div class="team-image">
-                        <img src="<?php echo ASSETS_PATH; ?>/images/green-generation/IMG_3265.JPG" alt="Team Member">
-                        <div class="team-overlay">
-                            <div class="social-links">
-                                <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
-                                <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                                <a href="#" class="social-link"><i class="fas fa-envelope"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="team-content">
-                        <h4 class="team-name">Jane Smith</h4>
-                        <p class="team-role">Program Manager</p>
-                        <p class="team-bio">Coordinating community programs and ensuring sustainable impact across all environmental initiatives.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6">
-                <div class="team-card">
-                    <div class="team-image">
-                        <img src="<?php echo ASSETS_PATH; ?>/images/eco-wear/_DSC2674.jpg" alt="Team Member">
-                        <div class="team-overlay">
-                            <div class="social-links">
-                                <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
-                                <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                                <a href="#" class="social-link"><i class="fas fa-envelope"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="team-content">
-                        <h4 class="team-name">David Wilson</h4>
-                        <p class="team-role">Conservation Specialist</p>
-                        <p class="team-bio">Expert in biodiversity conservation and sustainable environmental practices with extensive field experience.</p>
-                    </div>
-                </div>
-            </div>
+            <?php endif; ?>
         </div>
+
+        <?php if (!empty($all_team_members) && count($all_team_members) > count($leadership_team)): ?>
+            <!-- Extended Team Section -->
+            <div class="row mt-5">
+                <div class="col-12 text-center mb-4">
+                    <h3 class="section-title">Our Extended Team</h3>
+                    <p class="section-subtitle">Meet the dedicated professionals who make our work possible</p>
+                </div>
+            </div>
+
+            <div class="row g-3">
+                <?php
+                $extended_team = array_filter($all_team_members, function ($member) {
+                    return !$member['is_leadership'];
+                });
+                foreach ($extended_team as $member):
+                ?>
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="team-card-compact">
+                            <div class="team-image-compact">
+                                <?php if (!empty($member['image_path']) && file_exists($member['image_path'])): ?>
+                                    <img src="<?php echo SITE_URL . '/' . htmlspecialchars($member['image_path']); ?>"
+                                        alt="<?php echo htmlspecialchars($member['name']); ?>">
+                                <?php else: ?>
+                                    <div class="team-image-placeholder-compact">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                            <div class="team-content-compact">
+                                <h5 class="team-name-compact"><?php echo htmlspecialchars($member['name']); ?></h5>
+                                <p class="team-role-compact"><?php echo htmlspecialchars($member['position']); ?></p>
+                                <span class="department-badge-compact"><?php echo ucfirst(htmlspecialchars($member['department'])); ?></span>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
     </div>
 </section>
 

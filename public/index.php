@@ -32,6 +32,7 @@ $communities_served = $db->getSetting('communities_served', '25');
 $featured_news = get_featured_content('news', 3);
 $featured_campaigns = get_featured_content('campaigns', 3);
 $recent_gallery = get_recent_content('gallery', 6);
+$featured_partners = get_partners(8, true);
 
 // Include header
 include 'includes/header.php';
@@ -1182,6 +1183,240 @@ include 'includes/header.php';
         }
     });
 </script>
+
+<!-- Partners Section -->
+<section class="partners-section-modern py-5" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center mb-5">
+                <div class="section-badge mb-3">
+                    <span class="badge-pill px-4 py-2 rounded-pill" style="background: rgba(32, 136, 54, 0.1); color: #208836; border: 2px solid #208836;">
+                        <i class="fas fa-handshake me-2"></i>Our Partners
+                    </span>
+                </div>
+                <h2 class="section-title-modern fw-bold mb-4" style="color: #208836;">Collaborating for Impact</h2>
+                <p class="section-subtitle text-muted mb-0">Working together with organizations that share our vision for environmental conservation</p>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <?php if (!empty($featured_partners)): ?>
+                <?php foreach ($featured_partners as $partner): ?>
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="partner-card-modern h-100">
+                            <div class="partner-logo-container">
+                                <?php if (!empty($partner['logo_path']) && file_exists($partner['logo_path'])): ?>
+                                    <img src="<?php echo SITE_URL . '/' . htmlspecialchars($partner['logo_path']); ?>"
+                                        alt="<?php echo htmlspecialchars($partner['name']); ?>"
+                                        class="partner-logo">
+                                <?php else: ?>
+                                    <div class="partner-logo-placeholder">
+                                        <i class="fas fa-building" style="font-size: 2rem; color: #208836;"></i>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                            <div class="partner-content">
+                                <h5 class="partner-name"><?php echo htmlspecialchars($partner['name']); ?></h5>
+                                <?php if (!empty($partner['description'])): ?>
+                                    <p class="partner-description"><?php echo htmlspecialchars(substr($partner['description'], 0, 100)) . (strlen($partner['description']) > 100 ? '...' : ''); ?></p>
+                                <?php endif; ?>
+                                <div class="partner-type">
+                                    <span class="type-badge"><?php echo ucfirst(htmlspecialchars($partner['partnership_type'])); ?> Partner</span>
+                                </div>
+                                <?php if (!empty($partner['website_url'])): ?>
+                                    <div class="partner-link">
+                                        <a href="<?php echo htmlspecialchars($partner['website_url']); ?>" target="_blank" rel="noopener noreferrer" class="btn-partner-link">
+                                            <i class="fas fa-external-link-alt me-2"></i>Visit Website
+                                        </a>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <div class="col-12 text-center">
+                    <div class="no-partners-message py-5">
+                        <i class="fas fa-handshake mb-3" style="font-size: 3rem; color: #208836; opacity: 0.5;"></i>
+                        <h4 style="color: #666;">Building Partnerships</h4>
+                        <p class="text-muted">We're actively seeking partners to join our mission. Contact us to explore collaboration opportunities.</p>
+                        <a href="<?php echo SITE_URL; ?>/contact" class="btn" style="background: #208836; color: #ffffff; padding: 12px 30px; border-radius: 50px; text-decoration: none;">
+                            <i class="fas fa-envelope me-2"></i>Contact Us
+                        </a>
+                    </div>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
+</section>
+
+<style>
+    /* Partners Section Styles */
+    .partners-section-modern {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .partners-section-modern::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background:
+            radial-gradient(circle at 20% 20%, rgba(32, 136, 54, 0.05) 0%, transparent 50%),
+            radial-gradient(circle at 80% 80%, rgba(32, 136, 54, 0.03) 0%, transparent 50%);
+        pointer-events: none;
+    }
+
+    .partner-card-modern {
+        background: #ffffff;
+        border-radius: 20px;
+        padding: 30px 20px;
+        text-align: center;
+        transition: all 0.4s ease;
+        border: 1px solid rgba(32, 136, 54, 0.1);
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .partner-card-modern::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: linear-gradient(90deg, #208836, #2ea043);
+        transform: scaleX(0);
+        transition: transform 0.3s ease;
+    }
+
+    .partner-card-modern:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 40px rgba(32, 136, 54, 0.2);
+    }
+
+    .partner-card-modern:hover::before {
+        transform: scaleX(1);
+    }
+
+    .partner-logo-container {
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+
+    .partner-logo {
+        max-height: 80px;
+        max-width: 200px;
+        width: auto;
+        height: auto;
+        object-fit: contain;
+        filter: grayscale(100%);
+        transition: filter 0.3s ease;
+    }
+
+    .partner-card-modern:hover .partner-logo {
+        filter: grayscale(0%);
+    }
+
+    .partner-logo-placeholder {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: rgba(32, 136, 54, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+    }
+
+    .partner-content {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .partner-name {
+        color: #208836;
+        font-weight: 600;
+        margin-bottom: 15px;
+        font-size: 1.1rem;
+    }
+
+    .partner-description {
+        color: #666;
+        font-size: 0.9rem;
+        line-height: 1.5;
+        margin-bottom: 15px;
+        flex-grow: 1;
+    }
+
+    .partner-type {
+        margin-bottom: 15px;
+    }
+
+    .type-badge {
+        background: rgba(32, 136, 54, 0.1);
+        color: #208836;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 500;
+    }
+
+    .partner-link {
+        margin-top: auto;
+    }
+
+    .btn-partner-link {
+        color: #208836;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+    }
+
+    .btn-partner-link:hover {
+        color: #1a6b2e;
+        text-decoration: none;
+        transform: translateX(5px);
+    }
+
+    .no-partners-message {
+        background: #ffffff;
+        border-radius: 20px;
+        border: 2px dashed rgba(32, 136, 54, 0.3);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .partner-card-modern {
+            padding: 20px 15px;
+        }
+
+        .partner-logo-container {
+            height: 60px;
+        }
+
+        .partner-logo {
+            max-height: 60px;
+        }
+
+        .partner-logo-placeholder {
+            width: 60px;
+            height: 60px;
+        }
+    }
+</style>
+
 <?php
 // Additional JavaScript for homepage
 $additional_js = [ASSETS_PATH . '/js/homepage.js'];

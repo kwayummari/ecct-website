@@ -90,6 +90,54 @@ $notifications = [
             </li>
 
             <li class="nav-item">
+                <a class="nav-link text-white <?php echo ($current_dir == 'partners') ? 'bg-dark' : ''; ?> d-flex justify-content-between align-items-center"
+                    data-bs-toggle="collapse" href="#partnersSubmenu" role="button" aria-expanded="<?php echo ($current_dir == 'partners') ? 'true' : 'false'; ?>">
+                    <span><i class="fas fa-handshake me-2"></i>Partners</span>
+                    <i class="fas fa-chevron-down"></i>
+                </a>
+                <div class="collapse <?php echo ($current_dir == 'partners') ? 'show' : ''; ?>" id="partnersSubmenu">
+                    <ul class="nav flex-column ms-3">
+                        <li class="nav-item">
+                            <a class="nav-link text-white-50 <?php echo ($current_page == 'list.php' && $current_dir == 'partners') ? 'text-white bg-secondary' : ''; ?>"
+                                href="<?php echo SITE_URL; ?>/admin/partners/list.php">
+                                <i class="fas fa-list me-2"></i>View Partners
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white-50 <?php echo ($current_page == 'create.php' && $current_dir == 'partners') ? 'text-white bg-secondary' : ''; ?>"
+                                href="<?php echo SITE_URL; ?>/admin/partners/create.php">
+                                <i class="fas fa-plus me-2"></i>Add Partner
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link text-white <?php echo ($current_dir == 'team') ? 'bg-dark' : ''; ?> d-flex justify-content-between align-items-center"
+                    data-bs-toggle="collapse" href="#teamSubmenu" role="button" aria-expanded="<?php echo ($current_dir == 'team') ? 'true' : 'false'; ?>">
+                    <span><i class="fas fa-users-cog me-2"></i>Team</span>
+                    <i class="fas fa-chevron-down"></i>
+                </a>
+                <div class="collapse <?php echo ($current_dir == 'team') ? 'show' : ''; ?>" id="teamSubmenu">
+                    <ul class="nav flex-column ms-3">
+                        <li class="nav-item">
+                            <a class="nav-link text-white-50 <?php echo ($current_page == 'list.php' && $current_dir == 'team') ? 'text-white bg-secondary' : ''; ?>"
+                                href="<?php echo SITE_URL; ?>/admin/team/list.php">
+                                <i class="fas fa-list me-2"></i>View Team
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white-50 <?php echo ($current_page == 'create.php' && $current_dir == 'team') ? 'text-white bg-secondary' : ''; ?>"
+                                href="<?php echo SITE_URL; ?>/admin/team/create.php">
+                                <i class="fas fa-plus me-2"></i>Add Member
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="nav-item">
                 <a class="nav-link text-white <?php echo ($current_dir == 'pages') ? 'bg-dark' : ''; ?>"
                     href="<?php echo SITE_URL; ?>/admin/pages/list.php">
                     <i class="fas fa-file-alt me-2"></i>Pages

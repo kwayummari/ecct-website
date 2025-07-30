@@ -845,3 +845,70 @@ function send_admin_notification($subject_prefix, $message_text, $additional_dat
 
     return send_email(ADMIN_EMAIL, $subject, $message);
 }
+
+// Partners Functions
+function get_partners($limit = null, $featured_only = false)
+{
+    $db = new Database();
+
+    $conditions = ['is_active' => 1];
+    if ($featured_only) {
+        $conditions['is_featured'] = 1;
+    }
+
+    $options = ['order_by' => 'sort_order ASC, name ASC'];
+    if ($limit) {
+        $options['limit'] = $limit;
+    }
+
+    return $db->select('partners', $conditions, $options);
+}
+
+function get_partner_by_id($id)
+{
+    $db = new Database();
+    return $db->selectOne('partners', ['id' => $id, 'is_active' => 1]);
+}
+
+function get_partners_by_type($type)
+{
+    $db = new Database();
+    return $db->select('partners', ['is_active' => 1, 'partnership_type' => $type], ['order_by' => 'sort_order ASC, name ASC']);
+}
+
+// Team Functions
+function get_team_members($limit = null, $leadership_only = false, $department = null)
+{
+    $db = new Database();
+
+    $conditions = ['is_active' => 1];
+    if ($leadership_only) {
+        $conditions['is_leadership'] = 1;
+    }
+    if ($department) {
+        $conditions['department'] = $department;
+    }
+
+    $options = ['order_by' => 'sort_order ASC, name ASC'];
+    if ($limit) {
+        $options['limit'] = $limit;
+    }
+
+    return $db->select('team_members', $conditions, $options);
+}
+
+function get_team_member_by_id($id)
+{
+    $db = new Database();
+    return $db->selectOne('team_members', ['id' => $id, 'is_active' => 1]);
+}
+
+function get_leadership_team()
+{
+    return get_team_members(null, true);
+}
+
+function get_team_by_department($department)
+{
+    return get_team_members(null, false, $department);
+}
