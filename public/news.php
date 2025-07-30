@@ -118,17 +118,18 @@ include 'includes/header.php';
         min-height: 70vh;
         display: flex;
         align-items: center;
-        background: linear-gradient(90deg, #28a745, #20c997), url('<?php echo ASSETS_PATH; ?>/images/she-lead/LUC06465.JPG');
+        background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(32, 136, 54, 0.7)),
+            url('<?php echo SITE_URL; ?>/assets/images/eco-wear/_DSC2674.jpg');
         background-size: cover;
         background-position: center;
         background-attachment: fixed;
-        color: white;
+        color: #ffffff;
     }
 
     .news-hero h1 {
         font-size: 3.5rem;
         font-weight: 800;
-        text-shadow: 2px 2px 4px rgba(f, f, f, 0.5);
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
         color: #ffffff;
         margin-bottom: 1.5rem;
     }
@@ -140,12 +141,14 @@ include 'includes/header.php';
     }
 
     .hero-badge {
-        background: #28a745;
+        background: #208836;
+        border: 2px solid #ffffff;
         border-radius: 25px;
         padding: 8px 20px;
         display: inline-block;
         margin-bottom: 2rem;
         font-weight: 500;
+        color: #ffffff;
     }
 
     .news-stats {
@@ -728,8 +731,8 @@ include 'includes/header.php';
                     <div class="hero-badge">
                         <i class="fas fa-newspaper me-2"></i>Latest News
                     </div>
-                    <h1>News & Events</h1>
-                    <p>Stay updated with the latest news, events, and stories from our environmental conservation efforts across Tanzania.</p>
+                    <h1 style="color: #ffffff; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);">News & Events</h1>
+                    <p style="color: #ffffff; text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);">Stay updated with the latest news, events, and stories from our environmental conservation efforts across Tanzania.</p>
                 </div>
             </div>
 

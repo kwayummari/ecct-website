@@ -100,11 +100,12 @@ include 'includes/header.php';
         min-height: 70vh;
         display: flex;
         align-items: center;
-        background: linear-gradient(135deg, rgba(40, 167, 69, 0.8), rgba(0, 0, 0, 0.6)), url('<?php echo ASSETS_PATH; ?>/images/tree-planting/LUC06450.JPG');
+        background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(32, 136, 54, 0.7)),
+            url('<?php echo SITE_URL; ?>/assets/images/eco-wear/_DSC2849.jpg');
         background-size: cover;
         background-position: center;
         background-attachment: fixed;
-        color: white;
+        color: #ffffff;
     }
 
     .contact-hero h1 {
@@ -121,12 +122,14 @@ include 'includes/header.php';
     }
 
     .hero-badge {
-        background: rgba(40, 167, 69, 0.9);
+        background: #208836;
+        border: 2px solid #ffffff;
         border-radius: 25px;
         padding: 8px 20px;
         display: inline-block;
         margin-bottom: 2rem;
         font-weight: 500;
+        color: #ffffff;
     }
 
     .contact-stats {
@@ -523,8 +526,8 @@ include 'includes/header.php';
                 <div class="hero-badge">
                     <i class="fas fa-envelope me-2"></i>Contact Us
                 </div>
-                <h1>Get in Touch</h1>
-                <p>Ready to make a difference? Contact us for partnerships, volunteer opportunities, or environmental conservation inquiries.</p>
+                <h1 style="color: #ffffff; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);">Get in Touch</h1>
+                <p style="color: #ffffff; text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);">Ready to make a difference? Contact us for partnerships, volunteer opportunities, or environmental conservation inquiries.</p>
             </div>
         </div>
 

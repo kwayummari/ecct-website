@@ -67,11 +67,12 @@ include 'includes/header.php';
         min-height: 70vh;
         display: flex;
         align-items: center;
-        background: linear-gradient(135deg, #28a745, rgba(0, 0, 0, 0.6)), url('<?php echo ASSETS_PATH; ?>/images/tree-planting/LUC06508.JPG');
+        background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(32, 136, 54, 0.7)),
+            url('<?php echo SITE_URL; ?>/assets/images/green-generation/IMG_3264.JPG');
         background-size: cover;
         background-position: center;
         background-attachment: fixed;
-        color: white;
+        color: #ffffff;
     }
 
     .gallery-hero h1 {
@@ -88,12 +89,14 @@ include 'includes/header.php';
     }
 
     .hero-badge {
-        background: #28a745;
+        background: #208836;
+        border: 2px solid #ffffff;
         border-radius: 25px;
         padding: 8px 20px;
         display: inline-block;
         margin-bottom: 2rem;
         font-weight: 500;
+        color: #ffffff;
     }
 
     .gallery-stats {
@@ -539,8 +542,8 @@ include 'includes/header.php';
                 <div class="hero-badge">
                     <i class="fas fa-camera me-2"></i>Photo Gallery
                 </div>
-                <h1>Visual Stories</h1>
-                <p>Discover our environmental conservation journey through captivating images of our work, impact, and community across Tanzania.</p>
+                <h1 style="color: #ffffff; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);">Visual Stories</h1>
+                <p style="color: #ffffff; text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);">Discover our environmental conservation journey through captivating images of our work, impact, and community across Tanzania.</p>
             </div>
         </div>
 

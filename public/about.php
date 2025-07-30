@@ -51,12 +51,14 @@ include 'includes/header.php';
     }
 
     .hero-badge {
-        background: rgba(40, 167, 69, 0.9);
+        background: #208836;
+        border: 2px solid #ffffff;
         border-radius: 25px;
         padding: 8px 20px;
         display: inline-block;
         margin-bottom: 2rem;
         font-weight: 500;
+        color: #ffffff;
     }
 
     .mission-vision {
@@ -436,12 +438,12 @@ include 'includes/header.php';
                 <div class="hero-badge">
                     <i class="fas fa-users me-2"></i>Who We Are
                 </div>
-                <h1>About ECCT</h1>
-                <p>Environmental Conservation Community of Tanzania - Empowering communities for sustainable environmental conservation across Tanzania</p>
-                <a href="#mission-vision" class="btn btn-success btn-lg me-3">
+                <h1 style="color: #ffffff; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);">About ECCT</h1>
+                <p style="color: #ffffff; text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);">Environmental Conservation Community of Tanzania - Empowering communities for sustainable environmental conservation across Tanzania</p>
+                <a href="#mission-vision" class="btn btn-lg me-3" style="background: #208836; color: #ffffff; border: 2px solid #ffffff; padding: 12px 30px; border-radius: 50px; text-decoration: none; font-weight: 600;">
                     <i class="fas fa-arrow-down me-2"></i>Learn More
                 </a>
-                <a href="<?php echo SITE_URL; ?>/volunteer.php" class="btn btn-outline-light btn-lg">
+                <a href="<?php echo SITE_URL; ?>/volunteer.php" class="btn btn-lg" style="background: transparent; color: #ffffff; border: 2px solid #ffffff; padding: 12px 30px; border-radius: 50px; text-decoration: none; font-weight: 600;">
                     <i class="fas fa-heart me-2"></i>Join Us Today
                 </a>
             </div>

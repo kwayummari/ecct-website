@@ -109,11 +109,12 @@ include 'includes/header.php';
         min-height: 70vh;
         display: flex;
         align-items: center;
-        background: linear-gradient(135deg, rgba(40, 167, 69, 0.8), rgba(0, 0, 0, 0.6)), url('<?php echo ASSETS_PATH; ?>/images/eco-wear/_DSC2674.jpg');
+        background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(32, 136, 54, 0.7)),
+            url('<?php echo SITE_URL; ?>/assets/images/she-lead/LUC06465.JPG');
         background-size: cover;
         background-position: center;
         background-attachment: fixed;
-        color: white;
+        color: #ffffff;
     }
 
     .campaigns-hero h1 {
@@ -130,12 +131,14 @@ include 'includes/header.php';
     }
 
     .hero-badge {
-        background: rgba(40, 167, 69, 0.9);
+        background: #208836;
+        border: 2px solid #ffffff;
         border-radius: 25px;
         padding: 8px 20px;
         display: inline-block;
         margin-bottom: 2rem;
         font-weight: 500;
+        color: #ffffff;
     }
 
     .campaign-stats {
@@ -675,8 +678,8 @@ include 'includes/header.php';
                     <div class="hero-badge">
                         <i class="fas fa-bullhorn me-2"></i>Our Campaigns
                     </div>
-                    <h1>Environmental Conservation Campaigns</h1>
-                    <p>Join our community-driven initiatives to protect Tanzania's environment and build sustainable communities for future generations.</p>
+                    <h1 style="color: #ffffff; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);">Environmental Conservation Campaigns</h1>
+                    <p style="color: #ffffff; text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);">Join our community-driven initiatives to protect Tanzania's environment and build sustainable communities for future generations.</p>
                 </div>
             </div>
 

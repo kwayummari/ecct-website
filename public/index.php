@@ -38,38 +38,36 @@ include 'includes/header.php';
 ?>
 
 <!-- Hero Section -->
-<section class="hero-section position-relative overflow-hidden">
-    <!-- Video Background -->
-    <div class="hero-video-background">
-        <video autoplay muted loop playsinline preload="auto" class="hero-video">
-            <source src="<?php echo SITE_URL; ?>/assets/videos/MAZINGIRA.mp4" type="video/mp4">
-            <source src="<?php echo SITE_URL; ?>/assets/videos/MAZINGIRA.webm" type="video/webm">
-            <!-- Fallback image if video doesn't load -->
-            <img src="<?php echo SITE_URL . '/' . $hero_background; ?>" alt="ECCT Environmental Conservation" class="hero-fallback-image">
-        </video>
-        <div class="hero-overlay-modern"></div>
-    </div>
+<section class="hero-section position-relative overflow-hidden" style="
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(32, 136, 54, 0.7)), 
+                url('<?php echo SITE_URL; ?>/assets/images/green-generation/IMG_3267.JPG');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    min-height: 100vh;
+">
+    <div class="hero-overlay-modern" style="background: linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(32, 136, 54, 0.3) 100%);"></div>
 
     <div class="container position-relative">
         <div class="row align-items-center min-vh-75">
             <div class="col-lg-7">
                 <div class="hero-content-modern text-white">
                     <div class="hero-badge mb-4 animate-fade-in">
-                        <span class="badge-pill bg-success-gradient text-white px-4 py-2 rounded-pill">
+                        <span class="badge-pill px-4 py-2 rounded-pill" style="background: #208836; color: #ffffff; border: 2px solid #ffffff;">
                             <i class="fas fa-leaf me-2"></i>Environmental Conservation
                         </span>
                     </div>
-                    <h1 class="hero-title-modern fw-bold mb-4 animate-fade-in text-white">
+                    <h1 class="hero-title-modern fw-bold mb-4 animate-fade-in" style="color: #ffffff; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);">
                         <?php echo htmlspecialchars($hero_title); ?>
                     </h1>
-                    <p class="hero-subtitle-modern mb-5 animate-fade-in-delay">
+                    <p class="hero-subtitle-modern mb-5 animate-fade-in-delay" style="color: #ffffff; text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);">
                         <?php echo htmlspecialchars($hero_subtitle); ?>
                     </p>
                     <div class="hero-buttons-modern animate-fade-in-delay-2">
-                        <a href="<?php echo SITE_URL; ?>/volunteer" class="btn btn-success-modern btn-lg me-3">
+                        <a href="<?php echo SITE_URL; ?>/volunteer" class="btn btn-lg me-3" style="background: #208836; color: #ffffff; border: 2px solid #ffffff; padding: 12px 30px; border-radius: 50px; text-decoration: none; font-weight: 600; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(32, 136, 54, 0.3);">
                             <i class="fas fa-heart me-2"></i>Join as Volunteer
                         </a>
-                        <a href="<?php echo SITE_URL; ?>/about" class="btn btn-glass btn-lg">
+                        <a href="<?php echo SITE_URL; ?>/about" class="btn btn-lg" style="background: transparent; color: #ffffff; border: 2px solid #ffffff; padding: 12px 30px; border-radius: 50px; text-decoration: none; font-weight: 600; transition: all 0.3s ease;">
                             <i class="fas fa-arrow-right me-2"></i>Learn More
                         </a>
                     </div>

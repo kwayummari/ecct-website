@@ -99,11 +99,12 @@ include 'includes/header.php';
         min-height: 70vh;
         display: flex;
         align-items: center;
-        background: linear-gradient(135deg, #28a745, rgba(0, 0, 0, 0.6)), url('<?php echo ASSETS_PATH; ?>/images/conservation-work/LUC06459.JPG');
+        background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(32, 136, 54, 0.7)),
+            url('<?php echo SITE_URL; ?>/assets/images/green-generation/IMG_3265.JPG');
         background-size: cover;
         background-position: center;
         background-attachment: fixed;
-        color: white;
+        color: #ffffff;
     }
 
     .programs-hero h1 {
@@ -120,12 +121,14 @@ include 'includes/header.php';
     }
 
     .hero-badge {
-        background: #28a745;
+        background: #208836;
+        border: 2px solid #ffffff;
         border-radius: 25px;
         padding: 8px 20px;
         display: inline-block;
         margin-bottom: 2rem;
         font-weight: 500;
+        color: #ffffff;
     }
 
     .programs-stats {
@@ -783,8 +786,8 @@ include 'includes/header.php';
                     <div class="hero-badge">
                         <i class="fas fa-seedling me-2"></i>Our Programs
                     </div>
-                    <h1>Conservation Programs</h1>
-                    <p>Discover our comprehensive environmental conservation programs designed to protect Tanzania's natural heritage and empower local communities for sustainable development.</p>
+                    <h1 style="color: #ffffff; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);">Conservation Programs</h1>
+                    <p style="color: #ffffff; text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);">Discover our comprehensive environmental conservation programs designed to protect Tanzania's natural heritage and empower local communities for sustainable development.</p>
                 </div>
             </div>
 
