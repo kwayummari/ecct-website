@@ -259,7 +259,7 @@ include 'includes/header.php';
         position: absolute;
         top: 15px;
         left: 15px;
-        background: rgba(0, 123, 255, 0.9);
+        background: #28a745;
         color: white;
         padding: 8px 15px;
         border-radius: 20px;
