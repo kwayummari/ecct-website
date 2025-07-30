@@ -99,7 +99,7 @@ include 'includes/header.php';
         min-height: 70vh;
         display: flex;
         align-items: center;
-        background: linear-gradient(135deg, rgba(32, 201, 151, 0.8), rgba(0, 0, 0, 0.6)), url('<?php echo ASSETS_PATH; ?>/images/conservation-work/LUC06459.JPG');
+        background: linear-gradient(135deg, #28a745, rgba(0, 0, 0, 0.6)), url('<?php echo ASSETS_PATH; ?>/images/conservation-work/LUC06459.JPG');
         background-size: cover;
         background-position: center;
         background-attachment: fixed;
@@ -120,7 +120,7 @@ include 'includes/header.php';
     }
 
     .hero-badge {
-        background: rgba(32, 201, 151, 0.9);
+        background: #28a745;
         border-radius: 25px;
         padding: 8px 20px;
         display: inline-block;
@@ -180,7 +180,7 @@ include 'includes/header.php';
         position: absolute;
         top: 15px;
         right: 15px;
-        background: #20c997;
+        background: #28a745;
         color: white;
         padding: 5px 12px;
         border-radius: 15px;
@@ -210,7 +210,7 @@ include 'includes/header.php';
         position: absolute;
         top: 15px;
         left: 15px;
-        background: rgba(32, 201, 151, 0.9);
+        background: #28a745;
         color: white;
         padding: 5px 12px;
         border-radius: 15px;
@@ -237,7 +237,7 @@ include 'includes/header.php';
     }
 
     .program-title a:hover {
-        color: #20c997;
+        color: #28a745;
     }
 
     .program-description {
@@ -256,7 +256,7 @@ include 'includes/header.php';
     }
 
     .program-duration {
-        color: #20c997;
+        color: #28a745;
         font-weight: 600;
     }
 
@@ -327,8 +327,8 @@ include 'includes/header.php';
 
     .category-btn:hover,
     .category-btn.active {
-        background: #20c997;
-        border-color: #20c997;
+        background: #28a745;
+        border-color: #28a745;
         color: white;
         transform: translateY(-2px);
     }
@@ -388,7 +388,7 @@ include 'includes/header.php';
     }
 
     .single-program-hero {
-        background: linear-gradient(135deg, rgba(32, 201, 151, 0.9), rgba(0, 0, 0, 0.7));
+        background: linear-gradient(135deg, #28a745, rgba(0, 0, 0, 0.7));
         color: white;
         padding: 80px 0;
     }
@@ -423,7 +423,7 @@ include 'includes/header.php';
     .feature-icon {
         width: 50px;
         height: 50px;
-        background: linear-gradient(135deg, #20c997, #17a2b8);
+        background: linear-gradient(135deg, #28a745, rgb(19, 117, 42));
         color: white;
         border-radius: 12px;
         display: flex;
@@ -446,7 +446,7 @@ include 'includes/header.php';
     }
 
     .program-cta {
-        background: linear-gradient(135deg, #20c997, #17a2b8);
+        background: linear-gradient(135deg, #28a745, rgb(19, 117, 42));
         border-radius: 15px;
         padding: 30px;
         text-align: center;
@@ -485,7 +485,7 @@ include 'includes/header.php';
 
     .cta-btn:hover {
         background: white;
-        color: #20c997;
+        color: #28a745;
         transform: translateY(-2px);
     }
 
@@ -503,7 +503,7 @@ include 'includes/header.php';
     }
 
     .section-badge {
-        background: linear-gradient(135deg, #20c997, #17a2b8);
+        background: linear-gradient(135deg, #28a745, #17a2b8);
         color: white;
         padding: 8px 20px;
         border-radius: 25px;
@@ -525,12 +525,12 @@ include 'includes/header.php';
         margin: 0 3px;
         border: none;
         padding: 8px 16px;
-        color: #20c997;
+        color: #28a745;
     }
 
     .pagination .page-item.active .page-link {
-        background: #20c997;
-        border-color: #20c997;
+        background: #28a745;
+        border-color: #28a745;
     }
 
     /* Responsive */
