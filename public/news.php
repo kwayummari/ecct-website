@@ -297,7 +297,7 @@ include 'includes/header.php';
     }
 
     .news-title a:hover {
-        color: #007bff;
+        color: #28a745;
     }
 
     .news-excerpt {
@@ -317,7 +317,7 @@ include 'includes/header.php';
     }
 
     .news-meta i {
-        color: #007bff;
+        color: #28a745;
     }
 
     .news-actions {
@@ -346,7 +346,7 @@ include 'includes/header.php';
     }
 
     .news-tag:hover {
-        background: #007bff;
+        background: #28a745;
         color: white;
     }
 
@@ -375,7 +375,7 @@ include 'includes/header.php';
 
     .article-excerpt {
         background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-        border-left: 4px solid #007bff;
+        border-left: 4px solid #28a745;
         padding: 25px;
         margin: 30px 0;
         border-radius: 0 15px 15px 0;
@@ -485,7 +485,7 @@ include 'includes/header.php';
     }
 
     .section-badge {
-        background: linear-gradient(135deg, #007bff, #0056b3);
+        background: linear-gradient(135deg, #28a745, #0056b3);
         color: white;
         padding: 8px 20px;
         border-radius: 25px;
@@ -507,12 +507,12 @@ include 'includes/header.php';
         margin: 0 3px;
         border: none;
         padding: 8px 16px;
-        color: #007bff;
+        color: #28a745;
     }
 
     .pagination .page-item.active .page-link {
-        background: #007bff;
-        border-color: #007bff;
+        background: #28a745;
+        border-color: #28a745;
     }
 
     /* Responsive */
