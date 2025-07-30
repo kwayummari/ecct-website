@@ -66,10 +66,27 @@ $notifications = [
             </li>
 
             <li class="nav-item">
-                <a class="nav-link text-white <?php echo ($current_dir == 'gallery') ? 'bg-dark' : ''; ?>"
-                    href="<?php echo SITE_URL; ?>/admin/gallery/list.php">
-                    <i class="fas fa-images me-2"></i>Gallery
+                <a class="nav-link text-white <?php echo ($current_dir == 'gallery') ? 'bg-dark' : ''; ?> d-flex justify-content-between align-items-center"
+                    data-bs-toggle="collapse" href="#gallerySubmenu" role="button" aria-expanded="<?php echo ($current_dir == 'gallery') ? 'true' : 'false'; ?>">
+                    <span><i class="fas fa-images me-2"></i>Gallery</span>
+                    <i class="fas fa-chevron-down"></i>
                 </a>
+                <div class="collapse <?php echo ($current_dir == 'gallery') ? 'show' : ''; ?>" id="gallerySubmenu">
+                    <ul class="nav flex-column ms-3">
+                        <li class="nav-item">
+                            <a class="nav-link text-white-50 <?php echo ($current_page == 'list.php' && $current_dir == 'gallery') ? 'text-white bg-secondary' : ''; ?>"
+                                href="<?php echo SITE_URL; ?>/admin/gallery/list.php">
+                                <i class="fas fa-list me-2"></i>View Gallery
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white-50 <?php echo ($current_page == 'upload.php' && $current_dir == 'gallery') ? 'text-white bg-secondary' : ''; ?>"
+                                href="<?php echo SITE_URL; ?>/admin/gallery/upload.php">
+                                <i class="fas fa-upload me-2"></i>Upload Images
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </li>
 
             <li class="nav-item">

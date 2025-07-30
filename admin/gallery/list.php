@@ -158,7 +158,11 @@ include '../includes/header.php';
                                 </div>
 
                                 <div class="card-body">
-                                    <h6 class="card-title"><?php echo htmlspecialchars($image['title']); ?></h6>
+                                    <h6 class="card-title">
+                                        <a href="edit.php?id=<?php echo $image['id']; ?>" class="text-decoration-none text-dark">
+                                            <?php echo htmlspecialchars($image['title']); ?>
+                                        </a>
+                                    </h6>
 
                                     <?php if ($image['description']): ?>
                                         <p class="card-text small text-muted">
@@ -174,6 +178,12 @@ include '../includes/header.php';
                                         <small class="text-muted"><?php echo date('M j, Y', strtotime($image['created_at'])); ?></small>
 
                                         <div class="btn-group">
+                                            <!-- Edit -->
+                                            <a href="edit.php?id=<?php echo $image['id']; ?>"
+                                                class="btn btn-sm btn-outline-primary" title="Edit Image">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+
                                             <!-- Toggle Status -->
                                             <form method="POST" style="display: inline;">
                                                 <input type="hidden" name="image_id" value="<?php echo $image['id']; ?>">
@@ -187,7 +197,7 @@ include '../includes/header.php';
 
                                             <!-- View Full Size -->
                                             <a href="<?php echo SITE_URL . '/' . $image['image_path']; ?>"
-                                                target="_blank" class="btn btn-sm btn-outline-primary" title="View Full Size">
+                                                target="_blank" class="btn btn-sm btn-outline-info" title="View Full Size">
                                                 <i class="fas fa-expand"></i>
                                             </a>
 

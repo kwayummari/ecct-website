@@ -244,3 +244,148 @@ function admin_status_badge($status, $published_field = 'is_published')
             return '<span class="badge bg-light text-dark">' . ucfirst($status) . '</span>';
     }
 }
+
+/**
+ * Handle image upload for gallery
+ */
+function handle_image_upload($file, $folder = 'gallery')
+{
+    // Validate file
+    if (!isset($file['tmp_name']) || empty($file['tmp_name'])) {
+        return ['success' => false, 'error' => 'No file uploaded'];
+    }
+
+    if ($file['error'] !== UPLOAD_ERR_OK) {
+        return ['success' => false, 'error' => 'Upload error: ' . $file['error']];
+    }
+
+    // Check file size
+    if ($file['size'] > MAX_FILE_SIZE) {
+        return ['success' => false, 'error' => 'File too large. Maximum size: ' . (MAX_FILE_SIZE / 1024 / 1024) . 'MB'];
+    }
+
+    // Check file type
+    $finfo = finfo_open(FILEINFO_MIME_TYPE);
+    $mime_type = finfo_file($finfo, $file['tmp_name']);
+    finfo_close($finfo);
+
+    if (!in_array($mime_type, ALLOWED_IMAGE_TYPES)) {
+        return ['success' => false, 'error' => 'Invalid file type. Allowed: JPG, PNG, GIF'];
+    }
+
+    // Create upload directories
+    $upload_dir = ECCT_ROOT . '/assets/uploads/' . $folder;
+    $thumb_dir = $upload_dir . '/thumbs';
+
+    if (!is_dir($upload_dir)) {
+        mkdir($upload_dir, 0755, true);
+    }
+    if (!is_dir($thumb_dir)) {
+        mkdir($thumb_dir, 0755, true);
+    }
+
+    // Generate unique filename
+    $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
+    $filename = uniqid() . '_' . time() . '.' . $extension;
+    $image_path = 'assets/uploads/' . $folder . '/' . $filename;
+    $thumbnail_path = 'assets/uploads/' . $folder . '/thumbs/' . $filename;
+
+    $full_image_path = ECCT_ROOT . '/' . $image_path;
+    $full_thumbnail_path = ECCT_ROOT . '/' . $thumbnail_path;
+
+    // Move uploaded file
+    if (!move_uploaded_file($file['tmp_name'], $full_image_path)) {
+        return ['success' => false, 'error' => 'Failed to save uploaded file'];
+    }
+
+    // Create thumbnail
+    if (!create_thumbnail($full_image_path, $full_thumbnail_path, 300, 300)) {
+        // If thumbnail creation fails, still consider upload successful
+        $thumbnail_path = $image_path; // Use original image as thumbnail
+    }
+
+    return [
+        'success' => true,
+        'image_path' => $image_path,
+        'thumbnail_path' => $thumbnail_path,
+        'filename' => $filename
+    ];
+}
+
+/**
+ * Create thumbnail from image
+ */
+function create_thumbnail($source, $destination, $max_width = 300, $max_height = 300)
+{
+    if (!file_exists($source)) {
+        return false;
+    }
+
+    // Get image info
+    $image_info = getimagesize($source);
+    if (!$image_info) {
+        return false;
+    }
+
+    $width = $image_info[0];
+    $height = $image_info[1];
+    $type = $image_info[2];
+
+    // Calculate new dimensions
+    $ratio = min($max_width / $width, $max_height / $height);
+    $new_width = round($width * $ratio);
+    $new_height = round($height * $ratio);
+
+    // Create image resource based on type
+    switch ($type) {
+        case IMAGETYPE_JPEG:
+            $source_image = imagecreatefromjpeg($source);
+            break;
+        case IMAGETYPE_PNG:
+            $source_image = imagecreatefrompng($source);
+            break;
+        case IMAGETYPE_GIF:
+            $source_image = imagecreatefromgif($source);
+            break;
+        default:
+            return false;
+    }
+
+    if (!$source_image) {
+        return false;
+    }
+
+    // Create thumbnail
+    $thumbnail = imagecreatetruecolor($new_width, $new_height);
+
+    // Preserve transparency for PNG and GIF
+    if ($type == IMAGETYPE_PNG || $type == IMAGETYPE_GIF) {
+        imagealphablending($thumbnail, false);
+        imagesavealpha($thumbnail, true);
+        $transparent = imagecolorallocatealpha($thumbnail, 255, 255, 255, 127);
+        imagefill($thumbnail, 0, 0, $transparent);
+    }
+
+    // Resize image
+    imagecopyresampled($thumbnail, $source_image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
+
+    // Save thumbnail
+    $result = false;
+    switch ($type) {
+        case IMAGETYPE_JPEG:
+            $result = imagejpeg($thumbnail, $destination, 85);
+            break;
+        case IMAGETYPE_PNG:
+            $result = imagepng($thumbnail, $destination, 8);
+            break;
+        case IMAGETYPE_GIF:
+            $result = imagegif($thumbnail, $destination);
+            break;
+    }
+
+    // Clean up
+    imagedestroy($source_image);
+    imagedestroy($thumbnail);
+
+    return $result;
+}
