@@ -12,7 +12,8 @@ if (!$current_user || !is_array($current_user)) {
 // Get notifications
 $notifications = [
     'messages' => $db->count('contact_messages', ['is_read' => 0]),
-    'volunteers' => $db->count('volunteers', ['status' => 'pending'])
+    'volunteers' => $db->count('volunteers', ['status' => 'pending']),
+    'programs' => $db->count('programs', ['is_active' => 0])
 ];
 ?>
 
@@ -42,6 +43,16 @@ $notifications = [
                 <a class="nav-link text-white <?php echo ($current_dir == 'campaigns') ? 'bg-dark' : ''; ?>"
                     href="<?php echo SITE_URL; ?>/admin/campaigns/list.php">
                     <i class="fas fa-bullhorn me-2"></i>Campaigns
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link text-white <?php echo ($current_dir == 'programs') ? 'bg-dark' : ''; ?>"
+                    href="<?php echo SITE_URL; ?>/admin/programs/list.php">
+                    <i class="fas fa-leaf me-2"></i>Programs
+                    <?php if ($notifications['programs'] > 0): ?>
+                        <span class="badge bg-warning ms-auto"><?php echo $notifications['programs']; ?></span>
+                    <?php endif; ?>
                 </a>
             </li>
 
