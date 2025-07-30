@@ -123,7 +123,7 @@ include 'includes/header.php';
     .news-hero h1 {
         font-size: 3.5rem;
         font-weight: 800;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        text-shadow: 2px 2px 4px rgba(f, f, f, 0.5);
         margin-bottom: 1.5rem;
     }
 
