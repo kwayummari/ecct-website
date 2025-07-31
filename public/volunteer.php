@@ -117,8 +117,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 // Get volunteer statistics and testimonials
+$approved_volunteers = $db->count('volunteers', ['status' => 'approved']);
+$active_volunteers = $db->count('volunteers', ['status' => 'active']);
+
 $volunteer_stats = [
-    'total_volunteers' => $db->count('volunteers', ['status' => ['approved', 'active']]),
+    'total_volunteers' => $approved_volunteers + $active_volunteers,
     'active_campaigns' => $db->count('campaigns', ['status' => 'active']),
     'communities_served' => $db->getSetting('communities_served', '25'),
     'successful_campaigns' => $db->getSetting('successful_campaigns', '10')
@@ -405,15 +408,226 @@ include 'includes/header.php';
         color: #721c24;
     }
 
+    /* Stepper Form Styles */
+    .stepper-header {
+        margin-bottom: 40px;
+    }
+
+    .stepper-progress {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+        position: relative;
+    }
+
+    .stepper-progress::before {
+        content: '';
+        position: absolute;
+        top: 30px;
+        left: 5%;
+        right: 5%;
+        height: 2px;
+        background: #e9ecef;
+        z-index: 0;
+    }
+
+    .step {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+        z-index: 1;
+        min-width: 100px;
+    }
+
+    .step-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: #e9ecef;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #6c757d;
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+        transition: all 0.3s ease;
+    }
+
+    .step.active .step-icon {
+        background: #208836;
+        color: white;
+    }
+
+    .step.completed .step-icon {
+        background: #28a745;
+        color: white;
+    }
+
+    .step-title {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: #6c757d;
+        text-align: center;
+        transition: color 0.3s ease;
+    }
+
+    .step.active .step-title {
+        color: #208836;
+    }
+
+    .step.completed .step-title {
+        color: #28a745;
+    }
+
+    .step-content {
+        display: none;
+        animation: fadeIn 0.3s ease;
+    }
+
+    .step-content.active {
+        display: block;
+    }
+
+    .step-heading {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #2c3e50;
+        margin-bottom: 10px;
+    }
+
+    .step-description {
+        color: #6c757d;
+        margin-bottom: 30px;
+        font-size: 1.1rem;
+    }
+
+    .checkbox-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+
+    .checkbox-item {
+        position: relative;
+    }
+
+    .checkbox-item input[type="checkbox"] {
+        display: none;
+    }
+
+    .checkbox-item label {
+        display: flex;
+        align-items: center;
+        padding: 15px 20px;
+        border: 2px solid #e9ecef;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        background: white;
+    }
+
+    .checkbox-item label:hover {
+        border-color: #208836;
+        background: #f8f9fa;
+    }
+
+    .checkbox-item input[type="checkbox"]:checked+label {
+        border-color: #208836;
+        background: rgba(32, 136, 54, 0.1);
+        color: #208836;
+    }
+
+    .checkbox-item label i {
+        font-size: 1.2rem;
+        margin-right: 10px;
+        width: 20px;
+        text-align: center;
+    }
+
+    .custom-checkbox {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 15px;
+    }
+
+    .custom-checkbox input[type="checkbox"] {
+        margin-right: 10px;
+        margin-top: 4px;
+    }
+
+    .step-navigation {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 40px;
+        padding-top: 30px;
+        border-top: 1px solid #e9ecef;
+    }
+
+    .btn-nav {
+        background: #208836;
+        color: white;
+        border: none;
+        padding: 12px 30px;
+        border-radius: 25px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .btn-nav:hover {
+        background: #155a24;
+        transform: translateY(-2px);
+    }
+
+    .btn-nav:disabled {
+        background: #6c757d;
+        cursor: not-allowed;
+        transform: none;
+    }
+
+    .btn-prev {
+        background: #6c757d;
+    }
+
+    .btn-prev:hover {
+        background: #5a6268;
+    }
+
+    .submit-section {
+        text-align: center;
+        margin-top: 30px;
+    }
+
+    .submit-note {
+        margin-top: 15px;
+        color: #6c757d;
+        font-size: 0.9rem;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
     @media (max-width: 768px) {
         .volunteer-hero h1 {
             font-size: 2.5rem;
         }
-        
+
         .volunteer-hero p {
             font-size: 1rem;
         }
-        
+
         .volunteer-btn {
             padding: 12px 25px;
             font-size: 0.9rem;
@@ -421,13 +635,145 @@ include 'includes/header.php';
             display: block;
             text-align: center;
         }
-        
+
         .stat-card {
             padding: 30px 20px;
             margin-bottom: 20px;
         }
+
+        .stepper-progress {
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .step {
+            min-width: 80px;
+        }
+
+        .step-icon {
+            width: 50px;
+            height: 50px;
+            font-size: 1rem;
+        }
+
+        .checkbox-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .step-navigation {
+            flex-direction: column;
+            gap: 15px;
+        }
     }
 </style>
+
+<script>
+    let currentStep = 1;
+    const totalSteps = 5;
+
+    function showStep(step) {
+        // Hide all step contents
+        document.querySelectorAll('.step-content').forEach(content => {
+            content.classList.remove('active');
+        });
+
+        // Show current step content
+        const currentContent = document.querySelector(`.step-content[data-step="${step}"]`);
+        if (currentContent) {
+            currentContent.classList.add('active');
+        }
+
+        // Update step indicators
+        document.querySelectorAll('.step').forEach((stepEl, index) => {
+            stepEl.classList.remove('active', 'completed');
+            if (index + 1 < step) {
+                stepEl.classList.add('completed');
+            } else if (index + 1 === step) {
+                stepEl.classList.add('active');
+            }
+        });
+
+        // Update navigation buttons
+        const prevBtn = document.querySelector('.btn-prev');
+        const nextBtn = document.querySelector('.btn-next');
+
+        if (prevBtn) {
+            prevBtn.style.display = step === 1 ? 'none' : 'inline-block';
+        }
+
+        if (nextBtn) {
+            if (step === totalSteps) {
+                nextBtn.style.display = 'none';
+            } else {
+                nextBtn.style.display = 'inline-block';
+                nextBtn.textContent = step === totalSteps - 1 ? 'Review' : 'Next';
+            }
+        }
+    }
+
+    function nextStep() {
+        if (validateCurrentStep() && currentStep < totalSteps) {
+            currentStep++;
+            showStep(currentStep);
+        }
+    }
+
+    function previousStep() {
+        if (currentStep > 1) {
+            currentStep--;
+            showStep(currentStep);
+        }
+    }
+
+    function validateCurrentStep() {
+        const currentContent = document.querySelector(`.step-content[data-step="${currentStep}"]`);
+        if (!currentContent) return true;
+
+        const requiredFields = currentContent.querySelectorAll('input[required], select[required], textarea[required]');
+        let isValid = true;
+
+        requiredFields.forEach(field => {
+            if (!field.value.trim()) {
+                field.classList.add('is-invalid');
+                isValid = false;
+            } else {
+                field.classList.remove('is-invalid');
+            }
+        });
+
+        // Validate checkboxes for interests and availability
+        if (currentStep === 3) {
+            const interests = currentContent.querySelectorAll('input[name="interests[]"]:checked');
+            const availability = currentContent.querySelectorAll('input[name="availability[]"]:checked');
+
+            if (interests.length === 0) {
+                alert('Please select at least one area of interest.');
+                isValid = false;
+            }
+
+            if (availability.length === 0) {
+                alert('Please select your availability.');
+                isValid = false;
+            }
+        }
+
+        return isValid;
+    }
+
+    // Initialize stepper when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+        showStep(1);
+
+        // Add real-time validation
+        document.querySelectorAll('input[required], select[required], textarea[required]').forEach(field => {
+            field.addEventListener('blur', function() {
+                if (this.value.trim()) {
+                    this.classList.remove('is-invalid');
+                }
+            });
+        });
+    });
+</script>
 
 <!-- Hero Section -->
 <section class="volunteer-hero">
@@ -714,15 +1060,52 @@ include 'includes/header.php';
                     </div>
                 <?php endif; ?>
 
-                <div class="application-card bg-white p-5 rounded-3 shadow">
-                    <form method="POST" action="" class="volunteer-form needs-validation" novalidate>
+                <div class="form-card">
+                    <!-- Progress Steps -->
+                    <div class="stepper-header">
+                        <div class="stepper-progress">
+                            <div class="step active" data-step="1">
+                                <div class="step-icon">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div class="step-title">Personal Info</div>
+                            </div>
+                            <div class="step" data-step="2">
+                                <div class="step-icon">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div class="step-title">Location</div>
+                            </div>
+                            <div class="step" data-step="3">
+                                <div class="step-icon">
+                                    <i class="fas fa-heart"></i>
+                                </div>
+                                <div class="step-title">Interests</div>
+                            </div>
+                            <div class="step" data-step="4">
+                                <div class="step-icon">
+                                    <i class="fas fa-comment"></i>
+                                </div>
+                                <div class="step-title">About You</div>
+                            </div>
+                            <div class="step" data-step="5">
+                                <div class="step-icon">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                                <div class="step-title">Complete</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <form method="POST" action="" class="stepper-form">
                         <?php echo csrf_field(); ?>
 
-                        <!-- Personal Information -->
-                        <div class="form-section mb-5">
-                            <h4 class="section-title text-primary mb-4">
+                        <!-- Step 1: Personal Information -->
+                        <div class="step-content active" data-step="1">
+                            <h4 class="step-heading">
                                 <i class="fas fa-user me-2"></i>Personal Information
                             </h4>
+                            <p class="step-description">Tell us about yourself to get started.</p>
 
                             <div class="row">
                                 <div class="col-md-6 mb-3">
@@ -797,272 +1180,317 @@ include 'includes/header.php';
                             </div>
                         </div>
 
-                        <!-- Contact & Location -->
-                        <div class="form-section mb-5">
-                            <h4 class="section-title text-primary mb-4">
-                                <i class="fas fa-map-marker-alt me-2"></i>Location Information
-                            </h4>
+                </div>
 
-                            <div class="mb-3">
-                                <label for="address" class="form-label">Address <span class="text-danger">*</span></label>
-                                <textarea class="form-control" id="address" name="address" rows="2" required
-                                    placeholder="Street address or location description"><?php echo htmlspecialchars($form_data['address'] ?? ''); ?></textarea>
-                                <div class="invalid-feedback">Please provide your address.</div>
-                            </div>
+                <!-- Step 2: Location Information -->
+                <div class="step-content" data-step="2">
+                    <h4 class="step-heading">
+                        <i class="fas fa-map-marker-alt me-2"></i>Location Information
+                    </h4>
+                    <p class="step-description">Help us understand where you're located for volunteer opportunities near you.</p>
 
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label for="city" class="form-label">City <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" id="city" name="city"
-                                        value="<?php echo htmlspecialchars($form_data['city'] ?? ''); ?>" required>
-                                    <div class="invalid-feedback">Please provide your city.</div>
-                                </div>
+                    <div class="mb-3">
+                        <label for="address" class="form-label">Address <span class="text-danger">*</span></label>
+                        <textarea class="form-control" id="address" name="address" rows="2" required
+                            placeholder="Street address or location description"><?php echo htmlspecialchars($form_data['address'] ?? ''); ?></textarea>
+                        <div class="invalid-feedback">Please provide your address.</div>
+                    </div>
 
-                                <div class="col-md-6 mb-3">
-                                    <label for="region" class="form-label">Region</label>
-                                    <select class="form-select" id="region" name="region">
-                                        <option value="">Select Region</option>
-                                        <option value="arusha" <?php echo ($form_data['region'] ?? '') === 'arusha' ? 'selected' : ''; ?>>Arusha</option>
-                                        <option value="dar-es-salaam" <?php echo ($form_data['region'] ?? '') === 'dar-es-salaam' ? 'selected' : ''; ?>>Dar es Salaam</option>
-                                        <option value="dodoma" <?php echo ($form_data['region'] ?? '') === 'dodoma' ? 'selected' : ''; ?>>Dodoma</option>
-                                        <option value="geita" <?php echo ($form_data['region'] ?? '') === 'geita' ? 'selected' : ''; ?>>Geita</option>
-                                        <option value="iringa" <?php echo ($form_data['region'] ?? '') === 'iringa' ? 'selected' : ''; ?>>Iringa</option>
-                                        <option value="kagera" <?php echo ($form_data['region'] ?? '') === 'kagera' ? 'selected' : ''; ?>>Kagera</option>
-                                        <option value="katavi" <?php echo ($form_data['region'] ?? '') === 'katavi' ? 'selected' : ''; ?>>Katavi</option>
-                                        <option value="kigoma" <?php echo ($form_data['region'] ?? '') === 'kigoma' ? 'selected' : ''; ?>>Kigoma</option>
-                                        <option value="kilimanjaro" <?php echo ($form_data['region'] ?? '') === 'kilimanjaro' ? 'selected' : ''; ?>>Kilimanjaro</option>
-                                        <option value="lindi" <?php echo ($form_data['region'] ?? '') === 'lindi' ? 'selected' : ''; ?>>Lindi</option>
-                                        <option value="manyara" <?php echo ($form_data['region'] ?? '') === 'manyara' ? 'selected' : ''; ?>>Manyara</option>
-                                        <option value="mara" <?php echo ($form_data['region'] ?? '') === 'mara' ? 'selected' : ''; ?>>Mara</option>
-                                        <option value="mbeya" <?php echo ($form_data['region'] ?? '') === 'mbeya' ? 'selected' : ''; ?>>Mbeya</option>
-                                        <option value="morogoro" <?php echo ($form_data['region'] ?? '') === 'morogoro' ? 'selected' : ''; ?>>Morogoro</option>
-                                        <option value="mtwara" <?php echo ($form_data['region'] ?? '') === 'mtwara' ? 'selected' : ''; ?>>Mtwara</option>
-                                        <option value="mwanza" <?php echo ($form_data['region'] ?? '') === 'mwanza' ? 'selected' : ''; ?>>Mwanza</option>
-                                        <option value="njombe" <?php echo ($form_data['region'] ?? '') === 'njombe' ? 'selected' : ''; ?>>Njombe</option>
-                                        <option value="pwani" <?php echo ($form_data['region'] ?? '') === 'pwani' ? 'selected' : ''; ?>>Pwani</option>
-                                        <option value="rukwa" <?php echo ($form_data['region'] ?? '') === 'rukwa' ? 'selected' : ''; ?>>Rukwa</option>
-                                        <option value="ruvuma" <?php echo ($form_data['region'] ?? '') === 'ruvuma' ? 'selected' : ''; ?>>Ruvuma</option>
-                                        <option value="shinyanga" <?php echo ($form_data['region'] ?? '') === 'shinyanga' ? 'selected' : ''; ?>>Shinyanga</option>
-                                        <option value="simiyu" <?php echo ($form_data['region'] ?? '') === 'simiyu' ? 'selected' : ''; ?>>Simiyu</option>
-                                        <option value="singida" <?php echo ($form_data['region'] ?? '') === 'singida' ? 'selected' : ''; ?>>Singida</option>
-                                        <option value="songwe" <?php echo ($form_data['region'] ?? '') === 'songwe' ? 'selected' : ''; ?>>Songwe</option>
-                                        <option value="tabora" <?php echo ($form_data['region'] ?? '') === 'tabora' ? 'selected' : ''; ?>>Tabora</option>
-                                        <option value="tanga" <?php echo ($form_data['region'] ?? '') === 'tanga' ? 'selected' : ''; ?>>Tanga</option>
-                                    </select>
-                                </div>
-                            </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="city" class="form-label">City <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="city" name="city"
+                                value="<?php echo htmlspecialchars($form_data['city'] ?? ''); ?>" required>
+                            <div class="invalid-feedback">Please provide your city.</div>
                         </div>
 
-                        <!-- Volunteer Interests -->
-                        <div class="form-section mb-5">
-                            <h4 class="section-title text-primary mb-4">
-                                <i class="fas fa-heart me-2"></i>Volunteer Interests & Availability
-                            </h4>
+                        <div class="col-md-6 mb-3">
+                            <label for="region" class="form-label">Region</label>
+                            <select class="form-select" id="region" name="region">
+                                <option value="">Select Region</option>
+                                <option value="arusha" <?php echo ($form_data['region'] ?? '') === 'arusha' ? 'selected' : ''; ?>>Arusha</option>
+                                <option value="dar-es-salaam" <?php echo ($form_data['region'] ?? '') === 'dar-es-salaam' ? 'selected' : ''; ?>>Dar es Salaam</option>
+                                <option value="dodoma" <?php echo ($form_data['region'] ?? '') === 'dodoma' ? 'selected' : ''; ?>>Dodoma</option>
+                                <option value="geita" <?php echo ($form_data['region'] ?? '') === 'geita' ? 'selected' : ''; ?>>Geita</option>
+                                <option value="iringa" <?php echo ($form_data['region'] ?? '') === 'iringa' ? 'selected' : ''; ?>>Iringa</option>
+                                <option value="kagera" <?php echo ($form_data['region'] ?? '') === 'kagera' ? 'selected' : ''; ?>>Kagera</option>
+                                <option value="katavi" <?php echo ($form_data['region'] ?? '') === 'katavi' ? 'selected' : ''; ?>>Katavi</option>
+                                <option value="kigoma" <?php echo ($form_data['region'] ?? '') === 'kigoma' ? 'selected' : ''; ?>>Kigoma</option>
+                                <option value="kilimanjaro" <?php echo ($form_data['region'] ?? '') === 'kilimanjaro' ? 'selected' : ''; ?>>Kilimanjaro</option>
+                                <option value="lindi" <?php echo ($form_data['region'] ?? '') === 'lindi' ? 'selected' : ''; ?>>Lindi</option>
+                                <option value="manyara" <?php echo ($form_data['region'] ?? '') === 'manyara' ? 'selected' : ''; ?>>Manyara</option>
+                                <option value="mara" <?php echo ($form_data['region'] ?? '') === 'mara' ? 'selected' : ''; ?>>Mara</option>
+                                <option value="mbeya" <?php echo ($form_data['region'] ?? '') === 'mbeya' ? 'selected' : ''; ?>>Mbeya</option>
+                                <option value="morogoro" <?php echo ($form_data['region'] ?? '') === 'morogoro' ? 'selected' : ''; ?>>Morogoro</option>
+                                <option value="mtwara" <?php echo ($form_data['region'] ?? '') === 'mtwara' ? 'selected' : ''; ?>>Mtwara</option>
+                                <option value="mwanza" <?php echo ($form_data['region'] ?? '') === 'mwanza' ? 'selected' : ''; ?>>Mwanza</option>
+                                <option value="njombe" <?php echo ($form_data['region'] ?? '') === 'njombe' ? 'selected' : ''; ?>>Njombe</option>
+                                <option value="pwani" <?php echo ($form_data['region'] ?? '') === 'pwani' ? 'selected' : ''; ?>>Pwani</option>
+                                <option value="rukwa" <?php echo ($form_data['region'] ?? '') === 'rukwa' ? 'selected' : ''; ?>>Rukwa</option>
+                                <option value="ruvuma" <?php echo ($form_data['region'] ?? '') === 'ruvuma' ? 'selected' : ''; ?>>Ruvuma</option>
+                                <option value="shinyanga" <?php echo ($form_data['region'] ?? '') === 'shinyanga' ? 'selected' : ''; ?>>Shinyanga</option>
+                                <option value="simiyu" <?php echo ($form_data['region'] ?? '') === 'simiyu' ? 'selected' : ''; ?>>Simiyu</option>
+                                <option value="singida" <?php echo ($form_data['region'] ?? '') === 'singida' ? 'selected' : ''; ?>>Singida</option>
+                                <option value="songwe" <?php echo ($form_data['region'] ?? '') === 'songwe' ? 'selected' : ''; ?>>Songwe</option>
+                                <option value="tabora" <?php echo ($form_data['region'] ?? '') === 'tabora' ? 'selected' : ''; ?>>Tabora</option>
+                                <option value="tanga" <?php echo ($form_data['region'] ?? '') === 'tanga' ? 'selected' : ''; ?>>Tanga</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
 
-                            <div class="mb-4">
-                                <label class="form-label">Areas of Interest <span class="text-danger">*</span></label>
-                                <p class="text-muted small mb-3">Select all areas you're interested in volunteering for:</p>
+            </div>
 
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-check mb-2">
-                                            <input class="form-check-input" type="checkbox" id="interest_beach_cleanup"
-                                                name="areas_of_interest[]" value="Beach & Marine Cleanup">
-                                            <label class="form-check-label" for="interest_beach_cleanup">
-                                                <i class="fas fa-water text-primary me-2"></i>Beach & Marine Cleanup
-                                            </label>
-                                        </div>
-                                        <div class="form-check mb-2">
-                                            <input class="form-check-input" type="checkbox" id="interest_education"
-                                                name="areas_of_interest[]" value="Environmental Education">
-                                            <label class="form-check-label" for="interest_education">
-                                                <i class="fas fa-graduation-cap text-primary me-2"></i>Environmental Education
-                                            </label>
-                                        </div>
-                                        <div class="form-check mb-2">
-                                            <input class="form-check-input" type="checkbox" id="interest_tree_planting"
-                                                name="areas_of_interest[]" value="Tree Planting & Restoration">
-                                            <label class="form-check-label" for="interest_tree_planting">
-                                                <i class="fas fa-seedling text-primary me-2"></i>Tree Planting & Restoration
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-check mb-2">
-                                            <input class="form-check-input" type="checkbox" id="interest_waste_management"
-                                                name="areas_of_interest[]" value="Waste Management Programs">
-                                            <label class="form-check-label" for="interest_waste_management">
-                                                <i class="fas fa-recycle text-primary me-2"></i>Waste Management Programs
-                                            </label>
-                                        </div>
-                                        <div class="form-check mb-2">
-                                            <input class="form-check-input" type="checkbox" id="interest_media"
-                                                name="areas_of_interest[]" value="Documentation & Media">
-                                            <label class="form-check-label" for="interest_media">
-                                                <i class="fas fa-camera text-primary me-2"></i>Documentation & Media
-                                            </label>
-                                        </div>
-                                        <div class="form-check mb-2">
-                                            <input class="form-check-input" type="checkbox" id="interest_outreach"
-                                                name="areas_of_interest[]" value="Community Outreach">
-                                            <label class="form-check-label" for="interest_outreach">
-                                                <i class="fas fa-handshake text-primary me-2"></i>Community Outreach
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
+            <!-- Step 3: Interests & Availability -->
+            <div class="step-content" data-step="3">
+                <h4 class="step-heading">
+                    <i class="fas fa-heart me-2"></i>Volunteer Interests & Availability
+                </h4>
+                <p class="step-description">Let us know what you're passionate about and when you're available.</p>
+
+                <div class="mb-4">
+                    <label class="form-label">Areas of Interest <span class="text-danger">*</span></label>
+                    <p class="text-muted small mb-3">Select all areas you're interested in volunteering for:</p>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="checkbox" id="interest_beach_cleanup"
+                                    name="areas_of_interest[]" value="Beach & Marine Cleanup">
+                                <label class="form-check-label" for="interest_beach_cleanup">
+                                    <i class="fas fa-water text-primary me-2"></i>Beach & Marine Cleanup
+                                </label>
                             </div>
-
-                            <div class="mb-4">
-                                <label class="form-label">Availability <span class="text-danger">*</span></label>
-                                <p class="text-muted small mb-3">When are you available to volunteer?</p>
-
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-check mb-2">
-                                            <input class="form-check-input" type="checkbox" id="availability_weekdays"
-                                                name="availability[]" value="Weekdays">
-                                            <label class="form-check-label" for="availability_weekdays">
-                                                Weekdays (Monday - Friday)
-                                            </label>
-                                        </div>
-                                        <div class="form-check mb-2">
-                                            <input class="form-check-input" type="checkbox" id="availability_weekends"
-                                                name="availability[]" value="Weekends">
-                                            <label class="form-check-label" for="availability_weekends">
-                                                Weekends (Saturday - Sunday)
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-check mb-2">
-                                            <input class="form-check-input" type="checkbox" id="availability_morning"
-                                                name="availability[]" value="Morning">
-                                            <label class="form-check-label" for="availability_morning">
-                                                Morning (6AM - 12PM)
-                                            </label>
-                                        </div>
-                                        <div class="form-check mb-2">
-                                            <input class="form-check-input" type="checkbox" id="availability_afternoon"
-                                                name="availability[]" value="Afternoon">
-                                            <label class="form-check-label" for="availability_afternoon">
-                                                Afternoon (12PM - 6PM)
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="checkbox" id="interest_education"
+                                    name="areas_of_interest[]" value="Environmental Education">
+                                <label class="form-check-label" for="interest_education">
+                                    <i class="fas fa-graduation-cap text-primary me-2"></i>Environmental Education
+                                </label>
                             </div>
-
-                            <div class="mb-3">
-                                <label for="skills" class="form-label">Skills & Expertise</label>
-                                <textarea class="form-control" id="skills" name="skills" rows="3"
-                                    placeholder="List any relevant skills, languages, or expertise you have..."><?php echo htmlspecialchars($form_data['skills'] ?? ''); ?></textarea>
-                                <div class="form-text">Examples: Photography, Teaching, First Aid, Social Media, Computer Skills, etc.</div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="checkbox" id="interest_tree_planting"
+                                    name="areas_of_interest[]" value="Tree Planting & Restoration">
+                                <label class="form-check-label" for="interest_tree_planting">
+                                    <i class="fas fa-seedling text-primary me-2"></i>Tree Planting & Restoration
+                                </label>
                             </div>
                         </div>
-
-                        <!-- Motivation & Experience -->
-                        <div class="form-section mb-5">
-                            <h4 class="section-title text-primary mb-4">
-                                <i class="fas fa-lightbulb me-2"></i>About You
-                            </h4>
-
-                            <div class="mb-4">
-                                <label for="motivation" class="form-label">Why do you want to volunteer with ECCT? <span class="text-danger">*</span></label>
-                                <textarea class="form-control" id="motivation" name="motivation" rows="4" required
-                                    placeholder="Tell us about your motivation to join our environmental conservation efforts..."><?php echo htmlspecialchars($form_data['motivation'] ?? ''); ?></textarea>
-                                <div class="invalid-feedback">Please tell us why you want to volunteer.</div>
-                                <div class="form-text">Minimum 50 characters</div>
+                        <div class="col-md-6">
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="checkbox" id="interest_waste_management"
+                                    name="areas_of_interest[]" value="Waste Management Programs">
+                                <label class="form-check-label" for="interest_waste_management">
+                                    <i class="fas fa-recycle text-primary me-2"></i>Waste Management Programs
+                                </label>
                             </div>
-
-                            <div class="mb-3">
-                                <label for="experience" class="form-label">Previous Volunteer Experience</label>
-                                <textarea class="form-control" id="experience" name="experience" rows="3"
-                                    placeholder="Describe any previous volunteer work, environmental activities, or community involvement..."><?php echo htmlspecialchars($form_data['experience'] ?? ''); ?></textarea>
-                                <div class="form-text">Include any environmental, community, or social volunteer work</div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="checkbox" id="interest_media"
+                                    name="areas_of_interest[]" value="Documentation & Media">
+                                <label class="form-check-label" for="interest_media">
+                                    <i class="fas fa-camera text-primary me-2"></i>Documentation & Media
+                                </label>
                             </div>
-
-                            <div class="mb-3">
-                                <label for="hear_about_us" class="form-label">How did you hear about ECCT?</label>
-                                <select class="form-select" id="hear_about_us" name="hear_about_us">
-                                    <option value="">Select one</option>
-                                    <option value="social_media" <?php echo ($form_data['hear_about_us'] ?? '') === 'social_media' ? 'selected' : ''; ?>>Social Media</option>
-                                    <option value="website" <?php echo ($form_data['hear_about_us'] ?? '') === 'website' ? 'selected' : ''; ?>>Website</option>
-                                    <option value="friend_family" <?php echo ($form_data['hear_about_us'] ?? '') === 'friend_family' ? 'selected' : ''; ?>>Friend/Family</option>
-                                    <option value="event" <?php echo ($form_data['hear_about_us'] ?? '') === 'event' ? 'selected' : ''; ?>>Event/Activity</option>
-                                    <option value="school_university" <?php echo ($form_data['hear_about_us'] ?? '') === 'school_university' ? 'selected' : ''; ?>>School/University</option>
-                                    <option value="news_media" <?php echo ($form_data['hear_about_us'] ?? '') === 'news_media' ? 'selected' : ''; ?>>News/Media</option>
-                                    <option value="other" <?php echo ($form_data['hear_about_us'] ?? '') === 'other' ? 'selected' : ''; ?>>Other</option>
-                                </select>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="checkbox" id="interest_outreach"
+                                    name="areas_of_interest[]" value="Community Outreach">
+                                <label class="form-check-label" for="interest_outreach">
+                                    <i class="fas fa-handshake text-primary me-2"></i>Community Outreach
+                                </label>
                             </div>
                         </div>
+                    </div>
+                </div>
 
-                        <!-- Emergency Contact -->
-                        <div class="form-section mb-5">
-                            <h4 class="section-title text-primary mb-4">
-                                <i class="fas fa-phone me-2"></i>Emergency Contact
-                            </h4>
+                <div class="mb-4">
+                    <label class="form-label">Availability <span class="text-danger">*</span></label>
+                    <p class="text-muted small mb-3">When are you available to volunteer?</p>
 
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label for="emergency_contact_name" class="form-label">Contact Name <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" id="emergency_contact_name" name="emergency_contact_name"
-                                        value="<?php echo htmlspecialchars($form_data['emergency_contact_name'] ?? ''); ?>" required>
-                                    <div class="invalid-feedback">Please provide emergency contact name.</div>
-                                </div>
-
-                                <div class="col-md-6 mb-3">
-                                    <label for="emergency_contact_phone" class="form-label">Contact Phone <span class="text-danger">*</span></label>
-                                    <input type="tel" class="form-control" id="emergency_contact_phone" name="emergency_contact_phone"
-                                        value="<?php echo htmlspecialchars($form_data['emergency_contact_phone'] ?? ''); ?>" required>
-                                    <div class="invalid-feedback">Please provide emergency contact phone.</div>
-                                </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="checkbox" id="availability_weekdays"
+                                    name="availability[]" value="Weekdays">
+                                <label class="form-check-label" for="availability_weekdays">
+                                    Weekdays (Monday - Friday)
+                                </label>
                             </div>
-
-                            <div class="mb-3">
-                                <label for="emergency_contact_relationship" class="form-label">Relationship</label>
-                                <input type="text" class="form-control" id="emergency_contact_relationship" name="emergency_contact_relationship"
-                                    value="<?php echo htmlspecialchars($form_data['emergency_contact_relationship'] ?? ''); ?>"
-                                    placeholder="Parent, Spouse, Sibling, Friend, etc.">
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="checkbox" id="availability_weekends"
+                                    name="availability[]" value="Weekends">
+                                <label class="form-check-label" for="availability_weekends">
+                                    Weekends (Saturday - Sunday)
+                                </label>
                             </div>
                         </div>
-
-                        <!-- Terms and Submit -->
-                        <div class="form-section">
-                            <div class="mb-4">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="terms_accepted" name="terms_accepted" required>
-                                    <label class="form-check-label" for="terms_accepted">
-                                        I agree to the <a href="<?php echo SITE_URL; ?>/terms" target="_blank">Terms and Conditions</a>
-                                        and <a href="<?php echo SITE_URL; ?>/privacy" target="_blank">Privacy Policy</a> <span class="text-danger">*</span>
-                                    </label>
-                                    <div class="invalid-feedback">You must accept the terms and conditions.</div>
-                                </div>
-
-                                <div class="form-check mt-2">
-                                    <input class="form-check-input" type="checkbox" id="newsletter_consent" name="newsletter_consent">
-                                    <label class="form-check-label" for="newsletter_consent">
-                                        I would like to receive updates about ECCT activities and volunteer opportunities
-                                    </label>
-                                </div>
+                        <div class="col-md-6">
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="checkbox" id="availability_morning"
+                                    name="availability[]" value="Morning">
+                                <label class="form-check-label" for="availability_morning">
+                                    Morning (6AM - 12PM)
+                                </label>
                             </div>
-
-                            <div class="d-grid">
-                                <button type="submit" class="btn btn-primary btn-lg">
-                                    <i class="fas fa-paper-plane me-2"></i>
-                                    Submit Application
-                                </button>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="checkbox" id="availability_afternoon"
+                                    name="availability[]" value="Afternoon">
+                                <label class="form-check-label" for="availability_afternoon">
+                                    Afternoon (12PM - 6PM)
+                                </label>
                             </div>
-
-                            <p class="text-muted text-center mt-3 small">
-                                <i class="fas fa-info-circle me-1"></i>
-                                We will review your application and contact you within 5-7 business days.
-                            </p>
                         </div>
-                    </form>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="skills" class="form-label">Skills & Expertise</label>
+                    <textarea class="form-control" id="skills" name="skills" rows="3"
+                        placeholder="List any relevant skills, languages, or expertise you have..."><?php echo htmlspecialchars($form_data['skills'] ?? ''); ?></textarea>
+                    <div class="form-text">Examples: Photography, Teaching, First Aid, Social Media, Computer Skills, etc.</div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Step 4: About You -->
+        <div class="step-content" data-step="4">
+            <h4 class="step-heading">
+                <i class="fas fa-comment me-2"></i>About You
+            </h4>
+            <p class="step-description">Tell us more about yourself and your motivations.</p>
+
+            <div class="mb-4">
+                <label for="motivation" class="form-label">Why do you want to volunteer with ECCT? <span class="text-danger">*</span></label>
+                <textarea class="form-control" id="motivation" name="motivation" rows="4" required
+                    placeholder="Tell us about your motivation to join our environmental conservation efforts..."><?php echo htmlspecialchars($form_data['motivation'] ?? ''); ?></textarea>
+                <div class="invalid-feedback">Please tell us why you want to volunteer.</div>
+                <div class="form-text">Minimum 50 characters</div>
+            </div>
+
+            <div class="mb-3">
+                <label for="experience" class="form-label">Previous Volunteer Experience</label>
+                <textarea class="form-control" id="experience" name="experience" rows="3"
+                    placeholder="Describe any previous volunteer work, environmental activities, or community involvement..."><?php echo htmlspecialchars($form_data['experience'] ?? ''); ?></textarea>
+                <div class="form-text">Include any environmental, community, or social volunteer work</div>
+            </div>
+
+            <div class="mb-3">
+                <label for="hear_about_us" class="form-label">How did you hear about ECCT?</label>
+                <select class="form-select" id="hear_about_us" name="hear_about_us">
+                    <option value="">Select one</option>
+                    <option value="social_media" <?php echo ($form_data['hear_about_us'] ?? '') === 'social_media' ? 'selected' : ''; ?>>Social Media</option>
+                    <option value="website" <?php echo ($form_data['hear_about_us'] ?? '') === 'website' ? 'selected' : ''; ?>>Website</option>
+                    <option value="friend_family" <?php echo ($form_data['hear_about_us'] ?? '') === 'friend_family' ? 'selected' : ''; ?>>Friend/Family</option>
+                    <option value="event" <?php echo ($form_data['hear_about_us'] ?? '') === 'event' ? 'selected' : ''; ?>>Event/Activity</option>
+                    <option value="school_university" <?php echo ($form_data['hear_about_us'] ?? '') === 'school_university' ? 'selected' : ''; ?>>School/University</option>
+                    <option value="news_media" <?php echo ($form_data['hear_about_us'] ?? '') === 'news_media' ? 'selected' : ''; ?>>News/Media</option>
+                    <option value="other" <?php echo ($form_data['hear_about_us'] ?? '') === 'other' ? 'selected' : ''; ?>>Other</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-label">Emergency Contact Name *</label>
+                    <input type="text" class="form-control" name="emergency_contact_name"
+                        value="<?php echo htmlspecialchars($form_data['emergency_contact_name'] ?? ''); ?>" required>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-label">Emergency Contact Phone *</label>
+                    <input type="tel" class="form-control" name="emergency_contact_phone"
+                        value="<?php echo htmlspecialchars($form_data['emergency_contact_phone'] ?? ''); ?>" required>
                 </div>
             </div>
         </div>
+
+        <div class="form-group">
+            <label class="form-label">Emergency Contact Relationship</label>
+            <input type="text" class="form-control" name="emergency_contact_relationship"
+                value="<?php echo htmlspecialchars($form_data['emergency_contact_relationship'] ?? ''); ?>"
+                placeholder="Parent, Spouse, Sibling, Friend, etc.">
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="emergency_contact_name" class="form-label">Contact Name <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="emergency_contact_name" name="emergency_contact_name"
+                    value="<?php echo htmlspecialchars($form_data['emergency_contact_name'] ?? ''); ?>" required>
+                <div class="invalid-feedback">Please provide emergency contact name.</div>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label for="emergency_contact_phone" class="form-label">Contact Phone <span class="text-danger">*</span></label>
+                <input type="tel" class="form-control" id="emergency_contact_phone" name="emergency_contact_phone"
+                    value="<?php echo htmlspecialchars($form_data['emergency_contact_phone'] ?? ''); ?>" required>
+                <div class="invalid-feedback">Please provide emergency contact phone.</div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="emergency_contact_relationship" class="form-label">Relationship</label>
+            <input type="text" class="form-control" id="emergency_contact_relationship" name="emergency_contact_relationship"
+                value="<?php echo htmlspecialchars($form_data['emergency_contact_relationship'] ?? ''); ?>"
+                placeholder="Parent, Spouse, Sibling, Friend, etc.">
+        </div>
+    </div>
+
+    </div>
+
+    <!-- Step 5: Complete -->
+    <div class="step-content" data-step="5">
+        <h4 class="step-heading">
+            <i class="fas fa-check me-2"></i>Complete Your Application
+        </h4>
+        <p class="step-description">Review and submit your volunteer application.</p>
+
+        <div class="form-group">
+            <div class="custom-checkbox">
+                <input type="checkbox" id="agree_terms" name="agree_terms" required>
+                <label for="agree_terms">
+                    I agree to the <a href="#" class="text-primary">Terms and Conditions</a> and
+                    <a href="#" class="text-primary">Privacy Policy</a> *
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="custom-checkbox">
+                <input type="checkbox" id="newsletter" name="newsletter"
+                    <?php echo ($form_data['newsletter'] ?? false) ? 'checked' : ''; ?>>
+                <label for="newsletter">
+                    I would like to receive updates about ECCT activities and volunteer opportunities
+                </label>
+            </div>
+        </div>
+
+        <div class="submit-section">
+            <button type="submit" class="btn-submit">
+                <i class="fas fa-paper-plane me-2"></i>
+                Submit Application
+            </button>
+            <p class="submit-note">
+                <i class="fas fa-info-circle me-1"></i>
+                We will review your application and contact you within 5-7 business days.
+            </p>
+        </div>
+    </div>
+
+    <!-- Navigation Buttons -->
+    <div class="step-navigation">
+        <button type="button" class="btn-nav btn-prev" onclick="previousStep()">
+            <i class="fas fa-arrow-left me-2"></i>Previous
+        </button>
+        <button type="button" class="btn-nav btn-next" onclick="nextStep()">
+            Next<i class="fas fa-arrow-right ms-2"></i>
+        </button>
+    </div>
+    </form>
+    </div>
+    </div>
+    </div>
     </div>
 </section>
 

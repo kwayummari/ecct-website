@@ -7,6 +7,7 @@
 
 require_once 'config.php';
 require_once 'database.php';
+require_once 'security.php';
 
 /**
  * Image handling functions
@@ -440,7 +441,8 @@ function validate_form($data, $rules)
  */
 function csrf_field()
 {
-    return '<input type="hidden" name="csrf_token" value="' . get_csrf_token() . '">';
+    $token = Security::generateCSRFToken();
+    return '<input type="hidden" name="csrf_token" value="' . htmlspecialchars($token) . '">';
 }
 
 /**
@@ -449,7 +451,26 @@ function csrf_field()
 function validate_csrf()
 {
     $token = $_POST['csrf_token'] ?? $_GET['csrf_token'] ?? '';
-    return verify_csrf_token($token);
+    return Security::validateCSRFToken($token);
+}
+
+/**
+ * Enhanced input sanitization (using Security class)
+ */
+function sanitize_input_enhanced($input, $type = 'string')
+{
+    return Security::sanitizeInput($input, $type);
+}
+
+/**
+ * Rate limiting check
+ */
+function check_rate_limit($identifier = null)
+{
+    if (!$identifier) {
+        $identifier = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
+    }
+    return Security::checkRateLimit($identifier);
 }
 
 /**
@@ -470,9 +491,9 @@ function clean_html($html)
 }
 
 /**
- * Rate limiting function
+ * Rate limiting function (enhanced version)
  */
-function check_rate_limit($action, $limit = 5, $period = 300)
+function check_rate_limit_enhanced($action, $limit = 5, $period = 300)
 { // 5 attempts per 5 minutes
     $ip = get_user_ip();
     $key = $action . '_' . $ip;

@@ -9,46 +9,58 @@ if (!defined('ECCT_ROOT')) {
     die('Direct access not allowed');
 }
 
+// Load environment variables
+require_once ECCT_ROOT . '/includes/env.php';
+
 // Start session if not already started
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
 // Database Configuration
-define('DB_HOST', 'localhost');
-define('DB_NAME', 'u750269652_ecct2025');
-define('DB_USER', 'u750269652_ecctAdmin');
-define('DB_PASS', ']R6yP;OW58Z');
+define('DB_HOST', env('DB_HOST', 'localhost'));
+define('DB_NAME', env('DB_NAME', 'u750269652_ecct2025'));
+define('DB_USER', env('DB_USER', 'u750269652_ecctAdmin'));
+define('DB_PASS', env('DB_PASS', ']R6yP;OW58Z'));
 define('DB_CHARSET', 'utf8mb4');
 
-// Site Configuration - FIXED URLS
-define('SITE_NAME', 'ECCT - Environmental Conservation Community of Tanzania');
-define('SITE_URL', 'https://ecct.serengetibytes.com'); // Fixed to match your actual domain
-define('ADMIN_EMAIL', 'info@ecct.or.tz');
+// Site Configuration
+define('SITE_NAME', env('SITE_NAME', 'ECCT - Environmental Conservation Community of Tanzania'));
+define('SITE_URL', env('SITE_URL', 'https://ecct.serengetibytes.com'));
+define('SITE_EMAIL', env('SITE_EMAIL', 'info@ecct.or.tz'));
+define('ADMIN_EMAIL', env('ADMIN_EMAIL', 'info@ecct.or.tz'));
 
 // Paths
-define('UPLOADS_PATH', ECCT_ROOT . '/assets/uploads');
-define('UPLOADS_URL', SITE_URL . '/assets/uploads');
-define('ASSETS_PATH', SITE_URL . '/assets'); // Added missing ASSETS_PATH
+define('UPLOADS_PATH', ECCT_ROOT . '/' . env('UPLOAD_PATH', 'assets/uploads'));
+define('UPLOADS_URL', SITE_URL . '/' . env('UPLOAD_PATH', 'assets/uploads'));
+define('ASSETS_PATH', SITE_URL . '/assets');
 
 // Security
 define('CSRF_TOKEN_NAME', 'csrf_token');
-define('SESSION_TIMEOUT', 7200); // 2 hours
+define('SESSION_TIMEOUT', env('SESSION_LIFETIME', 7200));
 
 // File Upload Settings
-define('MAX_FILE_SIZE', 5 * 1024 * 1024); // 5MB
-define('ALLOWED_IMAGE_TYPES', ['image/jpeg', 'image/jpg', 'image/png', 'image/gif']);
+define('MAX_FILE_SIZE', env('MAX_FILE_SIZE', 5 * 1024 * 1024)); // 5MB
+define('ALLOWED_IMAGE_TYPES', explode(',', env('ALLOWED_IMAGE_TYPES', 'jpg,jpeg,png,gif')));
 
 // Pagination
 define('DEFAULT_PER_PAGE', 10);
 define('MAX_PER_PAGE', 50);
 
+// Debug Mode
+define('DEBUG_MODE', env('DEBUG_MODE', false));
+
 // Timezone
 date_default_timezone_set('Africa/Dar_es_Salaam');
 
 // Error Reporting (disable in production)
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+if (DEBUG_MODE) {
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
+} else {
+    error_reporting(0);
+    ini_set('display_errors', 0);
+}
 
 // Custom error handler
 function ecct_error_handler($errno, $errstr, $errfile, $errline)
@@ -57,7 +69,7 @@ function ecct_error_handler($errno, $errstr, $errfile, $errline)
     error_log($error_message);
 
     // Don't show errors to users in production
-    if (defined('ENVIRONMENT') && ENVIRONMENT === 'production') {
+    if (!DEBUG_MODE) {
         return true;
     }
 
@@ -176,11 +188,11 @@ function redirect($url)
     exit();
 }
 
-// Email configuration (if needed)
-define('SMTP_HOST', '');
-define('SMTP_PORT', 587);
-define('SMTP_USERNAME', '');
-define('SMTP_PASSWORD', '');
+// Email configuration
+define('SMTP_HOST', env('SMTP_HOST', 'smtp.gmail.com'));
+define('SMTP_PORT', env('SMTP_PORT', 587));
+define('SMTP_USERNAME', env('SMTP_USER', ''));
+define('SMTP_PASSWORD', env('SMTP_PASS', ''));
 define('SMTP_ENCRYPTION', 'tls');
 
 // Cache settings
