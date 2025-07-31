@@ -37,10 +37,16 @@ if ($_POST && isset($_FILES['images'])) {
             $file_size = $files['size'][$i];
             $file_type = $files['type'][$i];
 
-            // Validate file type
+            // Validate file type and extension
             $allowed_types = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
-            if (!in_array($file_type, $allowed_types)) {
-                $errors[] = "File {$file_name}: Invalid file type. Only JPG, PNG, and GIF allowed.";
+            $allowed_extensions = ['jpg', 'jpeg', 'png', 'gif', 'JPG', 'JPEG', 'PNG', 'GIF'];
+
+            $file_extension = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
+            $file_extension_original = pathinfo($file_name, PATHINFO_EXTENSION);
+
+            // Check both MIME type and file extension
+            if (!in_array($file_type, $allowed_types) || !in_array($file_extension_original, $allowed_extensions)) {
+                $errors[] = "File {$file_name}: Invalid file type. Only JPG, JPEG, PNG, and GIF allowed (case insensitive).";
                 continue;
             }
 
@@ -148,9 +154,9 @@ include '../includes/header.php';
                                 <div class="mb-4">
                                     <label for="images" class="form-label">Select Images *</label>
                                     <input type="file" class="form-control" id="images" name="images[]"
-                                        accept="image/*" multiple required>
+                                        accept="image/jpeg,image/jpg,image/png,image/gif,.jpg,.jpeg,.png,.gif,.JPG,.JPEG,.PNG,.GIF" multiple required>
                                     <div class="form-text">
-                                        Select multiple images (JPG, PNG, GIF). Maximum size: 5MB per image.
+                                        Select multiple images (JPG, JPEG, PNG, GIF - case insensitive). Maximum size: 5MB per image.
                                     </div>
                                 </div>
 
@@ -214,7 +220,7 @@ include '../includes/header.php';
                             <ul class="list-unstyled">
                                 <li class="mb-2">
                                     <i class="fas fa-check text-success me-2"></i>
-                                    <strong>Supported formats:</strong> JPG, PNG, GIF
+                                    <strong>Supported formats:</strong> JPG, JPEG, PNG, GIF (case insensitive)
                                 </li>
                                 <li class="mb-2">
                                     <i class="fas fa-check text-success me-2"></i>

@@ -45,7 +45,7 @@ RATE_LIMIT_WINDOW=3600
 
 # File Upload Configuration
 MAX_FILE_SIZE=5242880
-ALLOWED_IMAGE_TYPES=jpg,jpeg,png,gif,webp
+ALLOWED_IMAGE_TYPES=jpg,jpeg,png,gif,webp,JPG,JPEG,PNG,GIF,WEBP
 UPLOAD_PATH=assets/uploads
 
 # Email Configuration (SMTP)

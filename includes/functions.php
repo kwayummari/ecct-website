@@ -30,11 +30,13 @@ function upload_image($file, $upload_dir, $allowed_types = null, $max_size = nul
         return ['success' => false, 'message' => 'File size too large'];
     }
 
-    // Get file extension
-    $file_extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+    // Get file extension (preserve original case for validation)
+    $file_extension_original = pathinfo($file['name'], PATHINFO_EXTENSION);
+    $file_extension = strtolower($file_extension_original);
 
-    // Check file type
-    if (!in_array($file_extension, $allowed_types)) {
+    // Check file type (support both lowercase and uppercase extensions)
+    $allowed_extensions = array_merge($allowed_types, array_map('strtoupper', $allowed_types));
+    if (!in_array($file_extension, $allowed_types) && !in_array($file_extension_original, $allowed_extensions)) {
         return ['success' => false, 'message' => 'Invalid file type'];
     }
 

@@ -41,7 +41,7 @@ define('SESSION_TIMEOUT', env('SESSION_LIFETIME', 7200));
 
 // File Upload Settings
 define('MAX_FILE_SIZE', env('MAX_FILE_SIZE', 5 * 1024 * 1024)); // 5MB
-define('ALLOWED_IMAGE_TYPES', explode(',', env('ALLOWED_IMAGE_TYPES', 'jpg,jpeg,png,gif')));
+define('ALLOWED_IMAGE_TYPES', explode(',', env('ALLOWED_IMAGE_TYPES', 'jpg,jpeg,png,gif,JPG,JPEG,PNG,GIF')));
 
 // Pagination
 define('DEFAULT_PER_PAGE', 10);

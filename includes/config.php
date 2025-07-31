@@ -56,7 +56,7 @@ define('RATE_LIMIT_WINDOW', env('RATE_LIMIT_WINDOW', 3600));
 
 // Image Upload Configuration
 define('MAX_FILE_SIZE', env('MAX_FILE_SIZE', 5242880)); // 5MB
-define('ALLOWED_IMAGE_TYPES', explode(',', env('ALLOWED_IMAGE_TYPES', 'jpg,jpeg,png,gif,webp')));
+define('ALLOWED_IMAGE_TYPES', explode(',', env('ALLOWED_IMAGE_TYPES', 'jpg,jpeg,png,gif,webp,JPG,JPEG,PNG,GIF,WEBP')));
 define('IMAGE_QUALITY', 85);
 
 // Email Configuration
