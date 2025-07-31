@@ -68,8 +68,8 @@ cache/
 caches/
 
 # Temporary Upload Files
-uploads/temp/
-uploads/cache/
+# uploads/temp/
+# uploads/cache/
 
 # SSL Certificates
 *.pem
