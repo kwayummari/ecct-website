@@ -26,7 +26,7 @@ define('DB_CHARSET', 'utf8mb4');
 
 // Site Configuration
 define('SITE_NAME', env('SITE_NAME', 'ECCT - Environmental Conservation Community of Tanzania'));
-define('SITE_URL', env('SITE_URL', 'https://ecct.serengetibytes.com'));
+define('SITE_URL', env('SITE_URL', 'https://ecct.or.tz'));
 define('SITE_EMAIL', env('SITE_EMAIL', 'info@ecct.or.tz'));
 define('ADMIN_EMAIL', env('ADMIN_EMAIL', 'info@ecct.or.tz'));
 
