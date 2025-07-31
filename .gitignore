@@ -22,9 +22,9 @@ cache/
 
 # Uploaded Files (keep directory structure)
 # assets/uploads/*
-!assets/uploads/.gitkeep
-admin/assets/uploads/*
-!admin/assets/uploads/.gitkeep
+# !assets/uploads/.gitkeep
+# admin/assets/uploads/*
+# !admin/assets/uploads/.gitkeep
 
 # Database Files
 *.sql
