@@ -466,7 +466,7 @@ include 'includes/header.php';
                             <i class="fas fa-leaf me-2"></i>Environmental Conservation
                         </span>
                     </div>
-                    <h1 class="hero-title-modern fw-bold mb-4 animate-fade-in" style="color: #ffffff; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);">
+                    <h1 class="hero-title-modern fw-bold mb-4 animate-fade-in" style="color: #ffffff;">
                         <?php echo htmlspecialchars($hero_title); ?>
                     </h1>
                     <p class="hero-subtitle-modern mb-5 animate-fade-in-delay" style="color: #ffffff; text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);">
