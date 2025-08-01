@@ -41,27 +41,22 @@ if ($_POST && isset($_FILES['images'])) {
             $allowed_types = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
             $allowed_extensions = ['jpg', 'jpeg', 'png', 'gif', 'JPG', 'JPEG', 'PNG', 'GIF'];
 
-            $file_extension = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
             $file_extension_original = pathinfo($file_name, PATHINFO_EXTENSION);
+            $file_extension_lower = strtolower($file_extension_original);
 
-            // Check both MIME type and file extension
-            if (!in_array($file_type, $allowed_types) || !in_array($file_extension_original, $allowed_extensions)) {
-                $errors[] = "File {$file_name}: Invalid file type. Only JPG, JPEG, PNG, and GIF allowed (case insensitive).";
+            // Use the upload_image function from functions.php for better validation
+            require_once ECCT_ROOT . '/includes/functions.php';
+            
+            $upload_result = upload_image($files['tmp_name'][$i], $upload_dir, ['jpg', 'jpeg', 'png', 'gif', 'JPG', 'JPEG', 'PNG', 'GIF'], 5 * 1024 * 1024);
+            
+            if (!$upload_result['success']) {
+                $errors[] = "File {$file_name}: " . $upload_result['message'];
                 continue;
             }
 
-            // Validate file size (5MB max)
-            if ($file_size > 5 * 1024 * 1024) {
-                $errors[] = "File {$file_name}: File too large. Maximum size is 5MB.";
-                continue;
-            }
-
-            // Generate unique filename
-            $file_extension = pathinfo($file_name, PATHINFO_EXTENSION);
-            $new_filename = uniqid() . '_' . time() . '.' . $file_extension;
-            $upload_path = $upload_dir . $new_filename;
-
-            if (move_uploaded_file($file_tmp, $upload_path)) {
+            // Get the uploaded file path
+            $upload_path = $upload_result['path'];
+            $new_filename = $upload_result['filename'];
                 // Get image dimensions
                 $image_info = getimagesize($upload_path);
                 $width = $image_info[0] ?? 0;
@@ -92,9 +87,6 @@ if ($_POST && isset($_FILES['images'])) {
                         unlink($upload_path);
                     }
                 }
-            } else {
-                $errors[] = "File {$file_name}: Failed to upload file.";
-            }
         } else {
             $errors[] = "File {$files['name'][$i]}: Upload error occurred.";
         }
