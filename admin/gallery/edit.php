@@ -243,8 +243,8 @@ include '../includes/header.php';
 
                                 <div class="mb-3">
                                     <label for="new_image" class="form-label">Replace Image (Optional)</label>
-                                    <input type="file" class="form-control" id="new_image" name="new_image" accept="image/*">
-                                    <div class="form-text">Leave empty to keep current image. Supported: JPG, PNG, GIF (max 5MB)</div>
+                                    <input type="file" class="form-control" id="new_image" name="new_image" accept="image/jpeg,image/jpg,image/png,image/gif,.jpg,.jpeg,.png,.gif,.JPG,.JPEG,.PNG,.GIF">
+                                    <div class="form-text">Leave empty to keep current image. Supported: JPG, JPEG, PNG, GIF (case insensitive, max 5MB)</div>
                                 </div>
 
                                 <div class="row mb-4">

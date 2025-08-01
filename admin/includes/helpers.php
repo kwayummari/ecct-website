@@ -264,13 +264,24 @@ function handle_image_upload($file, $folder = 'gallery')
         return ['success' => false, 'error' => 'File too large. Maximum size: ' . (MAX_FILE_SIZE / 1024 / 1024) . 'MB'];
     }
 
-    // Check file type
+    // Check file type and extension
     $finfo = finfo_open(FILEINFO_MIME_TYPE);
     $mime_type = finfo_file($finfo, $file['tmp_name']);
     finfo_close($finfo);
 
-    if (!in_array($mime_type, ALLOWED_IMAGE_TYPES)) {
-        return ['success' => false, 'error' => 'Invalid file type. Allowed: JPG, PNG, GIF'];
+    $file_extension = pathinfo($file['name'], PATHINFO_EXTENSION);
+    $file_extension_lower = strtolower($file_extension);
+    
+    // Define allowed MIME types and extensions
+    $allowed_mime_types = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
+    $allowed_extensions = ['jpg', 'jpeg', 'png', 'gif', 'JPG', 'JPEG', 'PNG', 'GIF'];
+    
+    // Check either MIME type OR file extension (more flexible)
+    $valid_mime = in_array($mime_type, $allowed_mime_types);
+    $valid_extension = in_array($file_extension, $allowed_extensions) || in_array($file_extension_lower, ['jpg', 'jpeg', 'png', 'gif']);
+    
+    if (!$valid_mime && !$valid_extension) {
+        return ['success' => false, 'error' => 'Invalid file type. Allowed: JPG, JPEG, PNG, GIF (case insensitive)'];
     }
 
     // Create upload directories

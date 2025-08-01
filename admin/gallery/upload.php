@@ -46,9 +46,9 @@ if ($_POST && isset($_FILES['images'])) {
 
             // Use the upload_image function from functions.php for better validation
             require_once ECCT_ROOT . '/includes/functions.php';
-            
+
             $upload_result = upload_image($files['tmp_name'][$i], $upload_dir, ['jpg', 'jpeg', 'png', 'gif', 'JPG', 'JPEG', 'PNG', 'GIF'], 5 * 1024 * 1024);
-            
+
             if (!$upload_result['success']) {
                 $errors[] = "File {$file_name}: " . $upload_result['message'];
                 continue;
@@ -57,36 +57,36 @@ if ($_POST && isset($_FILES['images'])) {
             // Get the uploaded file path
             $upload_path = $upload_result['path'];
             $new_filename = $upload_result['filename'];
-                // Get image dimensions
-                $image_info = getimagesize($upload_path);
-                $width = $image_info[0] ?? 0;
-                $height = $image_info[1] ?? 0;
+            // Get image dimensions
+            $image_info = getimagesize($upload_path);
+            $width = $image_info[0] ?? 0;
+            $height = $image_info[1] ?? 0;
 
-                // Use individual title or filename as fallback
-                $image_title = $title ?: pathinfo($file_name, PATHINFO_FILENAME);
+            // Use individual title or filename as fallback
+            $image_title = $title ?: pathinfo($file_name, PATHINFO_FILENAME);
 
-                $data = [
-                    'title' => $image_title,
-                    'description' => $description,
-                    'image_path' => 'assets/uploads/gallery/' . $new_filename,
-                    'category' => $category,
-                    // 'width' => $width,
-                    // 'height' => $height,
-                    // 'file_size' => $file_size,
-                    // 'is_active' => $is_active,
-                    'uploaded_by' => $current_user['id'],
-                    'uploaded_at' => date('Y-m-d H:i:s')
-                ];
+            $data = [
+                'title' => $image_title,
+                'description' => $description,
+                'image_path' => 'assets/uploads/gallery/' . $new_filename,
+                'category' => $category,
+                // 'width' => $width,
+                // 'height' => $height,
+                // 'file_size' => $file_size,
+                // 'is_active' => $is_active,
+                'uploaded_by' => $current_user['id'],
+                'uploaded_at' => date('Y-m-d H:i:s')
+            ];
 
-                if ($db->insert('gallery', $data)) {
-                    $success_count++;
-                } else {
-                    $errors[] = "File {$file_name}: Database error occurred.";
-                    // Delete uploaded file if database insert failed
-                    if (file_exists($upload_path)) {
-                        unlink($upload_path);
-                    }
+            if ($db->insert('gallery', $data)) {
+                $success_count++;
+            } else {
+                $errors[] = "File {$file_name}: Database error occurred.";
+                // Delete uploaded file if database insert failed
+                if (file_exists($upload_path)) {
+                    unlink($upload_path);
                 }
+            }
         } else {
             $errors[] = "File {$files['name'][$i]}: Upload error occurred.";
         }
