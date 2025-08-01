@@ -1,5 +1,7 @@
 <?php
-define('ECCT_ROOT', __DIR__);
+if (!defined('ECCT_ROOT')) {
+    define('ECCT_ROOT', __DIR__);
+}
 require_once 'includes/config.php';
 require_once 'includes/database.php';
 require_once 'includes/functions.php';

@@ -6,7 +6,9 @@
  */
 
 // Define root path
-define('ECCT_ROOT', __DIR__);
+if (!defined('ECCT_ROOT')) {
+    define('ECCT_ROOT', __DIR__);
+}
 
 // Check if we're accessing from web root or if files are in a subdirectory
 $request_uri = $_SERVER['REQUEST_URI'];
